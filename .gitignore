@@ -30,4 +30,10 @@
 *.exe
 *.out
 *.app
+
+# Miscellaneous
 desktop.ini
+build
+
+# Settings
+*.user
