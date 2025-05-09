@@ -1,4 +1,4 @@
-## Admin
+## Administrator
 
 The admin is supposed to manage the playlists of songs in the program so users can choose their favorite songs and playlists.
 
