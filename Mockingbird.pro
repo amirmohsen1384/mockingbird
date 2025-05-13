@@ -9,14 +9,14 @@ CONFIG += c++17
 
 HEADERS += \
     include/components/player.h \
-    include/core/playlist.h \
-    include/core/song.h
+    include/core/song.h \
+    include/core/playlist.h
 
 SOURCES += \
     main.cpp \
     src/components/player.cpp \
-    src/core/playlist.cpp \
-    src/core/song.cpp
+    src/core/song.cpp \
+    src/core/playlist.cpp
 
 FORMS += \
     ui/components/player.ui
