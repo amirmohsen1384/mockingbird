@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>914</width>
-    <height>141</height>
+    <height>114</height>
    </rect>
   </property>
   <property name="palette">
@@ -92,66 +92,7 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="controlPogressLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="titleLabel">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="font">
-        <font>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>The Name of The Song - Information of The Song in Floating Mode</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
-      <layout class="QHBoxLayout" name="progressLayout">
-       <item>
-        <widget class="QLabel" name="elapsedTimeLabel">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>00:00</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="progressSlider">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="totalTimeLabel">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>00:00</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="0">
       <layout class="QHBoxLayout" name="controlLayout">
        <item>
         <widget class="QPushButton" name="repeatButton">
@@ -370,6 +311,50 @@
          </property>
          <property name="flat">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <layout class="QHBoxLayout" name="progressLayout">
+       <item>
+        <widget class="QLabel" name="elapsedTimeLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>00:00</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="progressSlider">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="totalTimeLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>00:00</string>
          </property>
         </widget>
        </item>

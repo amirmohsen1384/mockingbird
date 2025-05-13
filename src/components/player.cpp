@@ -53,7 +53,6 @@ void Player::updateLoop()
 void Player::updateMetaData()
 {
     QFileInfo info(player->source().toLocalFile());
-    ui->titleLabel->setText(info.baseName());
     this->setWindowTitle(info.baseName());
 }
 
