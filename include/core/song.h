@@ -2,6 +2,7 @@
 #define SONG_H
 
 #include <QObject>
+#include <QUrl>
 
 class Song : public QObject
 {
