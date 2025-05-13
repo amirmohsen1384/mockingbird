@@ -5,12 +5,11 @@
         <file>images/player/play.png</file>
         <file>images/player/replay-10.png</file>
         <file>images/player/speed.png</file>
-        <file>images/player/loop.png</file>
         <file>images/player/shuffle.png</file>
         <file>images/player/no-repeat.png</file>
         <file>images/player/no-shuffle.png</file>
-        <file>images/player/volume.png</file>
         <file>images/player/stop.png</file>
         <file>images/playlist/song.png</file>
+        <file>images/player/repeat.png</file>
     </qresource>
 </RCC>
