@@ -8,13 +8,28 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+<<<<<<< Updated upstream
     include/components/player.h
 
 SOURCES += \
     main.cpp \
     src/components/player.cpp
+=======
+    include/components/playlistplayer.h \
+    include/components/player.h \
+    include/core/song.h \
+    include/core/playlist.h
+
+SOURCES += \
+    src/components/playlistplayer.cpp \
+    src/components/player.cpp \
+    src/core/playlist.cpp \
+    src/core/song.cpp \
+    main.cpp
+>>>>>>> Stashed changes
 
 FORMS += \
+    ui/components/playlistplayer.ui \
     ui/components/player.ui
 
 # Default rules for deployment.
