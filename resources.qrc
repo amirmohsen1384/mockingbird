@@ -11,5 +11,6 @@
         <file>images/player/no-shuffle.png</file>
         <file>images/player/volume.png</file>
         <file>images/player/stop.png</file>
+        <file>images/playlist/song.png</file>
     </qresource>
 </RCC>
