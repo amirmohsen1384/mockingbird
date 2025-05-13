@@ -2,12 +2,14 @@
 #define PLAYLIST_H
 
 #include <QAbstractListModel>
+#include <QStyledItemDelegate>
 #include "include/core/song.h"
+
+enum PlaylistRole {PlayingRole = Qt::UserRole + 1, ArtistRole = Qt::UserRole + 2};
 
 class Playlist : public QAbstractListModel
 {
     Q_OBJECT
-
 public:
     explicit Playlist(QObject *parent = nullptr);
     Playlist(Playlist &&data, QObject *parent = nullptr);
@@ -18,6 +20,7 @@ public:
 
     QString getName() const;
     const SongList& songs() const;
+    qint64 getCurrentSong() const;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -44,12 +47,15 @@ public slots:
     void replaceSong(int row, const Song &target);
 
     void setName(const QString &name);
+    void setCurrentSong(qint64 value);
 
 signals:
     void nameChanged(const QString &name);
+    void currentSongChanged(qint64 song);
 
 private:
     QString name;
+    qint64 current;
     SongList container;
 };
 
@@ -60,5 +66,13 @@ QDataStream& operator>>(QDataStream &stream, Playlist &data);
 QDataStream& operator<<(QDataStream &stream, const Playlist &data);
 
 Q_DECLARE_METATYPE(Playlist)
+
+class SongDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+public:
+    SongDelegate(QObject *parent = nullptr);
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};
 
 #endif // PLAYLIST_H

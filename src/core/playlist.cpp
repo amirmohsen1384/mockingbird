@@ -1,8 +1,11 @@
 #include "include/core/playlist.h"
+#include <QPainter>
 #include <QPixmap>
 
 Playlist::Playlist(QObject *parent) : QAbstractListModel(parent)
-{}
+{
+    current = 0;
+}
 
 Playlist::Playlist(Playlist &&data, QObject *parent) : Playlist(parent)
 {
@@ -17,14 +20,17 @@ Playlist::Playlist(const Playlist &data, QObject *parent) : Playlist(parent)
 Playlist &Playlist::operator=(const Playlist &data)
 {
     name = data.name;
+    current = data.current;
     container = data.container;
     return *this;
 }
 
 Playlist& Playlist::operator=(Playlist &&data)
 {
+    current = data.current;
     name = std::move(data.name);
     container = std::move(data.container);
+    current = 0;
     return *this;
 }
 
@@ -44,17 +50,30 @@ QVariant Playlist::data(const QModelIndex &index, int role) const
 
     const Song target = container.at(index.row());
 
-    switch(role) {
-    case Qt::DisplayRole: {
+    switch(role)
+    {
+    case Qt::DisplayRole:
+    {
         return target.getName();
     }
-    case Qt::DecorationRole: {
+    case Qt::DecorationRole:
+    {
         return QPixmap(":/images/playlist/song.png");
     }
-    case Qt::UserRole: {
+    case Qt::UserRole:
+    {
         return QVariant::fromValue<Song>(target);
     }
-    default: {
+    case PlaylistRole::PlayingRole:
+    {
+        return index.row() == this->current;
+    }
+    case PlaylistRole::ArtistRole:
+    {
+        return target.getArtist();
+    }
+    default:
+    {
         return {};
     }
     }
@@ -125,9 +144,24 @@ void Playlist::setName(const QString &name)
     emit nameChanged(name);
 }
 
+void Playlist::setCurrentSong(qint64 value)
+{
+    int temp = current;
+    current = value;
+
+    emit dataChanged(index(current), index(current), {PlaylistRole::PlayingRole});
+    emit dataChanged(index(temp), index(temp), {PlaylistRole::PlayingRole});
+    emit currentSongChanged(current);
+}
+
 const SongList &Playlist::songs() const
 {
     return container;
+}
+
+qint64 Playlist::getCurrentSong() const
+{
+    return current;
 }
 
 bool operator==(const Playlist &one, const Playlist &two)
@@ -153,6 +187,7 @@ bool operator!=(const Playlist &one, const Playlist &two)
 QDataStream& operator>>(QDataStream &stream, Playlist &data)
 {
     stream >> data.name;
+    stream >> data.current;
 
     data.beginResetModel();
     stream >> data.container;
@@ -164,6 +199,54 @@ QDataStream& operator>>(QDataStream &stream, Playlist &data)
 QDataStream& operator<<(QDataStream &stream, const Playlist &data)
 {
     stream << data.name;
+    stream << data.current;
     stream << data.container;
     return stream;
+}
+
+
+
+SongDelegate::SongDelegate(QObject *parent) : QStyledItemDelegate{parent}
+{}
+
+void SongDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    painter->save();
+    const int margin = 5;
+
+    const QPixmap logo = qvariant_cast<QPixmap>(index.data(Qt::DecorationRole));
+
+    painter->save();
+    painter->setClipRegion(QRegion(logo.rect(), QRegion::Ellipse));
+
+    painter->drawPixmap(QPoint(0, 0), logo);
+    painter->restore();
+
+    QLinearGradient gradient;
+    gradient.setCoordinateMode(QLinearGradient::ObjectMode);
+    gradient.setStops({{0.5, Qt::blue}, {1.0, Qt::green}});
+    gradient.setFinalStop(QPointF(0.5, 1));
+    gradient.setStart(QPointF(0.5, 0));
+
+    {
+        const QPen initial = painter->pen();
+        painter->setPen(QPen(gradient, 2));
+        painter->drawEllipse(logo.rect());
+        painter->setPen(initial);
+    }
+
+    painter->translate(logo.rect().width() + margin, 0);
+
+    {
+        const QFont initial = painter->font();
+
+        painter->setFont(QFont("Segoe Print", 14));
+        painter->drawText(QPoint(0, 0), index.data(Qt::DisplayRole).toString());
+
+        painter->setFont(QFont("Segoe UI", 10, QFont::Bold));
+        painter->drawText(QPoint(0, margin * 2), QString("A Song By %1").arg(index.data(PlaylistRole::ArtistRole).toString()));
+
+        painter->setFont(initial);
+    }
+    painter->restore();
 }
