@@ -19,18 +19,22 @@ Playlist::Playlist(const Playlist &data, QObject *parent) : Playlist(parent)
 
 Playlist &Playlist::operator=(const Playlist &data)
 {
+    beginResetModel();
     name = data.name;
     current = data.current;
     container = data.container;
+    endResetModel();
     return *this;
 }
 
 Playlist& Playlist::operator=(Playlist &&data)
 {
+    beginResetModel();
     current = data.current;
+    data.current = 0;
     name = std::move(data.name);
     container = std::move(data.container);
-    current = 0;
+    endResetModel();
     return *this;
 }
 
