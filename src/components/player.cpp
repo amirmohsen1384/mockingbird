@@ -1,19 +1,10 @@
 #include "include/components/player.h"
-#include <QMediaMetaData>
 #include <QMediaDevices>
 #include <QAudioOutput>
 #include <QAudioDevice>
-#include <QCloseEvent>
 #include "ui_player.h"
 #include <QFileInfo>
-#include <QTimer>
 #include <QTime>
-
-void Player::closeEvent(QCloseEvent *event)
-{
-    player->stop();
-    event->accept();
-}
 
 Player::Player(QWidget *parent) : QWidget(parent)
 {
@@ -26,9 +17,12 @@ Player::Player(QWidget *parent) : QWidget(parent)
     player->setAudioOutput(output.get());
     output->setDevice(QMediaDevices::defaultAudioOutput());
 
+    connect(this, &Player::shuffleModeChanged, this, &Player::updateShuffleButton);
+    connect(this, &Player::infiniteModeChanged, this, &Player::updateInfiniteButton);
     connect(player.get(), &QMediaPlayer::sourceChanged, this, &Player::updateMetaData);
     connect(player.get(), &QMediaPlayer::playingChanged, this, &Player::updatePlayback);
     connect(player.get(), &QMediaPlayer::positionChanged, this, &Player::updateProgress);
+    connect(ui->shuffleButton, &QPushButton::toggled, this, &Player::shuffleModeChanged);
     connect(player.get(), &QMediaPlayer::seekableChanged, this, &Player::updateSeekingControl);
     connect(ui->progressSlider, &QSlider::sliderMoved, player.get(), &QMediaPlayer::setPosition);
     connect(player.get(), &QMediaPlayer::playbackRateChanged, this, &Player::updatePlaybackSpeed);
@@ -37,6 +31,7 @@ Player::Player(QWidget *parent) : QWidget(parent)
 
 Player::~Player()
 {
+    player->stop();
     delete ui;
 }
 
@@ -45,9 +40,14 @@ QUrl Player::source() const
     return player->source();
 }
 
-void Player::updateLoop()
+bool Player::isShuffleMode() const
 {
-    player->setLoops(ui->repeatButton->isChecked() ? QMediaPlayer::Infinite : QMediaPlayer::Once);
+    return ui->shuffleButton->isChecked();
+}
+
+bool Player::isInfiniteMode() const
+{
+    return player->loops() == QMediaPlayer::Infinite ? true : false;
 }
 
 void Player::updateMetaData()
@@ -58,6 +58,12 @@ void Player::updateMetaData()
 
 void Player::updateProgress()
 {
+    if(player->duration() == player->position())
+    {
+        player->stop();
+        emit sourceFinished();
+    }
+
     const quint64 total = player->duration() / 1000;
     const quint64 progress = player->position() / 1000;
 
@@ -86,6 +92,12 @@ void Player::updatePlayback()
     }
 }
 
+void Player::updateShuffleButton()
+{
+    ui->shuffleButton->setToolTip(isShuffleMode() ? "Sequential" : "Shuffle");
+    ui->shuffleButton->setIcon(QIcon(QString(":/images/player/%1.png").arg(isShuffleMode() ? "no-shuffle" : "shuffle")));
+}
+
 void Player::updatePlaybackSpeed()
 {
     ui->speedButton->setText(QString::number(player->playbackRate(), '0', 2));
@@ -102,7 +114,12 @@ void Player::updateSeekingControl()
     ui->playbackButton->setEnabled(state);
     ui->totalTimeLabel->setEnabled(state);
     ui->elapsedTimeLabel->setEnabled(state);
+}
 
+void Player::updateInfiniteButton()
+{
+    ui->repeatButton->setToolTip(isInfiniteMode() ? "Once" : "Infinite");
+    ui->repeatButton->setIcon(QIcon(QString(":/images/player/%1.png").arg(isInfiniteMode() ? "no-repeat" : "repeat")));
 }
 
 void Player::setSource(const QUrl &source)
@@ -137,6 +154,18 @@ void Player::forward()
 void Player::controlPlaybackSpeed()
 {
     player->setPlaybackRate(std::max(std::fmod(player->playbackRate() + 0.25, 2.25), 0.25));
+}
+
+void Player::setShuffleMode(bool value)
+{
+    ui->shuffleButton->setChecked(value);
+    emit shuffleModeChanged(value);
+}
+
+void Player::setInfiniteMode(bool value)
+{
+    player->setLoops(value ? QMediaPlayer::Infinite : QMediaPlayer::Once);
+    emit infiniteModeChanged(value);
 }
 
 void Player::controlPlayback()

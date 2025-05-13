@@ -95,6 +95,32 @@
      <item row="1" column="0">
       <layout class="QHBoxLayout" name="controlLayout">
        <item>
+        <widget class="QPushButton" name="shuffleButton">
+         <property name="toolTip">
+          <string>Shuffle</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../resources.qrc">
+           <normaloff>:/images/player/shuffle.png</normaloff>:/images/player/shuffle.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="repeatButton">
          <property name="toolTip">
           <string>Repeat</string>
@@ -104,7 +130,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../resources.qrc">
-           <normaloff>:/images/player/loop.png</normaloff>:/images/player/loop.png</iconset>
+           <normaloff>:/images/player/repeat.png</normaloff>:/images/player/repeat.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -376,7 +402,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>463</x>
-     <y>127</y>
+     <y>100</y>
     </hint>
     <hint type="destinationlabel">
      <x>692</x>
@@ -392,7 +418,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>800</x>
-     <y>119</y>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -408,7 +434,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>515</x>
-     <y>119</y>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -424,7 +450,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>395</x>
-     <y>119</y>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -439,8 +465,8 @@
    <slot>controlPlaybackSpeed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>850</x>
-     <y>97</y>
+     <x>900</x>
+     <y>93</y>
     </hint>
     <hint type="destinationlabel">
      <x>868</x>
@@ -452,11 +478,11 @@
    <sender>repeatButton</sender>
    <signal>clicked(bool)</signal>
    <receiver>Player</receiver>
-   <slot>updateLoop()</slot>
+   <slot>setInfiniteMode(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>84</x>
-     <y>108</y>
+     <x>109</x>
+     <y>86</y>
     </hint>
     <hint type="destinationlabel">
      <x>135</x>
@@ -464,14 +490,32 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>shuffleButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Player</receiver>
+   <slot>updateShuffleButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>68</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>69</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
+  <signal>shuffleModeChnaged(bool)</signal>
   <slot>controlPlayback()</slot>
   <slot>stop()</slot>
   <slot>replay()</slot>
   <slot>forward()</slot>
   <slot>controlPlaylist()</slot>
   <slot>controlPlaybackSpeed()</slot>
-  <slot>updateLoop()</slot>
+  <slot>updateShuffleButton()</slot>
+  <slot>setInfiniteMode(bool)</slot>
  </slots>
 </ui>

@@ -8,17 +8,20 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+    include/components/playlistplayer.h \
     include/components/player.h \
     include/core/song.h \
     include/core/playlist.h
 
 SOURCES += \
-    main.cpp \
+    src/components/playlistplayer.cpp \
     src/components/player.cpp \
+    src/core/playlist.cpp \
     src/core/song.cpp \
-    src/core/playlist.cpp
+    main.cpp
 
 FORMS += \
+    ui/components/playlistplayer.ui \
     ui/components/player.ui
 
 # Default rules for deployment.
