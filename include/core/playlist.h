@@ -68,12 +68,4 @@ QDataStream& operator<<(QDataStream &stream, const Playlist &data);
 
 Q_DECLARE_METATYPE(Playlist)
 
-class SongDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
-public:
-    SongDelegate(QObject *parent = nullptr);
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-};
-
 #endif // PLAYLIST_H

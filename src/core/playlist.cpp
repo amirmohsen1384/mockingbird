@@ -76,6 +76,10 @@ QVariant Playlist::data(const QModelIndex &index, int role) const
     {
         return target.getArtist();
     }
+    case Qt::ToolTipRole:
+    {
+        return QString("By %1").arg(target.getArtist());
+    }
     default:
     {
         return {};
@@ -209,51 +213,4 @@ QDataStream& operator<<(QDataStream &stream, const Playlist &data)
     stream << data.current;
     stream << data.container;
     return stream;
-}
-
-
-
-SongDelegate::SongDelegate(QObject *parent) : QStyledItemDelegate{parent}
-{}
-
-void SongDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-    painter->save();
-    const int margin = 5;
-
-    const QPixmap logo = qvariant_cast<QPixmap>(index.data(Qt::DecorationRole));
-
-    painter->save();
-    painter->setClipRegion(QRegion(logo.rect(), QRegion::Ellipse));
-
-    painter->drawPixmap(QPoint(0, 0), logo);
-    painter->restore();
-
-    QLinearGradient gradient;
-    gradient.setCoordinateMode(QLinearGradient::ObjectMode);
-    gradient.setStops({{0.5, Qt::blue}, {1.0, Qt::green}});
-    gradient.setFinalStop(QPointF(0.5, 1));
-    gradient.setStart(QPointF(0.5, 0));
-
-    {
-        const QPen initial = painter->pen();
-        painter->setPen(QPen(gradient, 2));
-        painter->drawEllipse(logo.rect());
-        painter->setPen(initial);
-    }
-
-    painter->translate(logo.rect().width() + margin, 0);
-
-    {
-        const QFont initial = painter->font();
-
-        painter->setFont(QFont("Segoe Print", 14));
-        painter->drawText(QPoint(0, 0), index.data(Qt::DisplayRole).toString());
-
-        painter->setFont(QFont("Segoe UI", 10, QFont::Bold));
-        painter->drawText(QPoint(0, margin * 2), QString("A Song By %1").arg(index.data(PlaylistRole::ArtistRole).toString()));
-
-        painter->setFont(initial);
-    }
-    painter->restore();
 }
