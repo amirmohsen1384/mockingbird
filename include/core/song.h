@@ -8,6 +8,20 @@ class Song : public QObject
 {
     Q_OBJECT
 public:
+    enum Genre
+    {
+        Rock,
+        Rap,
+        Pop,
+        Jazz,
+        Electronic,
+        Classic,
+        Folk,
+        Country
+    };
+    Q_ENUM(Genre)
+
+public:
     explicit Song(QObject *parent = nullptr);
     Song(const Song &other, QObject *parent = nullptr);
     Song(Song &&other, QObject *parent = nullptr) noexcept;
@@ -15,9 +29,9 @@ public:
     Song& operator=(const Song &other);
     Song& operator=(Song&& other);
 
+    Genre getGenre() const;
     QUrl getAddress() const;
     QString getName() const;
-    QString getGenre() const;
     QString getArtist() const;
     int getPublicationYear() const;
     
@@ -29,15 +43,15 @@ public:
     friend QDataStream& operator>>(QDataStream &stream, Song &another);
 
 public slots:
+    void setGenre(Genre value);
     void setName(const QString &value);
-    void setGenre(const QString &value);
     void setArtist(const QString &value);
     void setPublicationYear(int value);
     void setAddress(const QUrl &value);
 
 signals:
     void nameChanged(QString name);
-    void genreChanged(QString genre);
+    void genreChanged(Genre genre);
     void addressChanged(QUrl address);
     void artistChanged(QString artist);
     void publicationYearChanged(int year);
@@ -45,9 +59,9 @@ signals:
 private:
     QUrl address;
     QString name;
-    QString genre;
     QString artist;
     int publicationYear;
+    Genre genre = Genre::Classic;
 };
 
 bool operator==(const Song &one, const Song &two);

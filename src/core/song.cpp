@@ -22,6 +22,9 @@ Song& Song::operator=(Song &&another)
     artist = std::move(another.artist);
     address = std::move(another.address);
     publicationYear = std::move(another.publicationYear);
+
+    publicationYear = 0;
+    genre = Genre::Classic;
     return *this;
 }
 
@@ -65,7 +68,7 @@ QString Song::getName() const
 {
     return name;
 }
-QString Song::getGenre() const
+Song::Genre Song::getGenre() const
 {
     return genre;
 }
@@ -88,7 +91,7 @@ void Song::setName(const QString &value)
         emit nameChanged(name);
     }
 }
-void Song::setGenre(const QString &value)
+void Song::setGenre(Genre value)
 {
     if (genre != value) {
         genre = value;
