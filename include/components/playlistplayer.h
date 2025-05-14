@@ -10,6 +10,10 @@ class PlaylistPlayer : public QWidget
 {
     Q_OBJECT
 
+private slots:
+    void navigatePlaylist();
+    void updatePlayer();
+
 public:
     explicit PlaylistPlayer(QWidget *parent = nullptr);
     ~PlaylistPlayer();
@@ -18,7 +22,7 @@ public:
     Playlist& playlist();
 
 private:
-    Playlist songs;
+    Playlist container;
     Ui::PlaylistPlayer *ui;
 };
 

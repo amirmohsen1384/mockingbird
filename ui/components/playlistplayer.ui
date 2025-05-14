@@ -82,7 +82,7 @@
       </font>
      </property>
      <property name="text">
-      <string>The name of playlist</string>
+      <string/>
      </property>
     </widget>
    </item>
