@@ -88,6 +88,7 @@ void Playlist::insertSong(int row, const Song &target)
     beginInsertRows(QModelIndex(), row, row);
     container.insert(row, target);
     endInsertRows();
+    emit songsChanged();
 }
 
 void Playlist::insertSong(int row, const SongList &target)
@@ -98,6 +99,7 @@ void Playlist::insertSong(int row, const SongList &target)
         container.insert(row, element);
     }
     endInsertRows();
+    emit songsChanged();
 }
 
 void Playlist::appendSong(const Song &target)
@@ -139,6 +141,7 @@ void Playlist::removeSong(int row)
 {
     beginRemoveRows(QModelIndex(), row, row);
     container.remove(row);
+    emit songsChanged();
     endRemoveRows();
 }
 

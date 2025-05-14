@@ -50,6 +50,7 @@ public slots:
     void setCurrentSong(qint64 value);
 
 signals:
+    void songsChanged();
     void nameChanged(const QString &name);
     void currentSongChanged(qint64 song);
 
