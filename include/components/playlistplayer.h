@@ -2,7 +2,7 @@
 #define PLAYLISTPLAYER_H
 
 #include <QWidget>
-#include "include/core/playlist.h"
+#include "include/models/playlist.h"
 
 namespace Ui { class PlaylistPlayer; }
 
@@ -11,6 +11,7 @@ class PlaylistPlayer : public QWidget
     Q_OBJECT
 
 private slots:
+    void playSong(const QModelIndex &index);
     void navigatePlaylist();
     void updatePlayer();
 

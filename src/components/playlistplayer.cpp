@@ -2,6 +2,11 @@
 #include "ui_playlistplayer.h"
 #include <QRandomGenerator64>
 
+void PlaylistPlayer::playSong(const QModelIndex &index)
+{
+    container.setCurrentSong(index.row());
+}
+
 void PlaylistPlayer::navigatePlaylist()
 {
     int index = 0;
@@ -19,9 +24,7 @@ void PlaylistPlayer::navigatePlaylist()
 
 void PlaylistPlayer::updatePlayer()
 {
-    if(ui->player->isPlaying()) {
-        return;
-    }
+    ui->player->stop();
     int index = container.getCurrentSong();
     if(!container.songs().isEmpty() && index >= 0 && index < container.songs().size())
     {
