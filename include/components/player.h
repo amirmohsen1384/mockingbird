@@ -19,6 +19,7 @@ public:
     ~Player();
     
     QUrl source() const;
+    bool isPlaying() const;
     bool isShuffleMode() const;
     bool isInfiniteMode() const;
 

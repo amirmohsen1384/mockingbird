@@ -40,6 +40,11 @@ QUrl Player::source() const
     return player->source();
 }
 
+bool Player::isPlaying() const
+{
+    return player->isPlaying();
+}
+
 bool Player::isShuffleMode() const
 {
     return ui->shuffleButton->isChecked();
@@ -58,7 +63,7 @@ void Player::updateMetaData()
 
 void Player::updateProgress()
 {
-    if(player->duration() == player->position())
+    if(player->duration() == player->position() && !isInfiniteMode())
     {
         player->stop();
         emit sourceFinished();
