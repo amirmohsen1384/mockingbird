@@ -1,4 +1,4 @@
-#include "include/core/playlist.h"
+#include "include/models/playlist.h"
 #include <QPainter>
 #include <QPixmap>
 
@@ -29,12 +29,14 @@ Playlist &Playlist::operator=(const Playlist &data)
 
 Playlist& Playlist::operator=(Playlist &&data)
 {
+    data.beginResetModel();
     beginResetModel();
     current = data.current;
     data.current = 0;
     name = std::move(data.name);
     container = std::move(data.container);
     endResetModel();
+    data.endResetModel();
     return *this;
 }
 
@@ -59,6 +61,14 @@ QVariant Playlist::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
     {
         return target.getName();
+    }
+    case Qt::BackgroundRole:
+    {
+        return index.row() == current ? QColor(217, 255, 161) : QVariant();
+    }
+    case Qt::FontRole:
+    {
+        return index.row() == current ? QFont("Segoe UI", 10, QFont::Bold) : QVariant();
     }
     case Qt::DecorationRole:
     {

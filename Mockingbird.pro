@@ -11,13 +11,13 @@ HEADERS += \
     include/components/playlistplayer.h \
     include/components/player.h \
     include/core/song.h \
-    include/core/playlist.h \
+    include/models/playlist.h \
     include/models/genremodel.h
 
 SOURCES += \
     src/components/playlistplayer.cpp \
     src/components/player.cpp \
-    src/core/playlist.cpp \
+    src/models/playlist.cpp \
     src/core/song.cpp \
     main.cpp \
     src/models/genremodel.cpp
