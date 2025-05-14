@@ -11,5 +11,13 @@
         <file>images/player/stop.png</file>
         <file>images/playlist/song.png</file>
         <file>images/player/repeat.png</file>
+        <file>images/genres/classic.png</file>
+        <file>images/genres/country.png</file>
+        <file>images/genres/electronic.png</file>
+        <file>images/genres/folk.png</file>
+        <file>images/genres/jazz.png</file>
+        <file>images/genres/pop.png</file>
+        <file>images/genres/rap.png</file>
+        <file>images/genres/rock.png</file>
     </qresource>
 </RCC>
