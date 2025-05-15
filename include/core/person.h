@@ -2,6 +2,7 @@
 #define PERSON_H
 
 #include <QObject>
+#include "general.h"
 
 class Person : public QObject
 {
@@ -27,12 +28,14 @@ public slots:
     bool setLastName(const QString &value);
     bool setUserName(const QString &value);
     bool setPassword(const QString &value);
+    virtual bool saveToRecord() = 0;
 
 signals:
     void firstNameChanged(const QString &value);
     void lastNameChanged(const QString &value);
     void userNameChanged(const QString &value);
     void passwordChanged(const QString &value);
+    void recordSaved();
 
 private:
     QString firstName;
