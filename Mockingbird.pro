@@ -12,7 +12,8 @@ HEADERS += \
     include/components/player.h \
     include/core/song.h \
     include/models/playlist.h \
-    include/models/genremodel.h
+    include/models/genremodel.h \
+    include/models/playlistmodel.h
 
 SOURCES += \
     src/components/playlistplayer.cpp \
@@ -20,7 +21,8 @@ SOURCES += \
     src/models/playlist.cpp \
     src/core/song.cpp \
     main.cpp \
-    src/models/genremodel.cpp
+    src/models/genremodel.cpp \
+    src/models/playlistmodel.cpp
 
 FORMS += \
     ui/components/playlistplayer.ui \

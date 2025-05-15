@@ -44,8 +44,6 @@ public slots:
     void removeSong(int row);
     Song takeSong(int row);
 
-    void replaceSong(int row, const Song &target);
-
     void setName(const QString &name);
     void setCurrentSong(qint64 value);
 
@@ -67,6 +65,8 @@ QDataStream& operator>>(QDataStream &stream, Playlist &data);
 QDataStream& operator<<(QDataStream &stream, const Playlist &data);
 
 Q_DECLARE_METATYPE(Playlist)
+
+using PlaylistList = QList<Playlist>;
 
 class SongDelegate : public QStyledItemDelegate
 {
