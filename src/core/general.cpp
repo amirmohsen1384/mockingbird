@@ -26,3 +26,12 @@ QDir Storage::user()
     result.cd(name);
     return result;
 }
+
+QDir Storage::songs()
+{
+    const QString name = "Songs";
+    QDir result = root();
+    result.mkdir(name);
+    result.cd(name);
+    return result;
+}

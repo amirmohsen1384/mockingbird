@@ -9,6 +9,7 @@ namespace Storage
     QDir root();
     QDir user();
     QDir admin();
+    QDir songs();
 }
 
 #endif // GENERAL_H
