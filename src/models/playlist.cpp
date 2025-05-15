@@ -139,14 +139,6 @@ Song Playlist::takeSong(int row)
     return song;
 }
 
-void Playlist::replaceSong(int row, const Song &target)
-{
-    if(row >= 0 && row < container.size()) {
-        container.replace(row, target);
-        emit dataChanged(index(1), index(1), {Qt::UserRole, Qt::DisplayRole});
-    }
-}
-
 void Playlist::removeSong(int row)
 {
     beginRemoveRows(QModelIndex(), row, row);

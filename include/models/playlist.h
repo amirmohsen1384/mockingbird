@@ -44,8 +44,6 @@ public slots:
     void removeSong(int row);
     Song takeSong(int row);
 
-    void replaceSong(int row, const Song &target);
-
     void setName(const QString &name);
     void setCurrentSong(qint64 value);
 
