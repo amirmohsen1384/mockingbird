@@ -68,6 +68,8 @@ QDataStream& operator<<(QDataStream &stream, const Playlist &data);
 
 Q_DECLARE_METATYPE(Playlist)
 
+using PlaylistList = QList<Playlist>;
+
 class SongDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
