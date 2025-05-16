@@ -1,9 +1,12 @@
 #include <QApplication>
-#include "include/components/player.h"
+#include "include/windows/welcomewindow.h"
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
+
+    WelcomeWindow window;
+    window.show();
 
     return app.exec();
 }

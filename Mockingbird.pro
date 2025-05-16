@@ -18,6 +18,7 @@ HEADERS += \
     include/models/playlistgroupmodel.h \
     include/models/playlistmodel.h \
     include/models/songdelegate.h \
+    include/windows/welcomewindow.h
 
 SOURCES += \
     src/core/admin.cpp \
@@ -29,10 +30,12 @@ SOURCES += \
     src/models/genremodel.cpp \
     src/models/playlistgroupmodel.cpp \
     src/models/playlistmodel.cpp \
-    src/models/songdelegate.cpp
+    src/models/songdelegate.cpp \
+    src/windows/welcomewindow.cpp
 
 FORMS += \
-    ui/components/player.ui
+    ui/components/player.ui \
+    ui/windows/welcomewindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
