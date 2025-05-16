@@ -37,7 +37,7 @@ signals:
     void passwordChanged(const QString &value);
     void recordSaved();
 
-private:
+protected:
     QString firstName;
     QString lastName;
     QString userName;
