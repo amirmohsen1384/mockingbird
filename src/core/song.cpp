@@ -33,6 +33,11 @@ QString Song::getName() const
     return name;
 }
 
+QPixmap Song::getCover() const
+{
+    return cover;
+}
+
 Song::Genre Song::getGenre() const
 {
     return genre;
@@ -66,6 +71,12 @@ void Song::setArtist(const QString &value)
 {
     artist = value;
 }
+
+void Song::setCover(const QPixmap &value)
+{
+    cover = value;
+}
+
 void Song::setPublicationYear(int value)
 {
     publicationYear = value;

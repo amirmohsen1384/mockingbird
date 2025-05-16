@@ -13,6 +13,7 @@ public:
     ~PlaylistModel() override;
 
     QString getName() const;
+    QPixmap getCover() const;
     qint64 getCurrentSong() const;
 
     const Playlist& getPlaylist() const;
@@ -25,6 +26,7 @@ public slots:
 
     void setName(const QString &name);
     void setCurrentSong(qint64 value);
+    void setCover(const QPixmap &value);
 
     void appendSong(const Song &target);
     void appendSong(const SongList &target);
@@ -39,6 +41,7 @@ signals:
     void songsChanged();
     void currentSongChanged(qint64 song);
     void nameChanged(const QString &name);
+    void coverChanged(const QPixmap &value);
 
 private:
     qint64 current;

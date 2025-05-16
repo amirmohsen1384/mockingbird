@@ -11,6 +11,11 @@ QString PlaylistModel::getName() const
     return container.getName();
 }
 
+QPixmap PlaylistModel::getCover() const
+{
+    return container.getCover();
+}
+
 int PlaylistModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
@@ -143,6 +148,12 @@ void PlaylistModel::setCurrentSong(qint64 value)
     emit dataChanged(index(current), index(current), {Playlist::PlayingRole});
     emit dataChanged(index(temp), index(temp), {Playlist::PlayingRole});
     emit currentSongChanged(current);
+}
+
+void PlaylistModel::setCover(const QPixmap &value)
+{
+    container.setCover(value);
+    emit coverChanged(value);
 }
 
 qint64 PlaylistModel::getCurrentSong() const

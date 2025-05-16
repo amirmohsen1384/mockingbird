@@ -25,8 +25,19 @@ public:
         name = value;
     }
 
+    inline QPixmap getCover() const
+    {
+        return cover;
+    }
+
+    inline void setCover(const QPixmap &value)
+    {
+        cover = value;
+    }
+
 private:
     QString name;
+    QPixmap cover;
 };
 
 Q_DECLARE_METATYPE(Playlist)

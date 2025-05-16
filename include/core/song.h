@@ -23,6 +23,7 @@ public:
     Genre getGenre() const;
     QUrl getAddress() const;
     QString getName() const;
+    QPixmap getCover() const;
     QString getArtist() const;
     int getPublicationYear() const;
     
@@ -34,6 +35,7 @@ public:
 
 public:
     void setArtist(const QString &value);
+    void setCover(const QPixmap &value);
     void setName(const QString &value);
     void setPublicationYear(int value);
     void setAddress(const QUrl &value);
@@ -42,6 +44,7 @@ public:
 private:
     QUrl address;
     QString name;
+    QPixmap cover;
     QString artist;
     int publicationYear;
     Genre genre = Genre::Classic;
