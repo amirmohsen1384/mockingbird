@@ -114,7 +114,7 @@ void SongDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
         painter->drawText(QPoint(0, 0), index.data(Qt::DisplayRole).toString());
 
         painter->setFont(QFont("Segoe UI", 10, QFont::Bold));
-        painter->drawText(QPoint(0, margin * 2), QString("A Song By %1").arg(index.data(PlaylistRole::ArtistRole).toString()));
+        painter->drawText(QPoint(0, margin * 2), QString("A Song By %1").arg(index.data(Playlist::ArtistRole).toString()));
 
         painter->setFont(initial);
     }

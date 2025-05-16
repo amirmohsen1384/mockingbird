@@ -2,7 +2,7 @@
 #define SONGDELEGATE_H
 
 #include <QStyledItemDelegate>
-#include "include/core/playlist.h"
+#include "include/models/playlistmodel.h"
 
 class SongDelegate : public QStyledItemDelegate
 {
