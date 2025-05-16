@@ -2,6 +2,7 @@
 #define SONG_H
 
 #include <QUrl>
+#include <QPixmap>
 #include <QVariant>
 
 class Song
