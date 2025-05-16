@@ -1,36 +1,6 @@
 #include "include/core/person.h"
 #include <QRegularExpression>
 
-Person::Person(QObject *parent) : QObject{parent} {}
-
-Person::Person(const Person &another, QObject *parent) : Person{parent}
-{
-    *this = another;
-}
-
-Person::Person(Person &&another, QObject *parent) : Person{parent}
-{
-    *this = std::move(another);
-}
-
-Person &Person::operator=(const Person &another)
-{
-    firstName = another.firstName;
-    lastName = another.lastName;
-    userName = another.userName;
-    password = another.password;
-    return *this;
-}
-
-Person& Person::operator=(Person &&another)
-{
-    firstName = std::move(another.firstName);
-    lastName = std::move(another.lastName);
-    userName = std::move(another.userName);
-    password = std::move(another.password);
-    return *this;
-}
-
 QString Person::getFirstName() const
 {
     return firstName;
@@ -60,7 +30,6 @@ bool Person::setFirstName(const QString &value)
     if(pattern.match(value).hasMatch())
     {
         firstName = value;
-        emit firstNameChanged(firstName);
         return true;
     }
     else
@@ -78,7 +47,6 @@ bool Person::setLastName(const QString &value)
     if(pattern.match(value).hasMatch())
     {
         lastName = value;
-        emit lastNameChanged(lastName);
         return true;
     }
     else
@@ -96,7 +64,6 @@ bool Person::setUserName(const QString &value)
     if(pattern.match(value).hasMatch())
     {
         userName = value;
-        emit userNameChanged(userName);
         return true;
     }
     else
@@ -120,7 +87,6 @@ bool Person::setPassword(const QString &value)
     if(pattern.match(value).hasMatch())
     {
         password = value;
-        emit passwordChanged(password);
         return true;
     }
     else

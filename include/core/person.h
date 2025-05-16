@@ -4,38 +4,23 @@
 #include <QObject>
 #include "general.h"
 
-class Person : public QObject
+class Person
 {
-    Q_OBJECT
 public:
-    explicit Person(QObject *parent = nullptr);
-    Person(Person &&another, QObject *parent = nullptr);
-    Person(const Person &another, QObject *parent = nullptr);
-
-    Person& operator=(const Person &another);
-    Person& operator=(Person &&another);
-
     QString getFirstName() const;
     QString getUserName() const;
     QString getLastName() const;
     QString getPassword() const;
 
-    friend QDataStream& operator<<(QDataStream &stream, const Person &data);
-    friend QDataStream& operator>>(QDataStream &stream, Person &data);
-
-public slots:
     bool setFirstName(const QString &value);
     bool setLastName(const QString &value);
     bool setUserName(const QString &value);
     bool setPassword(const QString &value);
+
     virtual bool saveToRecord() = 0;
 
-signals:
-    void firstNameChanged(const QString &value);
-    void lastNameChanged(const QString &value);
-    void userNameChanged(const QString &value);
-    void passwordChanged(const QString &value);
-    void recordSaved();
+    friend QDataStream& operator<<(QDataStream &stream, const Person &data);
+    friend QDataStream& operator>>(QDataStream &stream, Person &data);
 
 protected:
     QString firstName;

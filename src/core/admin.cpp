@@ -1,9 +1,6 @@
 #include "include/core/admin.h"
 #include <QFile>
 
-Admin::Admin(QObject *parent) : Person{parent}
-{}
-
 QString Admin::absoluteAdminFile() const
 {
     QDir temp = Storage::admin();
