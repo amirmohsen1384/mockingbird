@@ -37,7 +37,8 @@ Player::Player(QWidget *parent) : QWidget(parent)
 
     // Updates the playback rate of the player
     connect(media, &QMediaPlayer::playbackRateChanged, this, &Player::updatePlaybackSpeed);
-    connect(ui->progressSlider, &QSlider::sliderReleased, [&]()
+    connect(ui->progressSlider, &QSlider::sliderMoved, media, &QMediaPlayer::setPosition);
+    connect(ui->progressSlider, &QSlider::sliderPressed, [&]()
     {
         player->setPosition(ui->progressSlider->value());
     });
@@ -113,6 +114,7 @@ void Player::advanceToNextTrack()
             target = QRandomGenerator64::global()->bounded(0, songs.size());
         }
         while(index == target && songs.size() > 1);
+        index = target;
     }
     container.setCurrentSong(index);
 }
