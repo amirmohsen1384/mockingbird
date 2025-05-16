@@ -95,15 +95,24 @@ void Player::updatePlayer()
 
 void Player::navigatePlaylist()
 {
-    int index = 0;
+    int index = container.getCurrentSong();
     const SongList &songs = container.songs();
-    if(!isShuffleMode())
+    if(songs.isEmpty())
     {
-        index = (container.getCurrentSong() + 1) % songs.size();
+        return;
+    }
+    else if(!isShuffleMode())
+    {
+        index = (index + 1) % songs.size();
     }
     else
     {
-        index = QRandomGenerator64::global()->bounded(0, songs.size());
+        int target = 0;
+        do
+        {
+            target = QRandomGenerator64::global()->bounded(0, songs.size());
+        }
+        while(index == target && songs.size() > 1);
     }
     container.setCurrentSong(index);
 }
