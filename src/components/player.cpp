@@ -183,7 +183,9 @@ void Player::replay()
 {
     if(player->isSeekable())
     {
-        player->setPosition(player->position() - 10 * std::pow(10, 3));
+        constexpr qint64 SEEK_INTERVAL_MS = 10'000;
+        player->setPosition(player->position() + SEEK_INTERVAL_MS);
+
     }
 
 }
@@ -192,7 +194,9 @@ void Player::forward()
 {
     if(player->isSeekable())
     {
-        player->setPosition(player->position() + 10 * std::pow(10, 3));
+        constexpr qint64 SEEK_INTERVAL_MS = 10'000;
+        player->setPosition(player->position() + SEEK_INTERVAL_MS);
+
     }
 }
 
