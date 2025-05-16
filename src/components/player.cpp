@@ -43,8 +43,8 @@ Player::Player(QWidget *parent) : QWidget(parent)
         player->setPosition(ui->progressSlider->value());
     });
 
-    connect(&container, &Playlist::songsChanged, this, &Player::updatePlayer);
-    connect(&container, &Playlist::currentSongChanged, this, &Player::updatePlayer);
+    connect(&container, &PlaylistModel::songsChanged, this, &Player::updatePlayer);
+    connect(&container, &PlaylistModel::currentSongChanged, this, &Player::updatePlayer);
     connect(media, &QMediaPlayer::mediaStatusChanged, this, [&](QMediaPlayer::MediaStatus s)
     {
         if(s == QMediaPlayer::EndOfMedia)
@@ -54,14 +54,14 @@ Player::Player(QWidget *parent) : QWidget(parent)
     });
 }
 
-Playlist &Player::playlist()
+PlaylistModel* Player::underlyingModel()
 {
-    return container;
+    return &container;
 }
 
-const Playlist &Player::playlist() const
+const PlaylistModel* Player::underlyingModel() const
 {
-    return container;
+    return &container;
 }
 
 bool Player::isPlaying() const
@@ -85,35 +85,35 @@ void Player::updatePlayer()
     {
         return;
     }
+    const Playlist &target = container.getPlaylist();
     int index = container.getCurrentSong();
-    if(index >= 0 && index < container.songs().size())
+    if(index >= 0 && index < target.size())
     {
-        const Song &target = container.songs().at(index);
-        player->setSource(target.getAddress());
+        player->setSource(target.at(index).getAddress());
         player->play();
     }
 }
 
 void Player::advanceToNextTrack()
 {
+    const Playlist &playlist = container.getPlaylist();
     int index = container.getCurrentSong();
-    const SongList &songs = container.songs();
-    if(songs.isEmpty())
+    if(playlist.isEmpty())
     {
         return;
     }
     else if(!isShuffleMode())
     {
-        index = (index + 1) % songs.size();
+        index = (index + 1) % playlist.size();
     }
     else
     {
         int target = 0;
         do
         {
-            target = QRandomGenerator64::global()->bounded(0, songs.size());
+            target = QRandomGenerator64::global()->bounded(0, playlist.size());
         }
-        while(index == target && songs.size() > 1);
+        while(index == target && playlist.size() > 1);
         index = target;
     }
     container.setCurrentSong(index);

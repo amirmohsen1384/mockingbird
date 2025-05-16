@@ -20,8 +20,8 @@ public:
     explicit Player(QWidget *parent = nullptr);
     ~Player();
     
-    Playlist& playlist();
-    const Playlist& playlist() const;
+    PlaylistModel* underlyingModel();
+    const PlaylistModel* underlyingModel() const;
 
     bool isPlaying() const;
     bool isShuffleMode() const;
@@ -50,7 +50,7 @@ signals:
     void infiniteModeChanged(bool value);
 
 private:
-    Playlist container;
+    PlaylistModel container;
     std::unique_ptr<Ui::Player> ui;
     std::unique_ptr<QAudioOutput> output;
     std::unique_ptr<QMediaPlayer> player;
