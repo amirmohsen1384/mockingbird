@@ -50,8 +50,8 @@ signals:
     void infiniteModeChanged(bool value);
 
 private:
-    Ui::Player *ui;
     Playlist container;
+    std::unique_ptr<Ui::Player> ui;
     std::unique_ptr<QAudioOutput> output;
     std::unique_ptr<QMediaPlayer> player;
 };

@@ -7,7 +7,7 @@
 
 Player::Player(QWidget *parent) : QWidget(parent)
 {
-    ui = new Ui::Player;
+    ui = std::make_unique<Ui::Player>();
     ui->setupUi(this);
 
     player = std::make_unique<QMediaPlayer>();
@@ -207,5 +207,4 @@ void Player::setInfiniteMode(bool value)
 Player::~Player()
 {
     player->stop();
-    delete ui;
 }
