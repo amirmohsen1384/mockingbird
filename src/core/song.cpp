@@ -3,8 +3,6 @@
 #include <QDebug>
 #include <QUrl>
 
-Song::Song(QObject *parent) : QObject{parent} {}
-
 Song& Song::operator=(const Song &another)
 {
     name = another.name;
@@ -22,22 +20,17 @@ Song& Song::operator=(Song &&another)
     artist = std::move(another.artist);
     address = std::move(another.address);
     publicationYear = std::move(another.publicationYear);
-
-    publicationYear = 0;
-    genre = Genre::Classic;
     return *this;
 }
 
-Song::Song(const Song &other, QObject *parent) : Song(parent)
+Song::Song(const Song &other)
 {
     *this = other;
 }
-Song::Song(Song &&other, QObject *parent) noexcept : Song(parent)
+Song::Song(Song &&other) noexcept
 {
     *this = std::move(other);
 }
-
-Song::~Song() {}
 
 bool operator==(const Song &one, const Song &two)
 {
@@ -70,56 +63,47 @@ QString Song::getName() const
 {
     return name;
 }
+
 Song::Genre Song::getGenre() const
 {
     return genre;
 }
+
 QString Song::getArtist() const
 {
     return artist;
 }
+
 int Song::getPublicationYear() const
 {
     return publicationYear;
 }
+
 QUrl Song::getAddress() const
 {
     return address;
 }
+
 void Song::setName(const QString &value)
 {
-    if (name != value) {
-        name = value;
-        emit nameChanged(name);
-    }
+    name = value;
 }
+
 void Song::setGenre(Genre value)
 {
-    if (genre != value) {
-        genre = value;
-        emit genreChanged(genre);
-    }
+    genre = value;
 }
 void Song::setArtist(const QString &value)
 {
-    if (artist != value) {
-        artist = value;
-        emit artistChanged(artist);
-    }
+    artist = value;
 }
 void Song::setPublicationYear(int value)
 {
-    if (publicationYear != value) {
-        publicationYear = value;
-        emit publicationYearChanged(publicationYear);
-    }
+    publicationYear = value;
 }
 void Song::setAddress(const QUrl &value)
 {
-    if (address != value) {
-        address = value;
-        emit addressChanged(address);
-    }
+    address = value;
 }
 
 QDataStream& operator<<(QDataStream &stream, const Song &another)
@@ -127,8 +111,8 @@ QDataStream& operator<<(QDataStream &stream, const Song &another)
     stream << another.name;
     stream << another.genre;
     stream << another.artist;
-    stream << another.publicationYear;
     stream << another.address;
+    stream << another.publicationYear;
     return stream;
 }
 
@@ -137,20 +121,7 @@ QDataStream& operator>>(QDataStream &stream, Song &another)
     stream >> another.name;
     stream >> another.genre;
     stream >> another.artist;
-    stream >> another.publicationYear;
     stream >> another.address;
+    stream >> another.publicationYear;
     return stream;
-}
-
-QDebug operator<<(QDebug debug, const Song &song)
-{
-    QDebugStateSaver saver(debug);
-    debug.nospace() << "Song(";
-    debug.nospace() << "name: " << song.getName() << ", ";
-    debug.nospace() << "genre: " << song.getGenre() << ", ";
-    debug.nospace() << "artist: " << song.getArtist() << ", ";
-    debug.nospace() << "publicationYear: " << song.getPublicationYear() << ", ";
-    debug.nospace() << "address: " << song.getAddress();
-    debug.nospace() << ")";
-    return debug;
 }
