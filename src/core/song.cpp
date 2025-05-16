@@ -37,6 +37,8 @@ Song::Song(Song &&other, QObject *parent) noexcept : Song(parent)
     *this = std::move(other);
 }
 
+Song::~Song() {}
+
 bool operator==(const Song &one, const Song &two)
 {
     if(one.name != two.name) {

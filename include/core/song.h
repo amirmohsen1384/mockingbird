@@ -25,6 +25,7 @@ public:
     explicit Song(QObject *parent = nullptr);
     Song(const Song &other, QObject *parent = nullptr);
     Song(Song &&other, QObject *parent = nullptr) noexcept;
+    ~Song() override;
 
     Song& operator=(const Song &other);
     Song& operator=(Song&& other);
