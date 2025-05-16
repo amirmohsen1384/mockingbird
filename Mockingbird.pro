@@ -14,7 +14,6 @@ HEADERS += \
     include/core/general.h \
     include/core/person.h \
     include/components/player.h \
-    include/models/playlist.h \
     include/models/genremodel.h \
     include/models/playlistmodel.h
 
@@ -23,7 +22,6 @@ SOURCES += \
     src/core/general.cpp \
     src/core/person.cpp \
     src/components/player.cpp \
-    src/models/playlist.cpp \
     src/core/song.cpp \
     main.cpp \
     src/models/genremodel.cpp \

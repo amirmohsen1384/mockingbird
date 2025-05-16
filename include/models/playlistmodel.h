@@ -2,43 +2,53 @@
 #define PLAYLISTMODEL_H
 
 #include <QAbstractListModel>
-#include "playlist.h"
+#include <QStyledItemDelegate>
+#include "include/core/playlist.h"
+
+enum PlaylistRole {PlayingRole = Qt::UserRole + 1, ArtistRole = Qt::UserRole + 2};
 
 class PlaylistModel : public QAbstractListModel
 {
     Q_OBJECT
-
 public:
-    explicit PlaylistModel(QObject *parent = nullptr);
-    PlaylistModel(PlaylistModel &&data, QObject *parent = nullptr);
-    PlaylistModel(const PlaylistModel &data, QObject *parent = nullptr);
+    Q_DISABLE_COPY_MOVE(PlaylistModel)
+    PlaylistModel(QObject *parent = nullptr);
 
-    PlaylistModel& operator=(const PlaylistModel &data);
-    PlaylistModel& operator=(PlaylistModel &&data);
-
+    qint64 getCurrentSong() const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    PlaylistList& playlists();
-    const PlaylistList& playlists() const;
-
 public slots:
-    void insertPlaylist(int row, const Playlist &target);
-    void insertPlaylist(int row, const PlaylistList &target);
+    void insertSong(int row, const Song &target);
+    void insertSong(int row, const SongList &target);
 
-    void prependPlaylist(const Playlist &target);
-    void prependPlaylist(const PlaylistList &target);
+    void appendSong(const Song &target);
+    void appendSong(const SongList &target);
 
-    void appendPlaylist(const Playlist &target);
-    void appendPlaylist(const PlaylistList &target);
+    void prependSong(const Song &target);
+    void prependSong(const SongList &target);
 
-    void removePlaylist(int row);
+    void removeSong(int row);
+
+    void setName(const QString &name);
+    void setCurrentSong(qint64 value);
 
 signals:
-    void playlistsChanged();
+    void songsChanged();
+    void nameChanged(const QString &name);
+    void currentSongChanged(qint64 song);
 
 private:
-    PlaylistList container;
+    qint64 current;
+    Playlist container;
+};
+
+class SongDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+public:
+    SongDelegate(QObject *parent = nullptr);
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
 #endif // PLAYLISTMODEL_H

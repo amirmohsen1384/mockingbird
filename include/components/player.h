@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QMediaPlayer>
 #include <QAudioOutput>
-#include "include/models/playlist.h"
+#include "include/models/playlistmodel.h"
 
 namespace Ui
 {
