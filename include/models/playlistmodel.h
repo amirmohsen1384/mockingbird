@@ -19,8 +19,8 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    PlaylistList& container();
-    const PlaylistList& container() const;
+    PlaylistList& playlists();
+    const PlaylistList& playlists() const;
 
 public slots:
     void insertPlaylist(int row, const Playlist &target);
@@ -33,7 +33,6 @@ public slots:
     void appendPlaylist(const PlaylistList &target);
 
     void removePlaylist(int row);
-    Playlist takePlaylist(int row);
 
 signals:
     void playlistsChanged();

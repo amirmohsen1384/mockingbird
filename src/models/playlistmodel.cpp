@@ -5,18 +5,18 @@ PlaylistModel::PlaylistModel(QObject *parent) : QAbstractListModel(parent)
 
 PlaylistModel::PlaylistModel(PlaylistModel &&data, QObject *parent) : PlaylistModel{parent}
 {
-    container = std::move(data);
+    *this = std::move(data);
 }
 
 PlaylistModel::PlaylistModel(const PlaylistModel &data, QObject *parent) : PlaylistModel{parent}
 {
-    container = data;
+    *this = data;
 }
 
 PlaylistModel &PlaylistModel::operator=(const PlaylistModel &data)
 {
     beginResetModel();
-    container = data.container();
+    container = data.container;
     endResetModel();
     return *this;
 }
@@ -25,9 +25,10 @@ PlaylistModel& PlaylistModel::operator=(PlaylistModel &&data)
 {
     beginResetModel();
     data.beginResetModel();
-    container = std::move(data.container());
+    container = std::move(data.container);
     data.endResetModel();
     endResetModel();
+    return *this;
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -63,12 +64,12 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 }
 
-PlaylistList &PlaylistModel::container()
+PlaylistList &PlaylistModel::playlists()
 {
     return container;
 }
 
-const PlaylistList &PlaylistModel::container() const
+const PlaylistList &PlaylistModel::playlists() const
 {
     return container;
 }
@@ -84,7 +85,10 @@ void PlaylistModel::insertPlaylist(int row, const Playlist &target)
 void PlaylistModel::insertPlaylist(int row, const PlaylistList &target)
 {
     beginInsertRows(QModelIndex(), row, row + target.size());
-    container.insert(row, target);
+    for(const Playlist &playlist : target)
+    {
+        container.insert(row, playlist);
+    }
     endInsertRows();
     emit playlistsChanged();
 }
@@ -115,11 +119,4 @@ void PlaylistModel::removePlaylist(int row)
     container.remove(row);
     endRemoveRows();
     emit playlistsChanged();
-}
-
-Playlist PlaylistModel::takePlaylist(int row)
-{
-    Playlist container = container.at(row);
-    removePlaylist(row);
-    return container;
 }
