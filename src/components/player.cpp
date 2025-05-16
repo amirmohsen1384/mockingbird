@@ -25,7 +25,7 @@ Player::Player(QWidget *parent) : QWidget(parent)
         ui->playbackButton->setIcon(QIcon(QString(":/images/player/%1.png").arg(value ? "pause" : "play")));
     });
 
-    // Updates Squence-management buttons as they change
+    // Updates Sequence-management buttons as they change
     connect(this, &Player::shuffleModeChanged, this, &Player::toggleShuffleButton);
     connect(this, &Player::infiniteModeChanged, this, &Player::toggleInfiniteButton);
 
@@ -48,7 +48,7 @@ Player::Player(QWidget *parent) : QWidget(parent)
     {
         if(s == QMediaPlayer::EndOfMedia)
         {
-            navigatePlaylist();
+            advanceToNextTrack();
         }
     });
 }
@@ -93,7 +93,7 @@ void Player::updatePlayer()
     }
 }
 
-void Player::navigatePlaylist()
+void Player::advanceToNextTrack()
 {
     int index = container.getCurrentSong();
     const SongList &songs = container.songs();

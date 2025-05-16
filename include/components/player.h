@@ -30,7 +30,7 @@ public:
 private slots:
     void updatePlayer();
     void updateProgress();
-    void navigatePlaylist();
+    void advanceToNextTrack();
     void updatePlaybackSpeed();
     void updatePlaybackControl();
     void toggleShuffleButton(bool value);
