@@ -13,7 +13,6 @@ HEADERS += \
     include/core/general.h \
     include/core/person.h \
     include/components/player.h \
-    include/components/playlistplayer.h \
     include/models/playlist.h \
     include/models/genremodel.h \
     include/models/playlistmodel.h
@@ -22,7 +21,6 @@ SOURCES += \
     src/core/admin.cpp \
     src/core/general.cpp \
     src/core/person.cpp \
-    src/components/playlistplayer.cpp \
     src/components/player.cpp \
     src/models/playlist.cpp \
     src/core/song.cpp \
@@ -31,7 +29,6 @@ SOURCES += \
     src/models/playlistmodel.cpp
 
 FORMS += \
-    ui/components/playlistplayer.ui \
     ui/components/player.ui
 
 # Default rules for deployment.
