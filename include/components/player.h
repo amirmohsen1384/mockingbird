@@ -4,9 +4,11 @@
 #include <QWidget>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include "include/models/playlist.h"
 
-namespace Ui {
-class Player;
+namespace Ui
+{
+    class Player;
 }
 
 class Player : public QWidget
@@ -18,37 +20,38 @@ public:
     explicit Player(QWidget *parent = nullptr);
     ~Player();
     
-    QUrl source() const;
+    Playlist& playlist();
+    const Playlist& playlist() const;
+
     bool isPlaying() const;
     bool isShuffleMode() const;
     bool isInfiniteMode() const;
 
 private slots:
-    void updateMetaData();
+    void updatePlayer();
     void updateProgress();
-    void updatePlayback();
-    void updateShuffleButton();
+    void navigatePlaylist();
     void updatePlaybackSpeed();
-    void updateSeekingControl();
-    void updateInfiniteButton();
+    void updatePlaybackControl();
+    void toggleShuffleButton(bool value);
+    void toggleInfiniteButton(bool value);
 
 public slots:
     void stop();
     void replay();
     void forward();
-    void controlPlayback();
-    void controlPlaybackSpeed();
+    void changePlaybackMode();
+    void changePlaybackSpeed();
     void setShuffleMode(bool value);
     void setInfiniteMode(bool value);
-    void setSource(const QUrl &source);
 
 signals:
-    void sourceFinished();
     void shuffleModeChanged(bool value);
     void infiniteModeChanged(bool value);
 
 private:
     Ui::Player *ui;
+    Playlist container;
     std::unique_ptr<QAudioOutput> output;
     std::unique_ptr<QMediaPlayer> player;
 };

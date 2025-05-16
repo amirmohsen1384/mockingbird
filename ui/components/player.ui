@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>914</width>
+    <width>958</width>
     <height>114</height>
    </rect>
   </property>
@@ -398,15 +398,47 @@
    <sender>playbackButton</sender>
    <signal>clicked()</signal>
    <receiver>Player</receiver>
-   <slot>controlPlayback()</slot>
+   <slot>changePlaybackMode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>463</x>
+     <x>425</x>
      <y>100</y>
     </hint>
     <hint type="destinationlabel">
-     <x>692</x>
-     <y>561</y>
+     <x>376</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>replayButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Player</receiver>
+   <slot>replay()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>373</x>
+     <y>92</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>283</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>forwardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Player</receiver>
+   <slot>forward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>493</x>
+     <y>92</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>583</x>
+     <y>4</y>
     </hint>
    </hints>
   </connection>
@@ -421,40 +453,8 @@
      <y>92</y>
     </hint>
     <hint type="destinationlabel">
-     <x>694</x>
-     <y>689</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>forwardButton</sender>
-   <signal>clicked()</signal>
-   <receiver>Player</receiver>
-   <slot>forward()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>515</x>
-     <y>92</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>694</x>
-     <y>439</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>replayButton</sender>
-   <signal>clicked()</signal>
-   <receiver>Player</receiver>
-   <slot>replay()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>395</x>
-     <y>92</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>697</x>
-     <y>391</y>
+     <x>669</x>
+     <y>106</y>
     </hint>
    </hints>
   </connection>
@@ -462,15 +462,15 @@
    <sender>speedButton</sender>
    <signal>clicked()</signal>
    <receiver>Player</receiver>
-   <slot>controlPlaybackSpeed()</slot>
+   <slot>changePlaybackSpeed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>900</x>
+     <x>852</x>
      <y>93</y>
     </hint>
     <hint type="destinationlabel">
-     <x>868</x>
-     <y>136</y>
+     <x>775</x>
+     <y>6</y>
     </hint>
    </hints>
   </connection>
@@ -481,24 +481,24 @@
    <slot>setInfiniteMode(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>86</y>
+     <x>96</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
-     <x>135</x>
-     <y>139</y>
+     <x>140</x>
+     <y>104</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>shuffleButton</sender>
-   <signal>clicked()</signal>
+   <signal>clicked(bool)</signal>
    <receiver>Player</receiver>
-   <slot>updateShuffleButton()</slot>
+   <slot>setShuffleMode(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>41</x>
-     <y>68</y>
+     <x>35</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>69</x>
@@ -509,13 +509,16 @@
  </connections>
  <slots>
   <signal>shuffleModeChnaged(bool)</signal>
-  <slot>controlPlayback()</slot>
+  <signal>infiniteModeChanged(bool)</signal>
+  <slot>changePlaybackMode()</slot>
   <slot>stop()</slot>
   <slot>replay()</slot>
   <slot>forward()</slot>
   <slot>controlPlaylist()</slot>
-  <slot>controlPlaybackSpeed()</slot>
-  <slot>updateShuffleButton()</slot>
+  <slot>changePlaybackSpeed()</slot>
   <slot>setInfiniteMode(bool)</slot>
+  <slot>updateInfiniteButton()</slot>
+  <slot>setShuffleMode(bool)</slot>
+  <slot>updateShuffleButton()</slot>
  </slots>
 </ui>
