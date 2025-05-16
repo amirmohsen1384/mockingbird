@@ -31,7 +31,7 @@ private:
 
 Q_DECLARE_METATYPE(Playlist)
 
-using Playlists = QList<Playlist>;
+using PlaylistGroup = QList<Playlist>;
 
 
 #endif // PLAYLIST_H
