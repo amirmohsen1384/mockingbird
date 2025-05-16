@@ -1,36 +1,5 @@
 #include "include/core/song.h"
 #include <QDataStream>
-#include <QDebug>
-#include <QUrl>
-
-Song& Song::operator=(const Song &another)
-{
-    name = another.name;
-    genre = another.genre;
-    artist = another.artist;
-    address = another.address;
-    publicationYear = another.publicationYear;
-    return *this;
-}
-
-Song& Song::operator=(Song &&another)
-{
-    name = std::move(another.name);
-    genre = std::move(another.genre);
-    artist = std::move(another.artist);
-    address = std::move(another.address);
-    publicationYear = std::move(another.publicationYear);
-    return *this;
-}
-
-Song::Song(const Song &other)
-{
-    *this = other;
-}
-Song::Song(Song &&other) noexcept
-{
-    *this = std::move(other);
-}
 
 bool operator==(const Song &one, const Song &two)
 {

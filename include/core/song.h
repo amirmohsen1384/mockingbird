@@ -20,13 +20,6 @@ public:
     };
 
 public:
-    Song() = default;
-    Song(const Song &other);
-    Song(Song &&other) noexcept;
-
-    Song& operator=(const Song &other);
-    Song& operator=(Song&& other);
-
     Genre getGenre() const;
     QUrl getAddress() const;
     QString getName() const;
