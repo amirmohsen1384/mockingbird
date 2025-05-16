@@ -19,5 +19,10 @@
         <file>images/genres/pop.png</file>
         <file>images/genres/rap.png</file>
         <file>images/genres/rock.png</file>
+        <file>images/logos/logo-1.png</file>
+        <file>images/logos/logo-2.png</file>
+        <file>images/logos/logo-3.png</file>
+        <file>images/logos/logo-4.png</file>
+        <file>images/icon.ico</file>
     </qresource>
 </RCC>
