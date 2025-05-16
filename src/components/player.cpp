@@ -119,17 +119,16 @@ void Player::navigatePlaylist()
 
 void Player::updateProgress()
 {
-    const quint64 total = player->duration() / 1000;
-    const quint64 progress = player->position() / 1000;
+    const qint64 duration = player->duration();
+    const qint64 position = player->position();
 
-    ui->progressSlider->setMinimum(0);
-    ui->progressSlider->setMaximum(player->duration());
+    ui->progressSlider->setMaximum(duration);
+    ui->progressSlider->setValue(position);
 
-    ui->progressSlider->setValue(player->position());
-    QTime elapsedTime(progress / 3600, (progress / 60) % 60, progress % 60);
+    QTime elapsedTime = QTime::fromMSecsSinceStartOfDay(position);
     ui->elapsedTimeLabel->setText(elapsedTime.toString(elapsedTime.hour() > 0 ? "hh:mm:ss" : "mm:ss"));
 
-    QTime totalTime(total / 3600, (total / 60) % 60, total % 60);
+    QTime totalTime = QTime::fromMSecsSinceStartOfDay(duration);
     ui->totalTimeLabel->setText(totalTime.toString(totalTime.hour() > 0 ? "hh:mm:ss" : "mm:ss"));
 }
 
