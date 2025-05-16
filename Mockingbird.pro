@@ -8,6 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+    include/core/playlist.h \
     include/core/song.h \
     include/core/admin.h \
     include/core/general.h \
