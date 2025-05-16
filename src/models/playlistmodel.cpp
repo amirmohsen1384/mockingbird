@@ -1,61 +1,29 @@
 #include "include/models/playlistmodel.h"
+#include "include/models/genremodel.h"
 #include <QPainter>
 #include <QPixmap>
 
-Playlist::Playlist(QObject *parent) : QAbstractListModel(parent)
+PlaylistModel::PlaylistModel(QObject *parent) : QAbstractListModel(parent), current(0) {}
+PlaylistModel::~PlaylistModel() {}
+
+QString PlaylistModel::getName() const
 {
-    current = 0;
+    return container.getName();
 }
 
-Playlist::Playlist(Playlist &&data, QObject *parent) : Playlist(parent)
+int PlaylistModel::rowCount(const QModelIndex &parent) const
 {
-    *this = std::move(data);
-}
-
-Playlist::Playlist(const Playlist &data, QObject *parent) : Playlist(parent)
-{
-    *this = data;
-}
-
-Playlist &Playlist::operator=(const Playlist &data)
-{
-    beginResetModel();
-    name = data.name;
-    current = data.current;
-    container = data.container;
-    endResetModel();
-    return *this;
-}
-
-QString Playlist::getName() const
-{
-    return name;
-}
-
-Playlist& Playlist::operator=(Playlist &&data)
-{
-    data.beginResetModel();
-    beginResetModel();
-    current = data.current;
-    data.current = 0;
-    name = std::move(data.name);
-    container = std::move(data.container);
-    endResetModel();
-    data.endResetModel();
-    return *this;
-}
-
-int Playlist::rowCount(const QModelIndex &parent) const
-{
-    if (parent.isValid()) {
+    if (parent.isValid())
+    {
         return 0;
     }
     return container.size();
 }
 
-QVariant Playlist::data(const QModelIndex &index, int role) const
+QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid()) {
+    if (!index.isValid())
+    {
         return {};
     }
 
@@ -77,19 +45,31 @@ QVariant Playlist::data(const QModelIndex &index, int role) const
     }
     case Qt::DecorationRole:
     {
-        return QPixmap(":/images/playlist/song.png");
+        return QPixmap(":/images/PlaylistModel/song.png");
     }
     case Qt::UserRole:
     {
         return QVariant::fromValue<Song>(target);
     }
-    case PlaylistRole::PlayingRole:
+    case Playlist::PlayingRole:
     {
         return index.row() == this->current;
     }
-    case PlaylistRole::ArtistRole:
+    case Playlist::ArtistRole:
     {
         return target.getArtist();
+    }
+    case Playlist::GenreRole:
+    {
+        return target.getGenre();
+    }
+    case Playlist::GenreIconRole:
+    {
+        return GenreModel::toPixmap(target.getGenre());
+    }
+    case Playlist::YearRole:
+    {
+        return target.getPublicationYear();
     }
     case Qt::ToolTipRole:
     {
@@ -102,7 +82,7 @@ QVariant Playlist::data(const QModelIndex &index, int role) const
     }
 }
 
-void Playlist::insertSong(int row, const Song &target)
+void PlaylistModel::insertSong(int row, const Song &target)
 {
     beginInsertRows(QModelIndex(), row, row);
     container.insert(row, target);
@@ -110,7 +90,7 @@ void Playlist::insertSong(int row, const Song &target)
     emit songsChanged();
 }
 
-void Playlist::insertSong(int row, const SongList &target)
+void PlaylistModel::insertSong(int row, const SongList &target)
 {
     beginInsertRows(QModelIndex(), row, row + target.size());
     for(const Song &element : target)
@@ -121,27 +101,27 @@ void Playlist::insertSong(int row, const SongList &target)
     emit songsChanged();
 }
 
-void Playlist::appendSong(const Song &target)
+void PlaylistModel::appendSong(const Song &target)
 {
     insertSong(container.size(), target);
 }
 
-void Playlist::appendSong(const SongList &target)
+void PlaylistModel::appendSong(const SongList &target)
 {
     insertSong(container.size(), target);
 }
 
-void Playlist::prependSong(const Song &target)
+void PlaylistModel::prependSong(const Song &target)
 {
     insertSong(0, target);
 }
 
-void Playlist::prependSong(const SongList &target)
+void PlaylistModel::prependSong(const SongList &target)
 {
     insertSong(0, target);
 }
 
-void Playlist::removeSong(int row)
+void PlaylistModel::removeSong(int row)
 {
     beginRemoveRows(QModelIndex(), row, row);
     container.remove(row);
@@ -149,68 +129,28 @@ void Playlist::removeSong(int row)
     endRemoveRows();
 }
 
-void Playlist::setName(const QString &name)
+void PlaylistModel::setName(const QString &name)
 {
-    this->name = name;
+    container.setName(name);
     emit nameChanged(name);
 }
 
-void Playlist::setCurrentSong(qint64 value)
+void PlaylistModel::setCurrentSong(qint64 value)
 {
     int temp = current;
     current = value;
 
-    emit dataChanged(index(current), index(current), {PlaylistRole::PlayingRole});
-    emit dataChanged(index(temp), index(temp), {PlaylistRole::PlayingRole});
+    emit dataChanged(index(current), index(current), {Playlist::PlayingRole});
+    emit dataChanged(index(temp), index(temp), {Playlist::PlayingRole});
     emit currentSongChanged(current);
 }
 
-const SongList &Playlist::songs() const
-{
-    return container;
-}
-
-qint64 Playlist::getCurrentSong() const
+qint64 PlaylistModel::getCurrentSong() const
 {
     return current;
 }
 
-bool operator==(const Playlist &one, const Playlist &two)
+const Playlist &PlaylistModel::getPlaylist() const
 {
-    if(one.name != two.name)
-    {
-        return false;
-    }
-    else if(one.container != two.container)
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
-}
-bool operator!=(const Playlist &one, const Playlist &two)
-{
-    return !(one == two);
-}
-
-QDataStream& operator>>(QDataStream &stream, Playlist &data)
-{
-    stream >> data.name;
-    stream >> data.current;
-
-    data.beginResetModel();
-    stream >> data.container;
-    data.endResetModel();
-
-    return stream;
-}
-
-QDataStream& operator<<(QDataStream &stream, const Playlist &data)
-{
-    stream << data.name;
-    stream << data.current;
-    stream << data.container;
-    return stream;
+    return container;
 }
