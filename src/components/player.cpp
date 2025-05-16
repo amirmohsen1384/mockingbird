@@ -37,9 +37,10 @@ Player::Player(QWidget *parent) : QWidget(parent)
 
     // Updates the playback rate of the player
     connect(media, &QMediaPlayer::playbackRateChanged, this, &Player::updatePlaybackSpeed);
-
-    connect(ui->progressSlider, &QSlider::sliderMoved, media, &QMediaPlayer::setPosition);
-    connect(ui->progressSlider, &QSlider::sliderPressed, [&]() { player->setPosition(ui->progressSlider->value()); });
+    connect(ui->progressSlider, &QSlider::sliderReleased, [&]()
+    {
+        player->setPosition(ui->progressSlider->value());
+    });
 
     connect(&container, &Playlist::songsChanged, this, &Player::updatePlayer);
     connect(&container, &Playlist::currentSongChanged, this, &Player::updatePlayer);
