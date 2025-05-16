@@ -27,6 +27,11 @@ Playlist &Playlist::operator=(const Playlist &data)
     return *this;
 }
 
+QString Playlist::getName() const
+{
+    return name;
+}
+
 Playlist& Playlist::operator=(Playlist &&data)
 {
     data.beginResetModel();
@@ -130,13 +135,6 @@ void Playlist::prependSong(const Song &target)
 void Playlist::prependSong(const SongList &target)
 {
     insertSong(0, target);
-}
-
-Song Playlist::takeSong(int row)
-{
-    Song song = container.at(row);
-    removeSong(row);
-    return song;
 }
 
 void Playlist::removeSong(int row)

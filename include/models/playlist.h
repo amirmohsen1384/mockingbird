@@ -42,7 +42,6 @@ public slots:
     void prependSong(const SongList &target);
 
     void removeSong(int row);
-    Song takeSong(int row);
 
     void setName(const QString &name);
     void setCurrentSong(qint64 value);
