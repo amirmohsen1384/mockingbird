@@ -49,6 +49,8 @@ private:
     QString artist;
     int publicationYear;
     Genre genre = Genre::Classic;
+
+    friend class SongEdit;
 };
 
 QDataStream& operator<<(QDataStream &stream, const Song &another);
