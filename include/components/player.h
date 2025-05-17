@@ -19,9 +19,9 @@ public:
     Q_DISABLE_COPY_MOVE(Player)
     explicit Player(QWidget *parent = nullptr);
     ~Player();
-    
-    PlaylistModel* underlyingModel();
-    const PlaylistModel* underlyingModel() const;
+
+    PlaylistModel* model();
+    void setModel(PlaylistModel *value);
 
     bool isPlaying() const;
     bool isShuffleMode() const;
@@ -50,7 +50,7 @@ signals:
     void infiniteModeChanged(bool value);
 
 private:
-    PlaylistModel container;
+    PlaylistModel *model = nullptr;
     std::unique_ptr<Ui::Player> ui;
     std::unique_ptr<QAudioOutput> output;
     std::unique_ptr<QMediaPlayer> player;

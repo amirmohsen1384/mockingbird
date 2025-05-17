@@ -54,16 +54,6 @@ Player::Player(QWidget *parent) : QWidget(parent)
     });
 }
 
-PlaylistModel* Player::underlyingModel()
-{
-    return &container;
-}
-
-const PlaylistModel* Player::underlyingModel() const
-{
-    return &container;
-}
-
 bool Player::isPlaying() const
 {
     return player->isPlaying();
