@@ -1,33 +1,6 @@
 #include "include/core/song.h"
 #include <QDataStream>
 
-bool operator==(const Song &one, const Song &two)
-{
-    if(one.name != two.name) {
-        return false;
-    }
-    else if(one.genre != two.genre) {
-        return false;
-    }
-    else if(one.artist != two.artist) {
-        return false;
-    }
-    else if(one.publicationYear != two.publicationYear) {
-        return false;
-    }
-    else if(one.address != two.address) {
-        return false;
-    }
-    else {
-        return true;
-    }
-}
-
-bool operator!=(const Song &one, const Song &two)
-{
-    return !(one == two);
-}
-
 QString Song::getName() const
 {
     return name;
@@ -51,6 +24,39 @@ QString Song::getArtist() const
 int Song::getPublicationYear() const
 {
     return publicationYear;
+}
+
+bool Song::operator==(const Song &other)
+{
+    if(this->name != other.name)
+    {
+        return false;
+    }
+    else if(this->genre != other.genre)
+    {
+        return false;
+    }
+    else if(this->artist != other.artist)
+    {
+        return false;
+    }
+    else if(this->publicationYear != other.publicationYear)
+    {
+        return false;
+    }
+    else if(this->address != other.address)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+bool Song::operator!=(const Song &other)
+{
+    return !(*this == other);
 }
 
 QUrl Song::getAddress() const

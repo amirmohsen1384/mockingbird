@@ -28,8 +28,8 @@ public:
     QString getArtist() const;
     int getPublicationYear() const;
     
-    friend bool operator==(const Song &one, const Song &two);
-    friend bool operator!=(const Song &one, const Song &two);
+    bool operator==(const Song &other);
+    bool operator!=(const Song &other);
 
     friend QDataStream& operator<<(QDataStream &stream, const Song &another);
     friend QDataStream& operator>>(QDataStream &stream, Song &another);
@@ -50,9 +50,6 @@ private:
     int publicationYear;
     Genre genre = Genre::Classic;
 };
-
-bool operator==(const Song &one, const Song &two);
-bool operator!=(const Song &one, const Song &two);
 
 QDataStream& operator<<(QDataStream &stream, const Song &another);
 QDataStream& operator>>(QDataStream &stream, Song &another);
