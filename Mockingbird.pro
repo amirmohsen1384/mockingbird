@@ -8,6 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+    include/core/artist.h \
     include/core/playlist.h \
     include/core/song.h \
     include/core/admin.h \
@@ -22,9 +23,11 @@ HEADERS += \
 
 SOURCES += \
     src/core/admin.cpp \
+    src/core/artist.cpp \
     src/core/general.cpp \
     src/core/person.cpp \
     src/components/player.cpp \
+    src/core/playlist.cpp \
     src/core/song.cpp \
     main.cpp \
     src/models/genremodel.cpp \
