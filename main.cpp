@@ -1,12 +1,15 @@
 #include <QApplication>
+#include "include/components/songedit.h"
 #include "include/windows/welcomewindow.h"
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    WelcomeWindow window;
+    SongEdit window;
     window.show();
 
-    return app.exec();
+    app.exec();
+
+    return 0;
 }

@@ -8,6 +8,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+    include/components/imageview.h \
+    include/components/songedit.h \
     include/core/artist.h \
     include/core/playlist.h \
     include/core/song.h \
@@ -22,6 +24,8 @@ HEADERS += \
     include/windows/welcomewindow.h
 
 SOURCES += \
+    src/components/imageview.cpp \
+    src/components/songedit.cpp \
     src/core/admin.cpp \
     src/core/artist.cpp \
     src/core/general.cpp \
@@ -38,6 +42,7 @@ SOURCES += \
 
 FORMS += \
     ui/components/player.ui \
+    ui/components/songedit.ui \
     ui/windows/welcomewindow.ui
 
 # Default rules for deployment.
