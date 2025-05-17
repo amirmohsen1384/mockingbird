@@ -21,8 +21,8 @@ public:
     QPixmap getCover() const;
     void setCover(const QPixmap &value);
 
-    bool operator==(const Playlist &other);
-    bool operator!=(const Playlist &other);
+    bool operator==(const Playlist &other) const;
+    bool operator!=(const Playlist &other) const;
 
     friend QDataStream& operator>>(QDataStream &stream, Playlist &target);
     friend QDataStream& operator<<(QDataStream &stream, const Playlist &target);

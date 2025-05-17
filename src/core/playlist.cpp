@@ -21,7 +21,7 @@ void Playlist::setCover(const QPixmap &value)
     cover = value;
 }
 
-bool Playlist::operator==(const Playlist &other)
+bool Playlist::operator==(const Playlist &other) const
 {
     if(this->name != other.name)
     {
@@ -38,7 +38,7 @@ bool Playlist::operator==(const Playlist &other)
     return true;
 }
 
-bool Playlist::operator!=(const Playlist &other)
+bool Playlist::operator!=(const Playlist &other) const
 {
     return !(*this == other);
 }
