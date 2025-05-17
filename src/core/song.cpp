@@ -26,7 +26,7 @@ int Song::getPublicationYear() const
     return publicationYear;
 }
 
-bool Song::operator==(const Song &other)
+bool Song::operator==(const Song &other) const
 {
     if(this->name != other.name)
     {
@@ -54,7 +54,7 @@ bool Song::operator==(const Song &other)
     }
 }
 
-bool Song::operator!=(const Song &other)
+bool Song::operator!=(const Song &other) const
 {
     return !(*this == other);
 }

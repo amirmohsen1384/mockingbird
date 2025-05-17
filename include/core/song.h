@@ -28,8 +28,8 @@ public:
     QString getArtist() const;
     int getPublicationYear() const;
     
-    bool operator==(const Song &other);
-    bool operator!=(const Song &other);
+    bool operator==(const Song &other) const;
+    bool operator!=(const Song &other) const;
 
     friend QDataStream& operator<<(QDataStream &stream, const Song &another);
     friend QDataStream& operator>>(QDataStream &stream, Song &another);
