@@ -26,6 +26,17 @@ QVariant PlaylistGroupModel::data(const QModelIndex &index, int role) const
     {
         return QVariant::fromValue(target);
     }
+    case Qt::DecorationRole:
+    {
+        if(target.getCover().isNull())
+        {
+            return QPixmap(":/images/playlist/playlist.png");
+        }
+        else
+        {
+            return target.getCover();
+        }
+    }
     default:
     {
         return {};

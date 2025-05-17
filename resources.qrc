@@ -24,5 +24,6 @@
         <file>images/logos/logo-3.png</file>
         <file>images/logos/logo-4.png</file>
         <file>images/icon.ico</file>
+        <file>images/playlist/playlist.png</file>
     </qresource>
 </RCC>

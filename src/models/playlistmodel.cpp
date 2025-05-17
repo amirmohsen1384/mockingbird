@@ -1,10 +1,7 @@
 #include "include/models/playlistmodel.h"
 #include "include/models/genremodel.h"
-#include <QPainter>
 #include <QPixmap>
-
-PlaylistModel::PlaylistModel(QObject *parent) : QAbstractListModel(parent), current(0) {}
-PlaylistModel::~PlaylistModel() {}
+#include <QFont>
 
 QString PlaylistModel::getName() const
 {
@@ -50,7 +47,14 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
     case Qt::DecorationRole:
     {
-        return QPixmap(":/images/PlaylistModel/song.png");
+        if(target.getCover().isNull())
+        {
+            return QPixmap(":/images/PlaylistModel/song.png");
+        }
+        else
+        {
+            return target.getCover();
+        }
     }
     case Qt::UserRole:
     {

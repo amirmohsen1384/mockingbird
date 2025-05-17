@@ -8,9 +8,9 @@ class PlaylistModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
+    PlaylistModel(QObject *parent = nullptr) : QAbstractListModel(parent), current(0) {}
     Q_DISABLE_COPY_MOVE(PlaylistModel)
-    PlaylistModel(QObject *parent = nullptr);
-    ~PlaylistModel() override;
+    ~PlaylistModel() override {}
 
     QString getName() const;
     QPixmap getCover() const;
