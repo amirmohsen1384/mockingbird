@@ -5,9 +5,8 @@
 #include "ui_player.h"
 #include <QTime>
 
-Player::Player(QWidget *parent) : QWidget(parent)
+Player::Player(QWidget *parent) : QWidget(parent), ui(std::make_unique<Ui::Player>())
 {
-    ui = std::make_unique<Ui::Player>();
     ui->setupUi(this);
 
     player = std::make_unique<QMediaPlayer>();
@@ -43,8 +42,7 @@ Player::Player(QWidget *parent) : QWidget(parent)
         player->setPosition(ui->progressSlider->value());
     });
 
-    connect(&container, &PlaylistModel::songsChanged, this, &Player::updatePlayer);
-    connect(&container, &PlaylistModel::currentSongChanged, this, &Player::updatePlayer);
+    // Advances to the next track if the current media reached the end.
     connect(media, &QMediaPlayer::mediaStatusChanged, this, [&](QMediaPlayer::MediaStatus s)
     {
         if(s == QMediaPlayer::EndOfMedia)
@@ -69,14 +67,26 @@ bool Player::isInfiniteMode() const
     return player->loops() == QMediaPlayer::Infinite ? true : false;
 }
 
+void Player::updateModel(PlaylistModel *prev, PlaylistModel *current)
+{
+    if(prev != nullptr)
+    {
+        disconnect(prev, &PlaylistModel::songsChanged, this, &Player::updatePlayer);
+        disconnect(prev, &PlaylistModel::currentSongChanged, this, &Player::updatePlayer);
+    }
+    connect(current, &PlaylistModel::songsChanged, this, &Player::updatePlayer);
+    connect(current, &PlaylistModel::currentSongChanged, this, &Player::updatePlayer);
+
+}
+
 void Player::updatePlayer()
 {
-    if(player->isPlaying())
+    if(player->isPlaying() || _model == nullptr)
     {
         return;
     }
-    const Playlist &target = container.getPlaylist();
-    int index = container.getCurrentSong();
+    const Playlist &target = _model->getPlaylist();
+    int index = _model->getCurrentSong();
     if(index >= 0 && index < target.size())
     {
         player->setSource(target.at(index).getAddress());
@@ -86,8 +96,12 @@ void Player::updatePlayer()
 
 void Player::advanceToNextTrack()
 {
-    const Playlist &playlist = container.getPlaylist();
-    int index = container.getCurrentSong();
+    if(_model == nullptr)
+    {
+        return;
+    }
+    const Playlist &playlist = _model->getPlaylist();
+    int index = _model->getCurrentSong();
     if(playlist.isEmpty())
     {
         return;
@@ -106,7 +120,7 @@ void Player::advanceToNextTrack()
         while(index == target && playlist.size() > 1);
         index = target;
     }
-    container.setCurrentSong(index);
+    _model->setCurrentSong(index);
 }
 
 void Player::updateProgress()
@@ -212,4 +226,18 @@ void Player::setInfiniteMode(bool value)
 Player::~Player()
 {
     player->stop();
+}
+
+PlaylistModel *Player::model()
+{
+    return _model;
+}
+
+void Player::setModel(PlaylistModel *value)
+{
+    PlaylistModel *temp = this->_model;
+    this->_model = value;
+    updateModel(temp, value);
+    player->stop();
+    updatePlayer();
 }

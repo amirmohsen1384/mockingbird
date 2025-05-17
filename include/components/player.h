@@ -35,6 +35,7 @@ private slots:
     void updatePlaybackControl();
     void toggleShuffleButton(bool value);
     void toggleInfiniteButton(bool value);
+    void updateModel(PlaylistModel *prev, PlaylistModel *current);
 
 public slots:
     void stop();
@@ -50,8 +51,8 @@ signals:
     void infiniteModeChanged(bool value);
 
 private:
-    PlaylistModel *model = nullptr;
     std::unique_ptr<Ui::Player> ui;
+    PlaylistModel *_model = nullptr;
     std::unique_ptr<QAudioOutput> output;
     std::unique_ptr<QMediaPlayer> player;
 };
