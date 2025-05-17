@@ -15,25 +15,17 @@ public:
         YearRole = Qt::UserRole + 5
     };
 
-    inline QString getName() const
-    {
-        return name;
-    }
+    QString getName() const;
+    void setName(const QString &value);
 
-    inline void setName(const QString &value)
-    {
-        name = value;
-    }
+    QPixmap getCover() const;
+    void setCover(const QPixmap &value);
 
-    inline QPixmap getCover() const
-    {
-        return cover;
-    }
+    bool operator==(const Playlist &other);
+    bool operator!=(const Playlist &other);
 
-    inline void setCover(const QPixmap &value)
-    {
-        cover = value;
-    }
+    friend QDataStream& operator>>(QDataStream &stream, Playlist &target);
+    friend QDataStream& operator<<(QDataStream &stream, const Playlist &target);
 
 private:
     QString name;
@@ -44,5 +36,7 @@ Q_DECLARE_METATYPE(Playlist)
 
 using PlaylistGroup = QList<Playlist>;
 
+QDataStream& operator>>(QDataStream &stream, Playlist &target);
+QDataStream& operator<<(QDataStream &stream, const Playlist &target);
 
 #endif // PLAYLIST_H
