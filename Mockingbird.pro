@@ -20,6 +20,7 @@ HEADERS += \
     include/models/genremodel.h \
     include/models/playlistgroupmodel.h \
     include/models/playlistmodel.h \
+    include/models/proxyplaylistmodel.h \
     include/models/songdelegate.h \
     include/windows/welcomewindow.h
 
@@ -37,6 +38,7 @@ SOURCES += \
     src/models/genremodel.cpp \
     src/models/playlistgroupmodel.cpp \
     src/models/playlistmodel.cpp \
+    src/models/proxyplaylistmodel.cpp \
     src/models/songdelegate.cpp \
     src/windows/welcomewindow.cpp
 
