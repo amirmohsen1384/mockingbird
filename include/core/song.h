@@ -4,12 +4,14 @@
 #include <QUrl>
 #include <QPixmap>
 #include <QVariant>
+#include "general.h"
 
 class Song
 {
 public:
     enum Genre
     {
+        NoGenre,
         Rock,
         Rap,
         Pop,
@@ -48,8 +50,7 @@ private:
     QPixmap cover;
     QString artist;
     int publicationYear;
-    Genre genre = Genre::Classic;
-
+    Genre genre = Genre::NoGenre;
     friend class SongEdit;
 };
 

@@ -5,6 +5,10 @@ QPixmap GenreModel::toPixmap(const Song::Genre &genre)
 {
     switch(genre)
     {
+        case Song::Genre::NoGenre:
+        {
+            return QPixmap(":/images/genres/no-genre.png");
+        }
         case Song::Genre::Classic: 
         {
             return QPixmap(":/images/genres/classic.png");
@@ -48,6 +52,10 @@ QString GenreModel::toString(const Song::Genre &genre)
 {
     switch(genre)
     {
+        case Song::Genre::NoGenre:
+        {
+            return QString("No Genre");
+        }
         case Song::Genre::Classic:
         {
             return QString("Classic");
@@ -102,7 +110,7 @@ int GenreModel::rowCount(const QModelIndex &parent) const
     }
 
     // The count of available enumeration values
-    return 8;
+    return 9;
 }
 
 QVariant GenreModel::data(const QModelIndex &index, int role) const
