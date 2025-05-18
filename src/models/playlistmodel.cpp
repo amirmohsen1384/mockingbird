@@ -49,7 +49,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     {
         if(target.getCover().isNull())
         {
-            return QPixmap(":/images/PlaylistModel/song.png");
+            return QPixmap(":/images/playlist/song.png");
         }
         else
         {
@@ -70,7 +70,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
     case Playlist::GenreRole:
     {
-        return target.getGenre();
+        return GenreModel::toString(target.getGenre());
     }
     case Playlist::GenreIconRole:
     {
@@ -79,10 +79,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     case Playlist::YearRole:
     {
         return target.getPublicationYear();
-    }
-    case Qt::ToolTipRole:
-    {
-        return QString("By %1").arg(target.getArtist());
     }
     default:
     {
