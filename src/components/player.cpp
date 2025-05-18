@@ -1,4 +1,5 @@
 #include "include/components/player.h"
+#include "include/core/song.h"
 #include <QRandomGenerator64>
 #include <QMediaDevices>
 #include <QAudioDevice>
@@ -50,6 +51,9 @@ Player::Player(QWidget *parent) : QWidget(parent), ui(std::make_unique<Ui::Playe
             advanceToNextTrack();
         }
     });
+
+    // The player gets updated as the current track changes
+    connect(this, &Player::currentTrackChanged, this, &Player::updatePlayer);
 }
 
 bool Player::isPlaying() const
@@ -67,16 +71,23 @@ bool Player::isInfiniteMode() const
     return player->loops() == QMediaPlayer::Infinite ? true : false;
 }
 
-void Player::updateModel(PlaylistModel *prev, PlaylistModel *current)
+int Player::getCurrentTrack() const
+{
+    return currentTrack;
+}
+
+void Player::updateModel(QAbstractItemModel *prev, QAbstractItemModel *current)
 {
     if(prev != nullptr)
     {
-        disconnect(prev, &PlaylistModel::songsChanged, this, &Player::updatePlayer);
-        disconnect(prev, &PlaylistModel::currentSongChanged, this, &Player::updatePlayer);
+        disconnect(prev, &QAbstractItemModel::rowsRemoved, this, &Player::updatePlayer);
+        disconnect(prev, &QAbstractItemModel::rowsInserted, this, &Player::updatePlayer);
     }
-    connect(current, &PlaylistModel::songsChanged, this, &Player::updatePlayer);
-    connect(current, &PlaylistModel::currentSongChanged, this, &Player::updatePlayer);
-
+    if(current != nullptr)
+    {
+        connect(current, &QAbstractItemModel::rowsRemoved, this, &Player::updatePlayer);
+        connect(current, &QAbstractItemModel::rowsInserted, this, &Player::updatePlayer);
+    }
 }
 
 void Player::updatePlayer()
@@ -85,42 +96,38 @@ void Player::updatePlayer()
     {
         return;
     }
-    const Playlist &target = _model->getPlaylist();
-    int index = _model->getCurrentSong();
-    if(index >= 0 && index < target.size())
-    {
-        player->setSource(target.at(index).getAddress());
-        player->play();
-    }
+    Song song = qvariant_cast<Song>(_model->index(currentTrack, 0, QModelIndex()).data(Qt::UserRole));
+    player->setSource(song.getAddress());
+    player->play();
 }
 
 void Player::advanceToNextTrack()
 {
+    int index = 0;
     if(_model == nullptr)
     {
         return;
     }
-    const Playlist &playlist = _model->getPlaylist();
-    int index = _model->getCurrentSong();
-    if(playlist.isEmpty())
+    const int count = _model->rowCount();
+    if(count <= 0)
     {
         return;
     }
     else if(!isShuffleMode())
     {
-        index = (index + 1) % playlist.size();
+        index = (currentTrack + 1) % count;
     }
     else
     {
         int target = 0;
         do
         {
-            target = QRandomGenerator64::global()->bounded(0, playlist.size());
+            target = QRandomGenerator64::global()->bounded(0, count);
         }
-        while(index == target && playlist.size() > 1);
+        while(index == target && count > 1);
         index = target;
     }
-    _model->setCurrentSong(index);
+    setCurrentTrack(index);
 }
 
 void Player::updateProgress()
@@ -211,6 +218,18 @@ void Player::changePlaybackSpeed()
     player->setPlaybackRate(std::max(std::fmod(player->playbackRate() + 0.25, 2.25), 0.25));
 }
 
+void Player::setCurrentTrack(int value)
+{
+    if(_model != nullptr)
+    {
+        if(value >= 0 && value < _model->rowCount())
+        {
+            currentTrack = value;
+            emit currentTrackChanged(value);
+        }
+    }
+}
+
 void Player::setShuffleMode(bool value)
 {
     ui->shuffleButton->setChecked(value);
@@ -225,19 +244,20 @@ void Player::setInfiniteMode(bool value)
 
 Player::~Player()
 {
-    player->stop();
+    setModel(nullptr);
 }
 
-PlaylistModel *Player::model()
+QAbstractItemModel *Player::model()
 {
     return _model;
 }
 
-void Player::setModel(PlaylistModel *value)
+void Player::setModel(QAbstractItemModel *value)
 {
-    PlaylistModel *temp = this->_model;
+    QAbstractItemModel *temp = this->_model;
     this->_model = value;
     updateModel(temp, value);
+    currentTrack = 0;
     player->stop();
     updatePlayer();
 }

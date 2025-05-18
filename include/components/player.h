@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QMediaPlayer>
 #include <QAudioOutput>
-#include "include/models/playlistmodel.h"
+#include <QAbstractItemModel>
+#include "include/core/general.h"
 
 namespace Ui
 {
@@ -20,39 +21,43 @@ public:
     explicit Player(QWidget *parent = nullptr);
     ~Player();
 
-    PlaylistModel* model();
-    void setModel(PlaylistModel *value);
+    QAbstractItemModel* model();
+    void setModel(QAbstractItemModel *value);
 
     bool isPlaying() const;
     bool isShuffleMode() const;
     bool isInfiniteMode() const;
+    int getCurrentTrack() const;
 
 private slots:
     void updatePlayer();
     void updateProgress();
-    void advanceToNextTrack();
     void updatePlaybackSpeed();
     void updatePlaybackControl();
     void toggleShuffleButton(bool value);
     void toggleInfiniteButton(bool value);
-    void updateModel(PlaylistModel *prev, PlaylistModel *current);
+    void updateModel(QAbstractItemModel *prev, QAbstractItemModel *current);
 
 public slots:
     void stop();
     void replay();
     void forward();
+    void advanceToNextTrack();
     void changePlaybackMode();
     void changePlaybackSpeed();
+    void setCurrentTrack(int value);
     void setShuffleMode(bool value);
     void setInfiniteMode(bool value);
 
 signals:
+    void currentTrackChanged(int value);
     void shuffleModeChanged(bool value);
     void infiniteModeChanged(bool value);
 
 private:
+    int currentTrack = 0;
+    QAbstractItemModel* _model;
     std::unique_ptr<Ui::Player> ui;
-    PlaylistModel *_model = nullptr;
     std::unique_ptr<QAudioOutput> output;
     std::unique_ptr<QMediaPlayer> player;
 };
