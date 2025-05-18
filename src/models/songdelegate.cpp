@@ -1,72 +1,113 @@
 #include "include/models/songdelegate.h"
 #include <QPainter>
 
-QRect SongDelegate::majorInfoRegion(const QModelIndex &index) const
-{
-    const QString name = index.data().toString();
-    const QString artist = index.data(Qt::ToolTipRole).toString();
-
-    QFontMetrics nameFontMetrics(nameFont);
-    const QRect nameRect = nameFontMetrics.boundingRect(name);
-
-    QFontMetrics artistFontMetrics(artistFont);
-    const QRect artistRect = artistFontMetrics.boundingRect(artist);
-
-    int width = std::max(nameRect.width(), artistRect.width());
-    width += 50;
-
-    QRect result;
-    result.setWidth(width);
-    result.setTopLeft(QPoint(0, 0));
-    result.setHeight(nameRect.height() + margins.bottom() + margins.top() + artistRect.height());
-
-    return result;
-}
-
-QRect SongDelegate::minorInfoRegion(const QModelIndex &index) const
-{
-    QRect result = majorInfoRegion(index);
-    const int height = result.height();
-
-    result.setTopLeft(result.topRight());
-}
-
 QRect SongDelegate::artistRegion(const QModelIndex &index) const
 {
-    QFontMetrics artistFontMetrics(artistFont);
-    const QRect majorRegion = majorInfoRegion(index);
+    const QRect result = nameRegion(index);
+    const QString artist = index.data(Playlist::ArtistRole).toString();
+    const QRect artistRect = QFontMetrics(artistFont).boundingRect(artist);
 
-    const QString artist = index.data(Qt::ToolTipRole).toString();
-    const QRect artistRect = artistFontMetrics.boundingRect(artist);
-
-    QRect result = artistRect;
-    QRect nameRect = nameRegion(index);
-    QPoint start = nameRect.bottomLeft();
+    QPoint start = result.bottomLeft();
     start += QPoint(0, margins.bottom() + margins.top());
 
-    result.setTopLeft(start);
-    result.setWidth(majorRegion.width());
+    return QRect(start.x(), start.y(), result.width(), artistRect.height());
+}
 
-    return result;
+void SongDelegate::paintArtist(QPainter *painter, const QModelIndex &index) const
+{
+    const QString text = index.data(Playlist::ArtistRole).toString();
+    const QRect region = artistRegion(index);
+    const QFont initial = painter->font();
+    painter->setFont(artistFont);
+    painter->drawText(region, text);
+    painter->setFont(initial);
+}
+
+QRect SongDelegate::genreRegion(const QModelIndex &index) const
+{
+    QPoint start = nameRegion(index).topRight() + QPoint(0, margins.top() + margins.bottom());
+    const QString text = index.data(Playlist::GenreRole).toString();
+    const QRect genreRect = QFontMetrics(genreFont).boundingRect(text);
+    const QPixmap icon = qvariant_cast<QPixmap>(index.data(Playlist::GenreIconRole));
+    return QRect(
+        start.x(),
+        start.y(),
+        genreRect.width() + icon.width() + margins.left() + margins.right(),
+        std::max(icon.height(), genreRect.height())
+    );
+}
+
+void SongDelegate::paintGenre(QPainter *painter, const QModelIndex &index) const
+{
+    QRect region = genreRegion(index);
+    QString text = index.data(Playlist::GenreRole).toString();
+    QPixmap icon = qvariant_cast<QPixmap>(index.data(Playlist::GenreIconRole));
+
+    painter->save();
+    painter->translate(region.topLeft());
+
+    painter->drawPixmap(icon.rect(), icon);
+    region.setTopLeft(QPoint(icon.width() + margins.left() + margins.right(), margins.top()));
+    region.setWidth(region.width() - icon.width());
+
+    const QFont initial = painter->font();
+    painter->setFont(genreFont);
+    painter->drawText(region, text);
+    painter->setFont(initial);
+
+    painter->restore();
 }
 
 QRect SongDelegate::coverRegion(const QModelIndex &index) const
 {
-    const QPixmap cover = QPixmap(":/images/playlist/song.png");
-    QRect region = cover.rect().marginsAdded(margins);
-    region.setTopLeft(QPoint(0, 0));
-    return region;
+    QPixmap cover = qvariant_cast<QPixmap>(index.data(Qt::DecorationRole));
+    QRect rectangle = cover.rect().marginsRemoved(margins);
+    rectangle.setSize(QSize(72, 72));
+    return rectangle;
+}
+
+void SongDelegate::paintCover(QPainter *painter, const QModelIndex &index) const
+{
+    const QPixmap cover = qvariant_cast<QPixmap>(index.data(Qt::DecorationRole));
+    const QRect region = coverRegion(index);
+
+    painter->save();
+    painter->setClipRegion(QRegion(region, QRegion::Ellipse));
+    painter->drawPixmap(region, cover);
+    painter->restore();
+
+    QLinearGradient gradient;
+    gradient.setCoordinateMode(QLinearGradient::ObjectMode);
+    gradient.setStops({{0.3, Qt::blue}, {0.8, Qt::magenta}});
+    gradient.setFinalStop(QPointF(0.5, 1));
+    gradient.setStart(QPointF(0.5, 0));
+
+    const QPen initial = painter->pen();
+    painter->setPen(QPen(gradient, 4));
+
+    painter->drawEllipse(region);
+    painter->setPen(initial);
 }
 
 QRect SongDelegate::nameRegion(const QModelIndex &index) const
 {
-    QFontMetrics nameFontMetrics(nameFont);
     const QString name = index.data().toString();
+    const QString artist = index.data(Playlist::ArtistRole).toString();
 
-    QRect nameRect = nameFontMetrics.boundingRect(name);
-    nameRect.setWidth(majorInfoRegion(index).width());
+    const QRect nameRect = QFontMetrics(nameFont).boundingRect(name);
+    const QRect artistRect = QFontMetrics(artistFont).boundingRect(artist);
 
-    return nameRect;
+    int width = std::max(nameRect.width(), artistRect.width()) + 80;
+    return QRect(0, 0, width, nameRect.height());
+}
+void SongDelegate::paintName(QPainter *painter, const QModelIndex &index) const
+{
+    const QString text = index.data().toString();
+    const QFont initial = painter->font();
+    const QRect region = nameRegion(index);
+    painter->setFont(nameFont);
+    painter->drawText(region, text);
+    painter->setFont(initial);
 }
 
 SongDelegate::SongDelegate(QObject *parent) : QStyledItemDelegate{parent}
@@ -76,47 +117,23 @@ SongDelegate::SongDelegate(QObject *parent) : QStyledItemDelegate{parent}
 
 QSize SongDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
+    return QSize(option.widget != nullptr ? option.widget->width() : 1000 , 72 + margins.top() * 2 + margins.bottom());
 }
 
 void SongDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     painter->save();
-    const int margin = 5;
+    painter->translate(option.rect.topLeft() + QPoint(margins.top(), margins.left()));
+    painter->setRenderHint(QPainter::Antialiasing);
 
-    const QPixmap logo = qvariant_cast<QPixmap>(index.data(Qt::DecorationRole));
+    paintCover(painter, index);
+    painter->translate(coverRegion(index).width() + 20, 0);
 
-    painter->save();
-    painter->setClipRegion(QRegion(logo.rect(), QRegion::Ellipse));
+    paintName(painter, index);
 
-    painter->drawPixmap(QPoint(0, 0), logo);
-    painter->restore();
+    paintArtist(painter, index);
 
-    QLinearGradient gradient;
-    gradient.setCoordinateMode(QLinearGradient::ObjectMode);
-    gradient.setStops({{0.5, Qt::blue}, {1.0, Qt::green}});
-    gradient.setFinalStop(QPointF(0.5, 1));
-    gradient.setStart(QPointF(0.5, 0));
+    paintGenre(painter, index);
 
-    {
-        const QPen initial = painter->pen();
-        painter->setPen(QPen(gradient, 2));
-        painter->drawEllipse(logo.rect());
-        painter->setPen(initial);
-    }
-
-    painter->translate(logo.rect().width() + margin, 0);
-
-    {
-        const QFont initial = painter->font();
-
-        painter->setFont(QFont("Segoe Print", 14));
-        painter->drawText(QPoint(0, 0), index.data(Qt::DisplayRole).toString());
-
-        painter->setFont(QFont("Segoe UI", 10, QFont::Bold));
-        painter->drawText(QPoint(0, margin * 2), QString("A Song By %1").arg(index.data(Playlist::ArtistRole).toString()));
-
-        painter->setFont(initial);
-    }
     painter->restore();
 }
