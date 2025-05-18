@@ -12,4 +12,6 @@ namespace Storage
     QDir songs();
 }
 
+constexpr int _min_year = 1900;
+
 #endif // GENERAL_H

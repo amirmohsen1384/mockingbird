@@ -70,6 +70,10 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
     case Playlist::GenreRole:
     {
+        return QVariant::fromValue(target.getGenre());
+    }
+    case Playlist::GenreTextRole:
+    {
         return GenreModel::toString(target.getGenre());
     }
     case Playlist::GenreIconRole:

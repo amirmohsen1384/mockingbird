@@ -26,5 +26,6 @@
         <file>images/icon.ico</file>
         <file>images/playlist/playlist.png</file>
         <file>images/widgets/browse.png</file>
+        <file>images/genres/no-genre.png</file>
     </qresource>
 </RCC>

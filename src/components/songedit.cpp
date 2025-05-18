@@ -44,6 +44,7 @@ SongEdit::SongEdit(QWidget *parent) : QWidget{parent}
     }
     );
     connect(ui->releaseYearEdit, &QSpinBox::valueChanged, this, &SongEdit::releasedYearChanged);
+    ui->releaseYearEdit->setMinimum(_min_year);
 }
 
 SongEdit::SongEdit(const Song &value, QWidget *parent) : SongEdit(parent)

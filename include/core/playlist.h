@@ -8,10 +8,11 @@ class Playlist : public SongList
 public:
     enum Role
     {
+        GenreTextRole = Qt::UserRole + 3,
         GenreIconRole = Qt::UserRole + 4,
         PlayingRole = Qt::UserRole + 1,
         ArtistRole = Qt::UserRole + 2,
-        GenreRole = Qt::UserRole + 3,
+        GenreRole = Qt::UserRole + 6,
         YearRole = Qt::UserRole + 5
     };
 
