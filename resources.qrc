@@ -27,5 +27,8 @@
         <file>images/playlist/playlist.png</file>
         <file>images/widgets/browse.png</file>
         <file>images/genres/no-genre.png</file>
+        <file>images/view/filter.png</file>
+        <file>images/view/search.png</file>
+        <file>images/view/sort.png</file>
     </qresource>
 </RCC>
