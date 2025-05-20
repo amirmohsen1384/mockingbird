@@ -242,21 +242,18 @@ void Player::setInfiniteMode(bool value)
     emit infiniteModeChanged(value);
 }
 
-Player::~Player()
-{
-    setModel(nullptr);
-}
+Player::~Player() {}
 
-QAbstractItemModel *Player::model()
+std::shared_ptr<QAbstractItemModel> Player::model()
 {
     return _model;
 }
 
-void Player::setModel(QAbstractItemModel *value)
+void Player::setModel(std::shared_ptr<QAbstractItemModel> &value)
 {
-    QAbstractItemModel *temp = this->_model;
+    auto temp = this->_model;
     this->_model = value;
-    updateModel(temp, value);
+    updateModel(temp.get(), value.get());
     currentTrack = 0;
     player->stop();
     updatePlayer();

@@ -21,8 +21,8 @@ public:
     explicit Player(QWidget *parent = nullptr);
     ~Player();
 
-    QAbstractItemModel* model();
-    void setModel(QAbstractItemModel *value);
+    std::shared_ptr<QAbstractItemModel> model();
+    void setModel(std::shared_ptr<QAbstractItemModel> &value);
 
     bool isPlaying() const;
     bool isShuffleMode() const;
@@ -56,10 +56,10 @@ signals:
 
 private:
     int currentTrack = 0;
-    QAbstractItemModel* _model;
     std::unique_ptr<Ui::Player> ui;
     std::unique_ptr<QAudioOutput> output;
     std::unique_ptr<QMediaPlayer> player;
+    std::shared_ptr<QAbstractItemModel> _model;
 };
 
 #endif // PLAYER_H
