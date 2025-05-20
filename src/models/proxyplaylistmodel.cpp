@@ -1,6 +1,13 @@
 #include "include/models/proxyplaylistmodel.h"
 
-ProxyPlaylistModel::ProxyPlaylistModel(QObject *parent) : QSortFilterProxyModel(parent) {}
+ProxyPlaylistModel::ProxyPlaylistModel(QObject *parent) : QSortFilterProxyModel(parent)
+{
+    connect(this, &ProxyPlaylistModel::sortOrderChanged, this, [&](Qt::SortOrder value)
+    {
+        this->sort(0, value);
+    }
+    );
+}
 
 int ProxyPlaylistModel::getMinimumYear() const
 {
@@ -18,10 +25,21 @@ int ProxyPlaylistModel::getMaximumYear() const
     return maxYear;
 }
 
+Qt::SortOrder ProxyPlaylistModel::getSortOrder() const
+{
+    return order;
+}
+
 void ProxyPlaylistModel::setMaximumYear(int value)
 {
     maxYear = value;
     invalidateFilter();
+}
+
+void ProxyPlaylistModel::setSortOrder(Qt::SortOrder order)
+{
+    this->order = order;
+    emit sortOrderChanged(order);
 }
 
 Song::Genre ProxyPlaylistModel::getFilteringGenre() const
@@ -52,6 +70,5 @@ void ProxyPlaylistModel::setFilteringGenre(Song::Genre genre)
 bool ProxyPlaylistModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     const QModelIndex &index = sourceModel()->index(source_row, 0, source_parent);
-    QString name = index.data(Qt::DisplayRole).toString();
-    return acceptsWith(index) && name.contains(filterRegularExpression());
+    return acceptsWith(index) && QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 }

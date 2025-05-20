@@ -12,7 +12,8 @@ public:
     {
         ByName = Qt::DisplayRole,
         ByArtist = Playlist::ArtistRole,
-        ByReleasedYear = Playlist::YearRole
+        ByReleasedYear = Playlist::YearRole,
+        ByGenre = Playlist::GenreTextRole
     };
 
 public:
@@ -21,6 +22,7 @@ public:
 
     int getMinimumYear() const;
     int getMaximumYear() const;
+    Qt::SortOrder getSortOrder() const;
     Song::Genre getFilteringGenre() const;
 
     bool acceptsWith(const QModelIndex &index) const;
@@ -28,12 +30,17 @@ public:
 public slots:
     void setMinimumYear(int value);
     void setMaximumYear(int value);
+    void setSortOrder(Qt::SortOrder order);
     void setFilteringGenre(Song::Genre genre);
 
 protected:
     virtual bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 
+signals:
+    void sortOrderChanged(Qt::SortOrder order);
+
 private:
+    Qt::SortOrder order;
     int minYear = _min_year;
     Song::Genre genre = Song::Genre::NoGenre;
     int maxYear = QDate::currentDate().year();
