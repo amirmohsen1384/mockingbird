@@ -121,9 +121,9 @@ void PlaylistView::updateFilter()
 {
     if(model.get() != nullptr)
     {
-        model->setFilteringGenre(ui->filterEdit->getGenre());
-        model->setMinimumYear(ui->filterEdit->getMinimumYear());
-        model->setMaximumYear(ui->filterEdit->getMaximumYear());
+        model->setFilteringGenre(ui->filterEdit->isGenreFilteringEnabled() ? ui->filterEdit->getGenre() : Song::NoGenre);
+        model->setMinimumYear(ui->filterEdit->isYearFilteringEnabled() ? ui->filterEdit->getMinimumYear() : _min_year);
+        model->setMaximumYear(ui->filterEdit->isYearFilteringEnabled() ? ui->filterEdit->getMaximumYear() : QDate::currentDate().year());
     }
 }
 

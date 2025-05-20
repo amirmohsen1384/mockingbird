@@ -51,7 +51,7 @@ bool ProxyPlaylistModel::acceptsWith(const QModelIndex &index) const
 {
     if(genre != Song::Genre::NoGenre)
     {
-        Song::Genre target = qvariant_cast<Song::Genre>(index.data(Playlist::GenreRole));
+        Song::Genre target = index.data(Playlist::GenreRole).value<Song::Genre>();
         if(genre != target)
         {
             return false;
