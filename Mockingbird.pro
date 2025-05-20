@@ -8,6 +8,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+    include/components/custom/arrangewidget.h \
+    include/components/custom/filteredit.h \
+    include/components/custom/findwidget.h \
     include/components/imageview.h \
     include/components/songedit.h \
     include/core/artist.h \
@@ -22,9 +25,14 @@ HEADERS += \
     include/models/playlistmodel.h \
     include/models/proxyplaylistmodel.h \
     include/models/songdelegate.h \
-    include/windows/welcomewindow.h
+    include/windows/welcomewindow.h \
+    include/components/playlistview.h
 
 SOURCES += \
+    src/components/custom/arrangewidget.cpp \
+    src/components/custom/filteredit.cpp \
+    src/components/custom/findwidget.cpp \
+    src/components/playlistview.cpp \
     src/components/imageview.cpp \
     src/components/songedit.cpp \
     src/core/admin.cpp \
@@ -43,6 +51,10 @@ SOURCES += \
     src/windows/welcomewindow.cpp
 
 FORMS += \
+    ui/components/custom/arrangewidget.ui \
+    ui/components/custom/filteredit.ui \
+    ui/components/custom/findwidget.ui \
+    ui/components/playlistview.ui \
     ui/components/player.ui \
     ui/components/songedit.ui \
     ui/windows/welcomewindow.ui
