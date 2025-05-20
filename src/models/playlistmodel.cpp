@@ -56,14 +56,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     {
         return target.getName();
     }
-    case Qt::BackgroundRole:
-    {
-        return index.row() == current ? QColor(217, 255, 161) : QVariant();
-    }
-    case Qt::FontRole:
-    {
-        return index.row() == current ? QFont("Segoe UI", 10, QFont::Bold) : QVariant();
-    }
     case Qt::DecorationRole:
     {
         if(target.getCover().isNull())
@@ -78,10 +70,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     case Qt::UserRole:
     {
         return QVariant::fromValue<Song>(target);
-    }
-    case Playlist::PlayingRole:
-    {
-        return index.row() == this->current;
     }
     case Playlist::ArtistRole:
     {
@@ -163,25 +151,10 @@ void PlaylistModel::setName(const QString &name)
     emit nameChanged(name);
 }
 
-void PlaylistModel::setCurrentSong(qint64 value)
-{
-    int temp = current;
-    current = value;
-
-    emit dataChanged(index(current), index(current), {Playlist::PlayingRole});
-    emit dataChanged(index(temp), index(temp), {Playlist::PlayingRole});
-    emit currentSongChanged(current);
-}
-
 void PlaylistModel::setCover(const QPixmap &value)
 {
     container.setCover(value);
     emit coverChanged(value);
-}
-
-qint64 PlaylistModel::getCurrentSong() const
-{
-    return current;
 }
 
 const Playlist &PlaylistModel::getPlaylist() const
