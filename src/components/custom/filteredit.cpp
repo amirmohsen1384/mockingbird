@@ -17,11 +17,23 @@ FilterEdit::FilterEdit(QWidget *parent) : QWidget(parent)
     connect(ui->genreEdit, &QComboBox::currentIndexChanged, this, &FilterEdit::filterChanged);
     connect(ui->startYearEdit, &QSpinBox::valueChanged, this, &FilterEdit::filterChanged);
     connect(ui->endYearEdit, &QSpinBox::valueChanged, this, &FilterEdit::filterChanged);
+    connect(ui->yearFilterGroup, &QGroupBox::toggled, this, &FilterEdit::filterChanged);
+    connect(ui->genreGroup, &QGroupBox::toggled, this, &FilterEdit::filterChanged);
 
     ui->endYearEdit->setValue(QDate::currentDate().year());
 }
 
 FilterEdit::~FilterEdit() {}
+
+bool FilterEdit::isYearFilteringEnabled() const
+{
+    return ui->yearFilterGroup->isChecked();
+}
+
+bool FilterEdit::isGenreFilteringEnabled() const
+{
+    return ui->genreGroup->isChecked();
+}
 
 void FilterEdit::setMinimumYear(int value)
 {
@@ -38,6 +50,16 @@ void FilterEdit::setGenre(Song::Genre value)
     ui->genreEdit->setCurrentIndex(static_cast<int>(value));
 }
 
+void FilterEdit::setYearFilteringEnabled(bool value)
+{
+    ui->genreGroup->setChecked(value);
+}
+
+void FilterEdit::setGenreFilteringEnabled(bool value)
+{
+    ui->yearFilterGroup->setChecked(value);
+}
+
 int FilterEdit::getMinimumYear() const
 {
     return ui->startYearEdit->value();
@@ -50,5 +72,5 @@ int FilterEdit::getMaximumYear() const
 
 Song::Genre FilterEdit::getGenre() const
 {
-    return ui->genreEdit->currentData(Playlist::GenreRole).value<Song::Genre>();
+    return ui->genreEdit->currentData(Qt::UserRole).value<Song::Genre>();
 }

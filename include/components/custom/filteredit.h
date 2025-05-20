@@ -17,6 +17,9 @@ public:
     explicit FilterEdit(QWidget *parent = nullptr);
     ~FilterEdit();
 
+    bool isYearFilteringEnabled() const;
+    bool isGenreFilteringEnabled() const;
+
     int getMinimumYear() const;
     int getMaximumYear() const;
     Song::Genre getGenre() const;
@@ -25,7 +28,8 @@ public slots:
     void setMinimumYear(int value);
     void setMaximumYear(int value);
     void setGenre(Song::Genre value);
-
+    void setYearFilteringEnabled(bool value);
+    void setGenreFilteringEnabled(bool value);
 signals:
     void filterChanged();
 
