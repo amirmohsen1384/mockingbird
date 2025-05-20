@@ -8,7 +8,7 @@ class PlaylistModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    PlaylistModel(QObject *parent = nullptr) : QAbstractListModel(parent), current(0) {}
+    PlaylistModel(QObject *parent = nullptr) : QAbstractListModel(parent), current(-1) {}
     Q_DISABLE_COPY_MOVE(PlaylistModel)
     ~PlaylistModel() override {}
 
