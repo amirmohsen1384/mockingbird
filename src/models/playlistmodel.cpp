@@ -26,7 +26,26 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
     {
-        return {};
+        // We provide some meta-information about the playlist when the supplied index is invalid.
+        switch(role)
+        {
+        case Qt::DisplayRole:
+        {
+            return container.getName();
+        }
+        case Qt::DecorationRole:
+        {
+            return container.getCover();
+        }
+        case Qt::UserRole:
+        {
+            return QVariant::fromValue(container);
+        }
+        default:
+        {
+            return {};
+        }
+        }
     }
 
     const Song target = container.at(index.row());
