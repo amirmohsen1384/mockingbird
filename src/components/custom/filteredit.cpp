@@ -35,31 +35,6 @@ bool FilterEdit::isGenreFilteringEnabled() const
     return ui->genreGroup->isChecked();
 }
 
-void FilterEdit::setMinimumYear(int value)
-{
-    ui->startYearEdit->setValue(value);
-}
-
-void FilterEdit::setMaximumYear(int value)
-{
-    ui->endYearEdit->setValue(value);
-}
-
-void FilterEdit::setGenre(Song::Genre value)
-{
-    ui->genreEdit->setCurrentIndex(static_cast<int>(value));
-}
-
-void FilterEdit::setYearFilteringEnabled(bool value)
-{
-    ui->genreGroup->setChecked(value);
-}
-
-void FilterEdit::setGenreFilteringEnabled(bool value)
-{
-    ui->yearFilterGroup->setChecked(value);
-}
-
 int FilterEdit::getMinimumYear() const
 {
     return ui->startYearEdit->value();

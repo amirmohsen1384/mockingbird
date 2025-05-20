@@ -19,14 +19,9 @@ public:
     enum Base {Artist, Name};
 
     QString getText() const;
-    Qt::MatchFlags getFlags() const;
+    Qt::MatchFlag getFlag() const;
     FindWidget::Base getSearchBase() const;
     Qt::CaseSensitivity getCaseSensitivityMode();
-
-public:
-    void setText(const QString &value);
-    void setFlags(Qt::MatchFlags value);
-    void setSearchBase(FindWidget::Base base);
 
 signals:
     void findPropertyChanged();
