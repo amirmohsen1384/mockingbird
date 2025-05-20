@@ -85,7 +85,8 @@ void PlaylistView::updateArrangeCriteria()
 {
     if(model.get() != nullptr)
     {
-        model->setSortRole(static_cast<int>(ui->arrangePanel->getArrangeBase()));
+        model->setSortRole(ui->arrangePanel->getArrangeBase());
+        model->setSortOrder(ui->arrangePanel->getSortOrder());
     }
 }
 
@@ -94,22 +95,28 @@ void PlaylistView::updateFindCriteria()
     if(model.get() != nullptr)
     {
         QRegularExpression target;
-        Qt::MatchFlags flags = ui->findPanel->getFlags();
-        if(flags.testFlag(Qt::MatchFlag::MatchStartsWith))
+        Qt::MatchFlag flag = ui->findPanel->getFlag();
+        switch(flag)
+        {
+        case Qt::MatchStartsWith:
         {
             target.setPattern(QString("^%1").arg(ui->findPanel->getText()));
+            break;
         }
-        else if(flags.testFlag(Qt::MatchFlag::MatchEndsWith))
+        case Qt::MatchEndsWith:
         {
             target.setPattern(QString("%1$").arg(ui->findPanel->getText()));
+            break;
         }
-        else if(flags.testFlag(Qt::MatchFlag::MatchContains))
+        case Qt::MatchContains:
         {
             target.setPattern(QString("%1").arg(ui->findPanel->getText()));
+            break;
         }
-        else if(flags.testFlag(Qt::MatchFlag::MatchFixedString))
+        default:
         {
-            target.setPattern(QString("%1").arg(ui->findPanel->getText()));
+            return;
+        }
         }
         model->setFilterRegularExpression(target);
         model->setFilterRole(static_cast<int>(ui->findPanel->getSearchBase()));
@@ -129,12 +136,16 @@ void PlaylistView::updateFilter()
 
 void PlaylistView::updateModel()
 {
-    PlaylistModel *original = dynamic_cast<PlaylistModel*>(model.get());
     ui->songView->setModel(model.get());
-    if(original != nullptr)
+    if(model.get() != nullptr)
     {
         updateFilter();
         updateFindCriteria();
         updateArrangeCriteria();
+        ui->countLabel->setText(QString("%1 songs available").arg
+        (
+            qvariant_cast<Playlist>(model->data(QModelIndex(), Qt::UserRole)).size()
+        ));
+        ui->playlistTitle->setText(model->data(QModelIndex(), Qt::DisplayRole).toString());
     }
 }

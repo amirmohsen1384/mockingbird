@@ -28,6 +28,8 @@ public:
     bool acceptsWith(const QModelIndex &index) const;
 
 public slots:
+    void arrange();
+
     void setMinimumYear(int value);
     void setMaximumYear(int value);
     void setSortOrder(Qt::SortOrder order);
