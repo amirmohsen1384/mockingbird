@@ -33,7 +33,7 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
         case Playlist::PlayingRole:
         {
             current = value.toInt();
-            emit dataChanged(index, index, {Playlist::PlayingRole});
+            emit dataChanged(index, index, {Playlist::PlayingRole, Qt::BackgroundRole, Qt::FontRole});
             return true;
         }
         default:
