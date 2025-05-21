@@ -5,8 +5,9 @@
 #include "include/models/proxyplaylistmodel.h"
 #include "include/components/custom/filteredit.h"
 
-namespace Ui {
-class PlaylistView;
+namespace Ui
+{
+    class PlaylistView;
 }
 
 class PlaylistView : public QWidget
@@ -24,6 +25,7 @@ public slots:
     void showArrangePanel(bool toggle);
     void showFilterEdit(bool toggle);
     void showFindPanel(bool toggle);
+    void playSong();
 
 private slots:
     void updateArrangeCriteria();

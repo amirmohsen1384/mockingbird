@@ -1,5 +1,7 @@
+#include "include/components/playlistplayer.h"
 #include "include/components/playlistview.h"
 #include "ui_playlistview.h"
+#include <QDialog>
 
 PlaylistView::PlaylistView(QWidget *parent) : QWidget(parent)
 {
@@ -79,6 +81,15 @@ void PlaylistView::showFindPanel(bool toggle)
     {
         ui->findPanel->setVisible(false);
     }
+}
+
+void PlaylistView::playSong()
+{
+    PlaylistPlayer player;
+    QDialog dialog(this);
+    dialog.setParent(&player);
+    player.setModel(model);
+    dialog.exec();
 }
 
 void PlaylistView::updateArrangeCriteria()

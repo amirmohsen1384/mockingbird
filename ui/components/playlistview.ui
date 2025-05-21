@@ -273,10 +273,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>playButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PlaylistView</receiver>
+   <slot>playSong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>727</x>
+     <y>626</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>750</x>
+     <y>646</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showFilterEdit(bool)</slot>
   <slot>showArrangePanel(bool)</slot>
   <slot>showFindPanel(bool)</slot>
+  <slot>playSong()</slot>
  </slots>
 </ui>
