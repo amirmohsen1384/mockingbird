@@ -5,12 +5,18 @@ void PlaylistPlayer::updateModel()
 {
     ui->player->setModel(_model);
     ui->playlistView->setModel(_model.get());
-    _model->setData(QModelIndex(), Playlist::PlayingRole, ui->player->getCurrentTrack());
+    _model->sourceModel()->setData(QModelIndex(), Playlist::PlayingRole, ui->player->getCurrentTrack());
+}
+
+void PlaylistPlayer::updateCurrentTrack()
+{
+    _model->sourceModel()->setData(QModelIndex(), Playlist::PlayingRole, ui->player->getCurrentTrack());
 }
 
 PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistPlayer)
 {
     ui->setupUi(this);
+    connect(ui->player, &Player::currentTrackChanged, this, &PlaylistPlayer::updateCurrentTrack);
 }
 
 PlaylistPlayer::~PlaylistPlayer() {}

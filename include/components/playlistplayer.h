@@ -11,6 +11,7 @@ class PlaylistPlayer : public QWidget
     Q_OBJECT
 private slots:
     void updateModel();
+    void updateCurrentTrack();
 
 public:
     explicit PlaylistPlayer(QWidget *parent = nullptr);
