@@ -222,11 +222,12 @@ const Playlist &PlaylistModel::playlist() const
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count);
-    for(int index = 0; index < count; ++i)
+    for(int index = 0; index < count; ++index)
     {
         container.insert(row, Song());
     }
     endInsertRows();
+    return true;
 }
 
 bool PlaylistModel::removeRows(int row, int count, const QModelIndex &parent)
@@ -234,6 +235,7 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex &parent)
     beginRemoveRows(parent, row, row + count);
     container.remove(row, count);
     endRemoveRows();
+    return true;
 }
 
 void PlaylistModel::insertSong(int row, const Song &target)
@@ -244,7 +246,7 @@ void PlaylistModel::insertSong(int row, const Song &target)
 
 void PlaylistModel::insertSong(int row, const SongList &target)
 {
-    insertRows(row, target.size());
+    insertRows(row, target.size(), QModelIndex());
     for(int i = 0; i < target.size(); ++i)
     {
         setData(index(i + row), QVariant::fromValue(target.at(i + row)), Qt::UserRole);
