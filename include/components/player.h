@@ -22,7 +22,7 @@ public:
     ~Player();
 
     std::shared_ptr<QAbstractItemModel> model();
-    void setModel(std::shared_ptr<QAbstractItemModel> &value);
+    void setModel(std::shared_ptr<QAbstractItemModel> value);
 
     bool isPlaying() const;
     bool isShuffleMode() const;

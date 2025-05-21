@@ -249,7 +249,7 @@ std::shared_ptr<QAbstractItemModel> Player::model()
     return _model;
 }
 
-void Player::setModel(std::shared_ptr<QAbstractItemModel> &value)
+void Player::setModel(std::shared_ptr<QAbstractItemModel> value)
 {
     auto temp = this->_model;
     this->_model = value;
