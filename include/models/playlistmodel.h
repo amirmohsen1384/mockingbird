@@ -12,21 +12,21 @@ public:
     Q_DISABLE_COPY_MOVE(PlaylistModel)
     ~PlaylistModel() override {}
 
-    QString getName() const;
-    QPixmap getCover() const;
-    qint64 getCurrentSong() const;
+    QString name() const;
+    QPixmap cover() const;
+    qint64 currentTrack() const;
+    const Playlist& playlist() const;
 
-    const Playlist& getPlaylist() const;
+    virtual bool insertRows(int row, int count, const QModelIndex &parent) override;
+    virtual bool removeRows(int row, int count, const QModelIndex &parent) override;
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-public slots:
-    void removeSong(int row);
+    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     void setName(const QString &name);
-    void setCurrentSong(qint64 value);
-    void setCover(const QPixmap &value);
+    void setCurrentTrack(qint64 value);
+    void setCover(const QPixmap &photo);
 
     void appendSong(const Song &target);
     void appendSong(const SongList &target);
@@ -37,11 +37,7 @@ public slots:
     void insertSong(int row, const Song &target);
     void insertSong(int row, const SongList &target);
 
-signals:
-    void songsChanged();
-    void currentSongChanged(qint64 song);
-    void nameChanged(const QString &name);
-    void coverChanged(const QPixmap &value);
+    void removeSong(int row);
 
 private:
     qint64 current;

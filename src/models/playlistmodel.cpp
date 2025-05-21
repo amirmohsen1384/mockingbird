@@ -3,16 +3,6 @@
 #include <QPixmap>
 #include <QFont>
 
-QString PlaylistModel::getName() const
-{
-    return container.getName();
-}
-
-QPixmap PlaylistModel::getCover() const
-{
-    return container.getCover();
-}
-
 int PlaylistModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
@@ -22,11 +12,95 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
     return container.size();
 }
 
+bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if(!index.isValid())
+    {
+        switch(role)
+        {
+        case Qt::DisplayRole:
+        {
+            container.setName(value.toString());
+            emit dataChanged(index, index, {Qt::DisplayRole});
+            return true;
+        }
+        case Qt::DecorationRole:
+        {
+            container.setCover(qvariant_cast<QPixmap>(value));
+            emit dataChanged(index, index, {Qt::DecorationRole});
+            return true;
+        }
+        case Playlist::PlayingRole:
+        {
+            current = value.toInt();
+            emit dataChanged(index, index, {Playlist::PlayingRole});
+            return true;
+        }
+        default:
+        {
+            return false;
+        }
+        }
+    }
+
+    Song target = container.at(index.row());
+
+    switch(role)
+    {
+    case Qt::DisplayRole:
+    {
+        container[index.row()].setName(value.toString());
+        emit dataChanged(index, index, {Qt::DisplayRole});
+        return true;
+    }
+    case Qt::DecorationRole:
+    {
+        container[index.row()].setCover(value.value<QPixmap>());
+        emit dataChanged(index, index, {Qt::DecorationRole});
+        return true;
+    }
+    case Playlist::ArtistRole:
+    {
+        container[index.row()].setArtist(value.toString());
+        emit dataChanged(index, index, {Playlist::ArtistRole});
+        return true;
+    }
+    case Playlist::GenreRole:
+    {
+        container[index.row()].setGenre(qvariant_cast<Song::Genre>(value));
+        emit dataChanged(index, index, {Playlist::GenreRole});
+        return true;
+    }
+    case Playlist::YearRole:
+    {
+        container[index.row()].setPublicationYear(value.toInt());
+        emit dataChanged(index, index, {Playlist::YearRole});
+        return true;
+    }
+    case Qt::UserRole:
+    {
+        container.replace(index.row(), qvariant_cast<Song>(value));
+        emit dataChanged(index, index, {
+            Qt::UserRole,
+            Qt::DisplayRole,
+            Qt::DecorationRole,
+            Playlist::ArtistRole,
+            Playlist::GenreRole,
+            Playlist::YearRole
+        });
+        return true;
+    }
+    default:
+    {
+        return false;
+    }
+    }
+}
+
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
     {
-        // We provide some meta-information about the playlist when the supplied index is invalid.
         switch(role)
         {
         case Qt::DisplayRole:
@@ -37,9 +111,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         {
             return container.getCover();
         }
-        case Qt::UserRole:
+        case Playlist::PlayingRole:
         {
-            return QVariant::fromValue(container);
+            return current;
         }
         default:
         {
@@ -110,33 +184,81 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 }
 
+void PlaylistModel::setName(const QString &name)
+{
+    setData(QModelIndex(), name, Qt::DisplayRole);
+}
+
+void PlaylistModel::setCurrentTrack(qint64 value)
+{
+    setData(QModelIndex(), value, Playlist::PlayingRole);
+}
+
+void PlaylistModel::setCover(const QPixmap &photo)
+{
+    setData(QModelIndex(), photo, Qt::DecorationRole);
+}
+
+QString PlaylistModel::name() const
+{
+    return container.getName();
+}
+
+QPixmap PlaylistModel::cover() const
+{
+    return container.getCover();
+}
+
+qint64 PlaylistModel::currentTrack() const
+{
+    return current;
+}
+
+const Playlist &PlaylistModel::playlist() const
+{
+    return container;
+}
+
+bool PlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    beginInsertRows(parent, row, row + count);
+    for(int index = 0; index < count; ++i)
+    {
+        container.insert(row, Song());
+    }
+    endInsertRows();
+}
+
+bool PlaylistModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    beginRemoveRows(parent, row, row + count);
+    container.remove(row, count);
+    endRemoveRows();
+}
+
 void PlaylistModel::insertSong(int row, const Song &target)
 {
-    beginInsertRows(QModelIndex(), row, row);
-    container.insert(row, target);
-    endInsertRows();
-    emit songsChanged();
+    insertRow(row);
+    setData(index(row), QVariant::fromValue(target), Qt::UserRole);
 }
 
 void PlaylistModel::insertSong(int row, const SongList &target)
 {
-    beginInsertRows(QModelIndex(), row, row + target.size());
-    for(const Song &element : target)
+    insertRows(row, target.size());
+    for(int i = 0; i < target.size(); ++i)
     {
-        container.insert(row, element);
+        setData(index(i + row), QVariant::fromValue(target.at(i + row)), Qt::UserRole);
     }
-    endInsertRows();
-    emit songsChanged();
 }
 
 void PlaylistModel::appendSong(const Song &target)
 {
-    insertSong(container.size(), target);
+    insertSong(rowCount(), target);
 }
 
 void PlaylistModel::appendSong(const SongList &target)
 {
-    insertSong(container.size(), target);
+    insertSong(rowCount(), target);
 }
 
 void PlaylistModel::prependSong(const Song &target)
@@ -151,40 +273,5 @@ void PlaylistModel::prependSong(const SongList &target)
 
 void PlaylistModel::removeSong(int row)
 {
-    beginRemoveRows(QModelIndex(), row, row);
-    container.remove(row);
-    emit songsChanged();
-    endRemoveRows();
-}
-
-void PlaylistModel::setName(const QString &name)
-{
-    container.setName(name);
-    emit nameChanged(name);
-}
-
-void PlaylistModel::setCurrentSong(qint64 value)
-{
-    int temp = current;
-    current = value;
-
-    emit dataChanged(index(current), index(current), {Playlist::PlayingRole});
-    emit dataChanged(index(temp), index(temp), {Playlist::PlayingRole});
-    emit currentSongChanged(current);
-}
-
-void PlaylistModel::setCover(const QPixmap &value)
-{
-    container.setCover(value);
-    emit coverChanged(value);
-}
-
-qint64 PlaylistModel::getCurrentSong() const
-{
-    return current;
-}
-
-const Playlist &PlaylistModel::getPlaylist() const
-{
-    return container;
+    removeRow(row);
 }
