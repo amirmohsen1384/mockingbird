@@ -8,6 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+    include/components/playlistplayer.h \
     include/components/custom/arrangewidget.h \
     include/components/custom/filteredit.h \
     include/components/custom/findwidget.h \
@@ -29,6 +30,7 @@ HEADERS += \
     include/components/playlistview.h
 
 SOURCES += \
+    src/components/playlistplayer.cpp \
     src/components/custom/arrangewidget.cpp \
     src/components/custom/filteredit.cpp \
     src/components/custom/findwidget.cpp \
@@ -51,6 +53,7 @@ SOURCES += \
     src/windows/welcomewindow.cpp
 
 FORMS += \
+    ui/components/playlistplayer.ui \
     ui/components/custom/arrangewidget.ui \
     ui/components/custom/filteredit.ui \
     ui/components/custom/findwidget.ui \
