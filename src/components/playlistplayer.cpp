@@ -21,6 +21,16 @@ PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::Pl
 
 PlaylistPlayer::~PlaylistPlayer() {}
 
+Player *PlaylistPlayer::player()
+{
+    return ui->player;
+}
+
+const Player *PlaylistPlayer::player() const
+{
+    return ui->player;
+}
+
 void PlaylistPlayer::setModel(std::shared_ptr<ProxyPlaylistModel> &model)
 {
     this->_model = model;

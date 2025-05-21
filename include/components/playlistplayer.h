@@ -2,6 +2,7 @@
 #define PLAYLISTPLAYER_H
 
 #include <QWidget>
+#include "include/components/player.h"
 #include "include/models/proxyplaylistmodel.h"
 
 namespace Ui { class PlaylistPlayer; }
@@ -16,6 +17,9 @@ private slots:
 public:
     explicit PlaylistPlayer(QWidget *parent = nullptr);
     ~PlaylistPlayer();
+
+    Player* player();
+    const Player* player() const;
 
     std::shared_ptr<ProxyPlaylistModel> model();
     void setModel(std::shared_ptr<ProxyPlaylistModel> &model);
