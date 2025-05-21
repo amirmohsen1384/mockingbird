@@ -2,6 +2,8 @@
 #define PLAYLISTVIEW_H
 
 #include <QWidget>
+#include <QDialog>
+#include "include/components/playlistplayer.h"
 #include "include/models/proxyplaylistmodel.h"
 #include "include/components/custom/filteredit.h"
 

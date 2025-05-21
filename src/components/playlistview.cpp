@@ -1,7 +1,7 @@
 #include "include/components/playlistplayer.h"
 #include "include/components/playlistview.h"
 #include "ui_playlistview.h"
-#include <QDialog>
+#include <QVBoxLayout>
 
 PlaylistView::PlaylistView(QWidget *parent) : QWidget(parent)
 {
@@ -85,11 +85,16 @@ void PlaylistView::showFindPanel(bool toggle)
 
 void PlaylistView::playSong()
 {
-    PlaylistPlayer player;
-    QDialog dialog(this);
-    dialog.setParent(&player);
-    player.setModel(model);
-    dialog.exec();
+    std::unique_ptr<QDialog> dialog = std::make_unique<QDialog>();
+    std::unique_ptr<QVBoxLayout> layout = std::make_unique<QVBoxLayout>();
+    std::unique_ptr<PlaylistPlayer> player = std::make_unique<PlaylistPlayer>();
+
+    player->setModel(model);
+    layout->addWidget(player.get());
+    dialog->setLayout(layout.get());
+
+    dialog->setWindowTitle("Media Player");
+    dialog->exec();
 }
 
 void PlaylistView::updateArrangeCriteria()
