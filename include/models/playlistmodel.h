@@ -7,6 +7,7 @@
 class PlaylistModel : public QAbstractListModel
 {
     Q_OBJECT
+    static const QVector<int> roles;
 public:
     PlaylistModel(QObject *parent = nullptr) : QAbstractListModel(parent), current(-1) {}
     Q_DISABLE_COPY_MOVE(PlaylistModel)

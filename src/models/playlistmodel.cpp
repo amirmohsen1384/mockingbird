@@ -3,6 +3,16 @@
 #include <QPixmap>
 #include <QFont>
 
+const QVector<int> PlaylistModel::roles  =
+{
+    Qt::UserRole,
+    Qt::DisplayRole,
+    Qt::DecorationRole,
+    Playlist::ArtistRole,
+    Playlist::GenreRole,
+    Playlist::YearRole
+};
+
 int PlaylistModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
@@ -43,51 +53,44 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
         }
     }
 
-    Song target = container.at(index.row());
+    Song &target = container[index.row()];
 
     switch(role)
     {
     case Qt::DisplayRole:
     {
-        container[index.row()].setName(value.toString());
+        target.setName(value.toString());
         emit dataChanged(index, index, {Qt::DisplayRole});
         return true;
     }
     case Qt::DecorationRole:
     {
-        container[index.row()].setCover(value.value<QPixmap>());
+        target.setCover(value.value<QPixmap>());
         emit dataChanged(index, index, {Qt::DecorationRole});
         return true;
     }
     case Playlist::ArtistRole:
     {
-        container[index.row()].setArtist(value.toString());
+        target.setArtist(value.toString());
         emit dataChanged(index, index, {Playlist::ArtistRole});
         return true;
     }
     case Playlist::GenreRole:
     {
-        container[index.row()].setGenre(qvariant_cast<Song::Genre>(value));
+        target.setGenre(qvariant_cast<Song::Genre>(value));
         emit dataChanged(index, index, {Playlist::GenreRole});
         return true;
     }
     case Playlist::YearRole:
     {
-        container[index.row()].setPublicationYear(value.toInt());
+        target.setPublicationYear(value.toInt());
         emit dataChanged(index, index, {Playlist::YearRole});
         return true;
     }
     case Qt::UserRole:
     {
         container.replace(index.row(), qvariant_cast<Song>(value));
-        emit dataChanged(index, index, {
-            Qt::UserRole,
-            Qt::DisplayRole,
-            Qt::DecorationRole,
-            Playlist::ArtistRole,
-            Playlist::GenreRole,
-            Playlist::YearRole
-        });
+        emit dataChanged(index, index, roles);
         return true;
     }
     default:
@@ -246,11 +249,13 @@ void PlaylistModel::insertSong(int row, const Song &target)
 
 void PlaylistModel::insertSong(int row, const SongList &target)
 {
-    insertRows(row, target.size(), QModelIndex());
-    for(int i = 0; i < target.size(); ++i)
+    const int size = target.size();
+    insertRows(row, size, QModelIndex());
+    for(int i = row; i < row + size; ++i)
     {
-        setData(index(i + row), QVariant::fromValue(target.at(i + row)), Qt::UserRole);
+        container[i] = target.at(i - row);
     }
+    emit dataChanged(index(row), index(row + size), roles);
 }
 
 void PlaylistModel::appendSong(const Song &target)
