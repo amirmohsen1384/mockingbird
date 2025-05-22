@@ -21,7 +21,7 @@ public:
     ~PlaylistView();
 
     std::shared_ptr<ProxyPlaylistModel> getModel();
-    void setModel(std::shared_ptr<ProxyPlaylistModel> &model);
+    void setModel(std::shared_ptr<ProxyPlaylistModel> model);
 
 public slots:
     void showArrangePanel(bool toggle);

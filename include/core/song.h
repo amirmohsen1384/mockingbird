@@ -11,7 +11,6 @@ class Song
 public:
     enum Genre
     {
-        NoGenre,
         Rock,
         Rap,
         Pop,
@@ -50,7 +49,7 @@ private:
     QPixmap cover;
     QString artist;
     int publicationYear;
-    Genre genre = Genre::NoGenre;
+    Genre genre = Genre::Classic;
     friend class SongEdit;
 };
 

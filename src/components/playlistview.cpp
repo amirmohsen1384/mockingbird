@@ -25,7 +25,7 @@ std::shared_ptr<ProxyPlaylistModel> PlaylistView::getModel()
     return model;
 }
 
-void PlaylistView::setModel(std::shared_ptr<ProxyPlaylistModel> &model)
+void PlaylistView::setModel(std::shared_ptr<ProxyPlaylistModel> model)
 {
     this->model = model;
     updateModel();
@@ -144,7 +144,8 @@ void PlaylistView::updateFilter()
 {
     if(model.get() != nullptr)
     {
-        model->setFilteringGenre(ui->filterEdit->isGenreFilteringEnabled() ? ui->filterEdit->getGenre() : Song::NoGenre);
+        model->setFilteringGenre(ui->filterEdit->getGenre());
+        model->setGenreFilteringEnabled(ui->filterEdit->isGenreFilteringEnabled());
         model->setMinimumYear(ui->filterEdit->isYearFilteringEnabled() ? ui->filterEdit->getMinimumYear() : _min_year);
         model->setMaximumYear(ui->filterEdit->isYearFilteringEnabled() ? ui->filterEdit->getMaximumYear() : QDate::currentDate().year());
     }

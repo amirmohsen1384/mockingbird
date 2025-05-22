@@ -2,7 +2,6 @@
 
 ProxyPlaylistModel::ProxyPlaylistModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
-    connect(this, &ProxyPlaylistModel::sortOrderChanged, this, &ProxyPlaylistModel::arrange);
     connect(this, &ProxyPlaylistModel::sortRoleChanged, this, &ProxyPlaylistModel::arrange);
 }
 
@@ -22,6 +21,11 @@ int ProxyPlaylistModel::getMaximumYear() const
     return maxYear;
 }
 
+bool ProxyPlaylistModel::getGenreFilteringEnabled() const
+{
+    return filteringGenre;
+}
+
 Qt::SortOrder ProxyPlaylistModel::getSortOrder() const
 {
     return order;
@@ -33,10 +37,16 @@ void ProxyPlaylistModel::setMaximumYear(int value)
     invalidateFilter();
 }
 
+void ProxyPlaylistModel::setGenreFilteringEnabled(bool value)
+{
+    filteringGenre = value;
+    invalidateFilter();
+}
+
 void ProxyPlaylistModel::setSortOrder(Qt::SortOrder order)
 {
     this->order = order;
-    emit sortOrderChanged(order);
+    arrange();
 }
 
 Song::Genre ProxyPlaylistModel::getFilteringGenre() const
@@ -46,7 +56,7 @@ Song::Genre ProxyPlaylistModel::getFilteringGenre() const
 
 bool ProxyPlaylistModel::acceptsWith(const QModelIndex &index) const
 {
-    if(genre != Song::Genre::NoGenre)
+    if(filteringGenre)
     {
         Song::Genre target = index.data(Playlist::GenreRole).value<Song::Genre>();
         if(genre != target)
