@@ -1,5 +1,5 @@
-#include "include/components/playlistplayer.h"
-#include "include/components/playlistview.h"
+#include "include/dialogs/playlistplayer.h"
+#include "include/dialogs/playlistview.h"
 #include "ui_playlistview.h"
 #include <QVBoxLayout>
 
@@ -94,6 +94,7 @@ void PlaylistView::updateArrangeCriteria()
 {
     if(model.get() != nullptr)
     {
+        selection->reset();
         model->setSortRole(ui->arrangePanel->getArrangeBase());
         model->setSortOrder(ui->arrangePanel->getSortOrder());
     }
@@ -103,6 +104,7 @@ void PlaylistView::updateFindCriteria()
 {
     if(model.get() != nullptr)
     {
+        selection->reset();
         QRegularExpression target;
         Qt::MatchFlag flag = ui->findPanel->getFlag();
         switch(flag)
@@ -137,6 +139,7 @@ void PlaylistView::updateFilter()
 {
     if(model.get() != nullptr)
     {
+        selection->reset();
         model->setFilteringGenre(ui->filterEdit->getGenre());
         model->setGenreFilteringEnabled(ui->filterEdit->isGenreFilteringEnabled());
         model->setMinimumYear(ui->filterEdit->isYearFilteringEnabled() ? ui->filterEdit->getMinimumYear() : _min_year);
@@ -149,9 +152,13 @@ void PlaylistView::updateModel()
     ui->songView->setModel(model.get());
     if(model.get() != nullptr)
     {
+        ui->songView->selectionModel()->reset();
+        selection = ui->songView->selectionModel();
+
         updateFilter();
         updateFindCriteria();
         updateArrangeCriteria();
+
         ui->playlistTitle->setText(model->sourceModel()->data(QModelIndex(), Qt::DisplayRole).toString());
         ui->countLabel->setText(QString("%1 song(s) available in total.").arg(model->sourceModel()->rowCount()));
         setWindowTitle(QString("%1 - Playlist View").arg(model->sourceModel()->data(QModelIndex(), Qt::DisplayRole).toString()));

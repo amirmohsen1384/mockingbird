@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QDialog>
+#include <QItemSelectionModel>
 #include "include/dialogs/playlistplayer.h"
 #include "include/models/proxyplaylistmodel.h"
 #include "include/components/custom/filteredit.h"
@@ -37,6 +38,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::PlaylistView> ui;
+    QItemSelectionModel *selection = nullptr;
     std::shared_ptr<ProxyPlaylistModel> model;
 };
 
