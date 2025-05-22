@@ -250,7 +250,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../resources.qrc">
-          <normaloff>:/images/widgets/browse.png</normaloff>:/images/widgets/browse.png</iconset>
+          <normaloff>:/images/dialogs/browse.png</normaloff>:/images/dialogs/browse.png</iconset>
         </property>
         <property name="iconSize">
          <size>
