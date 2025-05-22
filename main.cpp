@@ -4,6 +4,8 @@
 #include "include/windows/welcomewindow.h"
 #include "playlistedit.h"
 #include "include/models/playlistmodel.h"
+#include "include/components/playlistview.h"
+#include <QRandomGenerator64>
 
 int main(int argc, char **argv)
 {
@@ -14,10 +16,16 @@ int main(int argc, char **argv)
     for(const QFileInfo &i : songs)
     {
         Song target;
+        target.setGenre(static_cast<Song::Genre>(QRandomGenerator::global()->bounded(0, 7)));
+        target.setPublicationYear(QRandomGenerator::global()->bounded(1996, 2016));
         target.setAddress(i.absoluteFilePath());
         target.setName(i.baseName());
         model->appendSong(target);
     }
+    model->setName("Eminem Music");
+
+    std::shared_ptr<ProxyPlaylistModel> proxy = std::make_shared<ProxyPlaylistModel>();
+    proxy->setSourceModel(model.get());
 
     PlaylistEdit editor;
     editor.setModel(model);
