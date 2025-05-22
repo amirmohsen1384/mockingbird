@@ -27,9 +27,11 @@ HEADERS += \
     include/models/proxyplaylistmodel.h \
     include/models/songdelegate.h \
     include/windows/welcomewindow.h \
-    include/components/playlistview.h
+    include/components/playlistview.h \
+    playlistedit.h
 
 SOURCES += \
+    playlistedit.cpp \
     src/components/playlistplayer.cpp \
     src/components/custom/arrangewidget.cpp \
     src/components/custom/filteredit.cpp \
@@ -53,6 +55,7 @@ SOURCES += \
     src/windows/welcomewindow.cpp
 
 FORMS += \
+    playlistedit.ui \
     ui/components/playlistplayer.ui \
     ui/components/custom/arrangewidget.ui \
     ui/components/custom/filteredit.ui \
