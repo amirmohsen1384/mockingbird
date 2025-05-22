@@ -11,23 +11,9 @@ void Playlist::setName(const QString &value)
     name = value;
 }
 
-QPixmap Playlist::getCover() const
-{
-    return cover;
-}
-
-void Playlist::setCover(const QPixmap &value)
-{
-    cover = value;
-}
-
 bool Playlist::operator==(const Playlist &other) const
 {
     if(this->name != other.name)
-    {
-        return false;
-    }
-    else if(this->cover.toImage() != other.cover.toImage())
     {
         return false;
     }
@@ -46,7 +32,6 @@ bool Playlist::operator!=(const Playlist &other) const
 QDataStream& operator<<(QDataStream &stream, const Playlist &target)
 {
     stream << target.name;
-    stream << target.cover;
     stream << static_cast<SongList>(target);
     return stream;
 }
@@ -54,7 +39,6 @@ QDataStream& operator<<(QDataStream &stream, const Playlist &target)
 QDataStream& operator>>(QDataStream &stream, Playlist &target)
 {
     stream >> target.name;
-    stream >> target.cover;
     stream >> static_cast<SongList&>(target);
     return stream;
 }

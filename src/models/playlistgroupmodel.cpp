@@ -28,13 +28,18 @@ QVariant PlaylistGroupModel::data(const QModelIndex &index, int role) const
     }
     case Qt::DecorationRole:
     {
-        if(target.getCover().isNull())
+        QPixmap cover;
+        if(!target.isEmpty())
         {
-            return QPixmap(":/images/playlist/playlist.png");
+            cover = target.constFirst().getCover();
+        }
+        if(cover.isNull())
+        {
+            return QPixmap(":/images/playlist/playlist.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
         else
         {
-            return target.getCover();
+            return cover.scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
     }
     default:

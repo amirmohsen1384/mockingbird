@@ -29,7 +29,6 @@ public:
 
     void setName(const QString &name);
     void setCurrentTrack(qint64 value);
-    void setCover(const QPixmap &photo);
 
     void appendSong(const Song &target);
     void appendSong(const SongList &target);

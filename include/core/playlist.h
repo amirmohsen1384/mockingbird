@@ -19,9 +19,6 @@ public:
     QString getName() const;
     void setName(const QString &value);
 
-    QPixmap getCover() const;
-    void setCover(const QPixmap &value);
-
     bool operator==(const Playlist &other) const;
     bool operator!=(const Playlist &other) const;
 
@@ -30,7 +27,6 @@ public:
 
 private:
     QString name;
-    QPixmap cover;
 };
 
 Q_DECLARE_METATYPE(Playlist)

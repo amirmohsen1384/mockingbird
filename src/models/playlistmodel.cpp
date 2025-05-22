@@ -34,12 +34,6 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
             emit dataChanged(index, index, {Qt::DisplayRole});
             return true;
         }
-        case Qt::DecorationRole:
-        {
-            container.setCover(qvariant_cast<QPixmap>(value));
-            emit dataChanged(index, index, {Qt::DecorationRole});
-            return true;
-        }
         case Playlist::PlayingRole:
         {
             current = value.toInt();
@@ -109,10 +103,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         case Qt::DisplayRole:
         {
             return container.getName();
-        }
-        case Qt::DecorationRole:
-        {
-            return container.getCover();
         }
         case Playlist::PlayingRole:
         {
@@ -197,19 +187,9 @@ void PlaylistModel::setCurrentTrack(qint64 value)
     setData(QModelIndex(), value, Playlist::PlayingRole);
 }
 
-void PlaylistModel::setCover(const QPixmap &photo)
-{
-    setData(QModelIndex(), photo, Qt::DecorationRole);
-}
-
 QString PlaylistModel::name() const
 {
     return container.getName();
-}
-
-QPixmap PlaylistModel::cover() const
-{
-    return container.getCover();
 }
 
 qint64 PlaylistModel::currentTrack() const
