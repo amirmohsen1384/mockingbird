@@ -94,7 +94,24 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>playlistView</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>PlaylistPlayer</receiver>
+   <slot>playSong(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>211</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>725</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>playSong(QModelIndex)</slot>
  </slots>

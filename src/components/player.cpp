@@ -92,7 +92,7 @@ void Player::updateModel(QAbstractItemModel *prev, QAbstractItemModel *current)
 
 void Player::updatePlayer()
 {
-    if(player->isPlaying() || _model == nullptr)
+    if(_model == nullptr)
     {
         return;
     }

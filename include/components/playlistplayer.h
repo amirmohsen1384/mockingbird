@@ -13,6 +13,7 @@ class PlaylistPlayer : public QWidget
 private slots:
     void updateModel();
     void updateCurrentTrack();
+    void playSong(const QModelIndex &index);
 
 public:
     explicit PlaylistPlayer(QWidget *parent = nullptr);

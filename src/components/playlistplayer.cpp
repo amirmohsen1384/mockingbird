@@ -13,6 +13,11 @@ void PlaylistPlayer::updateCurrentTrack()
     _model->sourceModel()->setData(QModelIndex(), Playlist::PlayingRole, ui->player->getCurrentTrack());
 }
 
+void PlaylistPlayer::playSong(const QModelIndex &index)
+{
+    ui->player->setCurrentTrack(index.row());
+}
+
 PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistPlayer)
 {
     ui->setupUi(this);
