@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SongEdit</string>
+   <string>Create a new song</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -228,6 +228,9 @@
        <widget class="QLineEdit" name="fileNameEdit">
         <property name="readOnly">
          <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>The selected track is displayed here.</string>
         </property>
        </widget>
       </item>
