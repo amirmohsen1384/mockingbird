@@ -1,9 +1,8 @@
-#include "playlistedit.h"
+#include "include/dialogs/playlistedit.h"
+#include "include/dialogs/songedit.h"
 #include "ui_playlistedit.h"
 #include <QMessageBox>
-#include "playlistedit.h"
-#include "ui_playlistedit.h"
-#include "include/dialogs/songedit.h"
+
 
 void PlaylistEdit::updateModel()
 {

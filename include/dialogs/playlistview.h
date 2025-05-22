@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QDialog>
-#include "include/components/playlistplayer.h"
+#include "include/dialogs/playlistplayer.h"
 #include "include/models/proxyplaylistmodel.h"
 #include "include/components/custom/filteredit.h"
 
