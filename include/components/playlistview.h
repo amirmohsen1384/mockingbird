@@ -1,7 +1,7 @@
 #ifndef PLAYLISTVIEW_H
 #define PLAYLISTVIEW_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QDialog>
 #include "include/components/playlistplayer.h"
 #include "include/models/proxyplaylistmodel.h"
@@ -12,7 +12,7 @@ namespace Ui
     class PlaylistView;
 }
 
-class PlaylistView : public QWidget
+class PlaylistView : public QDialog
 {
     Q_OBJECT
 

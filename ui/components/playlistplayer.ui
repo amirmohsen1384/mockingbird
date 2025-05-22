@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PlaylistPlayer</class>
- <widget class="QWidget" name="PlaylistPlayer">
+ <widget class="QDialog" name="PlaylistPlayer">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -61,6 +61,9 @@
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1" rowspan="2">

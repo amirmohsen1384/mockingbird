@@ -3,7 +3,7 @@
 #include "ui_playlistview.h"
 #include <QVBoxLayout>
 
-PlaylistView::PlaylistView(QWidget *parent) : QWidget(parent)
+PlaylistView::PlaylistView(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::PlaylistView>();
     ui->setupUi(this);
@@ -85,16 +85,9 @@ void PlaylistView::showFindPanel(bool toggle)
 
 void PlaylistView::playSong()
 {
-    std::unique_ptr<QDialog> dialog = std::make_unique<QDialog>();
-    std::unique_ptr<QVBoxLayout> layout = std::make_unique<QVBoxLayout>();
-    std::unique_ptr<PlaylistPlayer> player = std::make_unique<PlaylistPlayer>();
-
-    player->setModel(model);
-    layout->addWidget(player.get());
-    dialog->setLayout(layout.get());
-
-    dialog->setWindowTitle("Media Player");
-    dialog->exec();
+    PlaylistPlayer player;
+    player.setModel(model);
+    player.exec();
 }
 
 void PlaylistView::updateArrangeCriteria()
@@ -161,5 +154,6 @@ void PlaylistView::updateModel()
         updateArrangeCriteria();
         ui->playlistTitle->setText(model->sourceModel()->data(QModelIndex(), Qt::DisplayRole).toString());
         ui->countLabel->setText(QString("%1 song(s) available in total.").arg(model->sourceModel()->rowCount()));
+        setWindowTitle(QString("%1 - Playlist View").arg(model->sourceModel()->data(QModelIndex(), Qt::DisplayRole).toString()));
     }
 }

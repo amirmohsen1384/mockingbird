@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Create a new song</string>
+   <string>Untitled - Song Editor</string>
   </property>
   <property name="modal">
    <bool>true</bool>

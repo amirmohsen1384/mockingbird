@@ -221,6 +221,10 @@ void SongEdit::setValue(const Song &value)
     setArtist(value.artist);
     setLocation(value.address);
     setReleasedYear(value.publicationYear);
+    if(!value.getName().isEmpty())
+    {
+        setWindowTitle(QString("%1 - Song Editor").arg(value.name));
+    }
 }
 
 void SongEdit::setGenre(Song::Genre value)

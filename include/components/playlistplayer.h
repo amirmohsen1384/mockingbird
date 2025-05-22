@@ -1,13 +1,13 @@
 #ifndef PLAYLISTPLAYER_H
 #define PLAYLISTPLAYER_H
 
-#include <QWidget>
+#include <QDialog>
 #include "include/components/player.h"
 #include "include/models/proxyplaylistmodel.h"
 
 namespace Ui { class PlaylistPlayer; }
 
-class PlaylistPlayer : public QWidget
+class PlaylistPlayer : public QDialog
 {
     Q_OBJECT
 private slots:
