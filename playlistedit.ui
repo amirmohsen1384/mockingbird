@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PlaylistEdit</class>
+ <widget class="QWidget" name="PlaylistEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>754</width>
+    <height>717</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLineEdit" name="nameEdit"/>
+   </item>
+   <item>
+    <widget class="QListView" name="songView">
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="controlLayout">
+     <item>
+      <widget class="QPushButton" name="addButton">
+       <property name="toolTip">
+        <string>Add</string>
+       </property>
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="removeButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Remove</string>
+       </property>
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="separator">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="moveUpButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Move up</string>
+       </property>
+       <property name="text">
+        <string>Move Up</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="moveDownButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Move down</string>
+       </property>
+       <property name="text">
+        <string>Move Down</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PlaylistEdit</receiver>
+   <slot>addSong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>66</x>
+     <y>697</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>97</x>
+     <y>712</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PlaylistEdit</receiver>
+   <slot>removeSong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>161</x>
+     <y>685</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>274</x>
+     <y>711</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>moveUpButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PlaylistEdit</receiver>
+   <slot>moveUpSong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>607</x>
+     <y>696</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>509</x>
+     <y>713</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>moveDownButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PlaylistEdit</receiver>
+   <slot>moveDownSong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>689</x>
+     <y>699</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>640</x>
+     <y>716</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>addSong()</slot>
+  <slot>removeSong()</slot>
+  <slot>moveUpSong()</slot>
+  <slot>moveDownSong()</slot>
+ </slots>
+</ui>
