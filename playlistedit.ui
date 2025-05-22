@@ -10,12 +10,32 @@
     <height>717</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+    <bold>true</bold>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLabel" name="playlistNameLabel">
+     <property name="text">
+      <string>Playlist Name:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLineEdit" name="nameEdit"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="songListLabel">
+     <property name="text">
+      <string>The list of the song:</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QListView" name="songView">
@@ -29,6 +49,19 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="controlLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
      <item>
       <widget class="QPushButton" name="addButton">
        <property name="toolTip">
@@ -64,32 +97,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="moveUpButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Move up</string>
-       </property>
-       <property name="text">
-        <string>Move Up</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="moveDownButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Move down</string>
-       </property>
-       <property name="text">
-        <string>Move Down</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -130,34 +137,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>moveUpButton</sender>
-   <signal>clicked()</signal>
+   <sender>songView</sender>
+   <signal>activated(QModelIndex)</signal>
    <receiver>PlaylistEdit</receiver>
-   <slot>moveUpSong()</slot>
+   <slot>editSong(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>607</x>
-     <y>696</y>
+     <x>598</x>
+     <y>250</y>
     </hint>
     <hint type="destinationlabel">
-     <x>509</x>
-     <y>713</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>moveDownButton</sender>
-   <signal>clicked()</signal>
-   <receiver>PlaylistEdit</receiver>
-   <slot>moveDownSong()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>689</x>
-     <y>699</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>640</x>
-     <y>716</y>
+     <x>748</x>
+     <y>143</y>
     </hint>
    </hints>
   </connection>
@@ -167,5 +158,6 @@
   <slot>removeSong()</slot>
   <slot>moveUpSong()</slot>
   <slot>moveDownSong()</slot>
+  <slot>editSong(QModelIndex)</slot>
  </slots>
 </ui>

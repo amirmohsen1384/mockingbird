@@ -27,8 +27,7 @@ public:
 public slots:
     void addSong();
     void removeSong();
-    void moveUpSong();
-    void moveDownSong();
+    void editSong(const QModelIndex &index);
 
 private:
     QItemSelectionModel *selectionModel;
