@@ -1,12 +1,14 @@
-#include "include/components/songedit.h"
+#include "include/dialogs/songedit.h"
 #include <QMediaMetaData>
 #include <QMediaDevices>
 #include "ui_songedit.h"
 #include <QAudioOutput>
 #include <QAudioDevice>
 #include <QFileDialog>
+#include <QMessageBox>
+#include <exception>
 
-SongEdit::SongEdit(QWidget *parent) : QWidget{parent}
+SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
 {
     ui = std::make_unique<Ui::SongEdit>();
     ui->setupUi(this);
@@ -235,4 +237,29 @@ void SongEdit::setArtist(const QString &value)
 void SongEdit::setLocation(const QUrl &location)
 {
     ui->fileNameEdit->setText(location.toLocalFile());
+}
+
+void SongEdit::accept()
+{
+    try
+    {
+        if(!QFile::exists(ui->fileNameEdit->text()) || !QUrl::fromLocalFile(ui->fileNameEdit->text()).isValid())
+        {
+            throw std::runtime_error("The file name is not valid or exists.");
+        }
+        else if(ui->nameEdit->text().isEmpty())
+        {
+            throw std::runtime_error("You have not entered the name.");
+        }
+        else if(ui->artistEdit->text().isEmpty())
+        {
+            throw std::runtime_error("You have not entered the artist.");
+        }
+        QDialog::accept();
+    }
+    catch(std::exception &e)
+    {
+        QMessageBox::critical(this, "Error!", e.what());
+        return;
+    }
 }

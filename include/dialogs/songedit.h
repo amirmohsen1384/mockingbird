@@ -1,7 +1,7 @@
 #ifndef SONGEDIT_H
 #define SONGEDIT_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QMediaPlayer>
 #include "include/models/genremodel.h"
 
@@ -11,7 +11,7 @@ namespace Ui
 }
 class QFileDialog;
 
-class SongEdit : public QWidget
+class SongEdit : public QDialog
 {
     Q_OBJECT
 private:
@@ -48,6 +48,7 @@ public slots:
     void setCover(const QPixmap &value);
     void setArtist(const QString &value);
     void setLocation(const QUrl &location);
+    virtual void accept() override;
 
 signals:
     void nameChanged(QString value);
