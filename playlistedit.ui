@@ -21,24 +21,26 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="playlistNameLabel">
+    <widget class="QLineEdit" name="nameEdit">
      <property name="text">
-      <string>Playlist Name:</string>
+      <string/>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="nameEdit"/>
-   </item>
-   <item>
-    <widget class="QLabel" name="songListLabel">
-     <property name="text">
-      <string>The list of the song:</string>
+     <property name="placeholderText">
+      <string>The playlist name will be edited here.</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QListView" name="songView">
+     <property name="frameShape">
+      <enum>QFrame::Shape::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
      </property>
