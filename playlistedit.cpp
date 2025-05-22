@@ -1,4 +1,3 @@
-
 #include "playlistedit.h"
 #include "ui_playlistedit.h"
 #include <QMessageBox>
@@ -13,6 +12,7 @@ void PlaylistEdit::updateModel()
         ui->songView->setModel(mainModel.get());
         selectionModel = ui->songView->selectionModel();
         ui->nameEdit->setText(mainModel->data(QModelIndex(), Qt::DisplayRole).toString());
+        setWindowTitle(QString("%1 - Playlist Editor").arg(mainModel->data(QModelIndex(), Qt::DisplayRole).toString()));
         connectComponents();
     }
 }
@@ -75,7 +75,7 @@ void PlaylistEdit::removeSong()
     message.setWindowTitle("Confirm");
     message.setIcon(QMessageBox::Warning);
     message.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    message.setText(QString("Are you sure to remove %1 songs permanently?").arg(indices.size()));
+    message.setText(QString("Are you sure to remove %1 song(s) permanently?").arg(indices.size()));
     if(message.exec() == QMessageBox::Yes)
     {
         std::sort(indices.begin(), indices.end(),
