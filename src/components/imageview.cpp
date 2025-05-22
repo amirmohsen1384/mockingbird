@@ -15,11 +15,12 @@ void ImageView::paintEvent(QPaintEvent *event)
     QImage image = this->image;
     const QRect &region = event->rect();
 
+    QPainter painter(this);
     if(image.isNull()) {
-        image = getEmptyImage();
+        painter.fillRect(region, Qt::black);
+        return;
     }
 
-    QPainter painter(this);
     painter.drawImage(region, image, image.rect());
 }
 
@@ -42,10 +43,6 @@ QImage ImageView::getImage() const
     return image;
 }
 
-QImage ImageView::getEmptyImage() const
-{
-    return QImage(":/images/default.png");
-}
 
 void ImageView::setImage(const QImage &image)
 {

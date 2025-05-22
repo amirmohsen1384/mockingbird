@@ -19,7 +19,6 @@ public:
     ImageView(QWidget *parent = nullptr);
     ImageView(const QImage &image, QWidget *parent = nullptr);
 
-    QImage getEmptyImage() const;
     QImage getImage() const;
 
 public slots:
