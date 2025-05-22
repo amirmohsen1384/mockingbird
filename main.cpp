@@ -27,8 +27,8 @@ int main(int argc, char **argv)
     std::shared_ptr<ProxyPlaylistModel> proxy = std::make_shared<ProxyPlaylistModel>();
     proxy->setSourceModel(model.get());
 
-    PlaylistEdit editor;
-    editor.setModel(model);
+    PlaylistView editor;
+    editor.setModel(proxy);
     editor.show();
 
     return app.exec();
