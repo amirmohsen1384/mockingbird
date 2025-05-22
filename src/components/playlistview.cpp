@@ -159,10 +159,7 @@ void PlaylistView::updateModel()
         updateFilter();
         updateFindCriteria();
         updateArrangeCriteria();
-        ui->countLabel->setText(QString("%1 songs available").arg
-        (
-            qvariant_cast<Playlist>(model->data(QModelIndex(), Qt::UserRole)).size()
-        ));
-        ui->playlistTitle->setText(model->data(QModelIndex(), Qt::DisplayRole).toString());
+        ui->playlistTitle->setText(model->sourceModel()->data(QModelIndex(), Qt::DisplayRole).toString());
+        ui->countLabel->setText(QString("%1 song(s) available in total.").arg(model->sourceModel()->rowCount()));
     }
 }
