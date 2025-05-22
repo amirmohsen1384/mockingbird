@@ -222,6 +222,18 @@ const Playlist &PlaylistModel::playlist() const
     return container;
 }
 
+bool PlaylistModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild)
+{
+    beginMoveRows(sourceParent, sourceRow, sourceRow + count, destinationParent, destinationChild);
+
+    for(int i = 0; i < count; ++i)
+    {
+        container.move(sourceRow + i, destinationChild + i);
+    }
+
+    endMoveRows();
+}
+
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count);

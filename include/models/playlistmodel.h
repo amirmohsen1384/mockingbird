@@ -18,6 +18,8 @@ public:
     qint64 currentTrack() const;
     const Playlist& playlist() const;
 
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override;
+
     virtual bool insertRows(int row, int count, const QModelIndex &parent) override;
     virtual bool removeRows(int row, int count, const QModelIndex &parent) override;
 
