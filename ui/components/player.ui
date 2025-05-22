@@ -163,6 +163,42 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="advanceBack">
+         <property name="toolTip">
+          <string>Previous Track</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../resources.qrc">
+           <normaloff>:/images/player/advance-prev.png</normaloff>:/images/player/advance-prev.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="leftNextSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QPushButton" name="replayButton">
          <property name="enabled">
           <bool>false</bool>
@@ -246,6 +282,42 @@
          </property>
          <property name="shortcut">
           <string>Right</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="rightNextSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="advanceNext">
+         <property name="toolTip">
+          <string>Next Track</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../resources.qrc">
+           <normaloff>:/images/player/advance-next.png</normaloff>:/images/player/advance-next.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -506,6 +578,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>advanceBack</sender>
+   <signal>clicked()</signal>
+   <receiver>Player</receiver>
+   <slot>goToPreviousTrack()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>advanceNext</sender>
+   <signal>clicked()</signal>
+   <receiver>Player</receiver>
+   <slot>goToNextTrack()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>662</x>
+     <y>63</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>810</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>shuffleModeChnaged(bool)</signal>
@@ -520,5 +624,7 @@
   <slot>updateInfiniteButton()</slot>
   <slot>setShuffleMode(bool)</slot>
   <slot>updateShuffleButton()</slot>
+  <slot>goToNextTrack()</slot>
+  <slot>goToPreviousTrack()</slot>
  </slots>
 </ui>

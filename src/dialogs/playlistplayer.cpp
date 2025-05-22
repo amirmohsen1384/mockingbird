@@ -1,4 +1,4 @@
-#include "include/components/playlistplayer.h"
+#include "include/dialogs/playlistplayer.h"
 #include "ui_playlistplayer.h"
 
 void PlaylistPlayer::updateModel()

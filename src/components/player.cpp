@@ -48,7 +48,7 @@ Player::Player(QWidget *parent) : QWidget(parent), ui(std::make_unique<Ui::Playe
     {
         if(s == QMediaPlayer::EndOfMedia)
         {
-            advanceToNextTrack();
+            advance();
         }
     });
 
@@ -101,7 +101,7 @@ void Player::updatePlayer()
     player->play();
 }
 
-void Player::advanceToNextTrack()
+void Player::advance()
 {
     int index = 0;
     if(_model == nullptr)
@@ -211,6 +211,16 @@ void Player::forward()
         player->setPosition(player->position() + SEEK_INTERVAL_MS);
 
     }
+}
+
+void Player::goToNextTrack()
+{
+    setCurrentTrack((currentTrack + 1) % _model->rowCount());
+}
+
+void Player::goToPreviousTrack()
+{
+    setCurrentTrack((currentTrack - 1) % _model->rowCount());
 }
 
 void Player::changePlaybackSpeed()

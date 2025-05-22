@@ -42,7 +42,9 @@ public slots:
     void stop();
     void replay();
     void forward();
-    void advanceToNextTrack();
+    void advance();
+    void goToNextTrack();
+    void goToPreviousTrack();
     void changePlaybackMode();
     void changePlaybackSpeed();
     void setCurrentTrack(int value);
