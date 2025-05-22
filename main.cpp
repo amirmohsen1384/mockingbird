@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "include/components/songedit.h"
+#include "include/dialogs/songedit.h"
 #include "include/windows/welcomewindow.h"
 
 int main(int argc, char **argv)
