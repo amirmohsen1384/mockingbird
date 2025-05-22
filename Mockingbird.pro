@@ -13,7 +13,7 @@ HEADERS += \
     include/components/custom/filteredit.h \
     include/components/custom/findwidget.h \
     include/components/imageview.h \
-    include/components/songedit.h \
+    include/dialogs/songedit.h \
     include/core/artist.h \
     include/core/playlist.h \
     include/core/song.h \
@@ -38,7 +38,7 @@ SOURCES += \
     src/components/custom/findwidget.cpp \
     src/components/playlistview.cpp \
     src/components/imageview.cpp \
-    src/components/songedit.cpp \
+    src/dialogs/songedit.cpp \
     src/core/admin.cpp \
     src/core/artist.cpp \
     src/core/general.cpp \
@@ -62,7 +62,7 @@ FORMS += \
     ui/components/custom/findwidget.ui \
     ui/components/playlistview.ui \
     ui/components/player.ui \
-    ui/components/songedit.ui \
+    ui/dialogs/songedit.ui \
     ui/windows/welcomewindow.ui
 
 # Default rules for deployment.
