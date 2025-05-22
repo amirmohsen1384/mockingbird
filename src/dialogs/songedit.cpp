@@ -236,7 +236,7 @@ void SongEdit::setArtist(const QString &value)
 
 void SongEdit::setLocation(const QUrl &location)
 {
-    ui->fileNameEdit->setText(location.toLocalFile());
+    ui->fileNameEdit->setText(location.toString(QUrl::PreferLocalFile));
 }
 
 void SongEdit::accept()
