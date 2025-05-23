@@ -2,9 +2,9 @@
 #include <QApplication>
 #include "include/dialogs/songedit.h"
 #include "include/windows/welcomewindow.h"
-#include "playlistedit.h"
+#include "include/dialogs/playlistedit.h"
 #include "include/models/playlistmodel.h"
-#include "include/components/playlistview.h"
+#include "include/dialogs/playlistview.h"
 #include <QRandomGenerator64>
 
 int main(int argc, char **argv)
