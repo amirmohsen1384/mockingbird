@@ -6,7 +6,6 @@
 #include "include/models/playlistmodel.h"
 #include <QRandomGenerator64>
 #include "include/models/artistmodel.h"
-#include "artistview.h"
 #include "include/dialogs/playlistplayer.h"
 
 int main(int argc, char **argv)

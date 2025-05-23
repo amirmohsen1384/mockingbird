@@ -1,4 +1,4 @@
-#include "artistedit.h"
+#include "include/dialogs/artistedit.h"
 #include "ui_artistedit.h"
 
 ArtistEdit::ArtistEdit(QWidget *parent)

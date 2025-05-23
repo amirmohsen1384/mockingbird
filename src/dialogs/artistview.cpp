@@ -1,7 +1,7 @@
-#include "artistview.h"
-#include "ui_artistview.h"
+#include "include/dialogs/artistview.h"
 #include "include/models/playlistmodel.h"
 #include "include/dialogs/playlistplayer.h"
+#include "ui_artistview.h"
 
 void ArtistView::updateMetaData()
 {
