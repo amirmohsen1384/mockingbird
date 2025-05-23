@@ -10,13 +10,16 @@ class PlaylistModel : public QAbstractListModel
     static const QVector<int> roles;
 public:
     PlaylistModel(QObject *parent = nullptr) : QAbstractListModel(parent), current(-1) {}
+    PlaylistModel(const Playlist &initial, QObject *parent = nullptr);
     Q_DISABLE_COPY_MOVE(PlaylistModel)
     ~PlaylistModel() override {}
 
     QString name() const;
     QPixmap cover() const;
     qint64 currentTrack() const;
+
     const Playlist& playlist() const;
+    void setPlaylist(const Playlist &value);
 
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override;
 
