@@ -11,7 +11,7 @@ class SongDelegate : public QStyledItemDelegate
     QFont yearFont = QFont("Segoe UI", 10);
     QFont genreFont = QFont("Segoe UI", 14);
     QFont artistFont = QFont("Segoe UI", 12, QFont::Bold);
-    QFont nameFont = QFont("Segoe Print", 18, QFont::Bold);
+    QFont nameFont = QFont("Segoe UI Light", 14);
 
 private:
     QRect nameRegion(const QModelIndex &index) const;
@@ -20,11 +20,7 @@ private:
     QRect coverRegion(const QModelIndex &index) const;
     void paintCover(QPainter *painter, const QModelIndex &index) const;
 
-    QRect artistRegion(const QModelIndex &index) const;
-    void paintArtist(QPainter *painter, const QModelIndex &index) const;
-
-    QRect genreRegion(const QModelIndex &index) const;
-    void paintGenre(QPainter *painter, const QModelIndex &index) const;
+    QRect genreRegion(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 public:
     SongDelegate(QObject *parent = nullptr);
