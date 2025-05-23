@@ -21,11 +21,11 @@ public:
     explicit ArtistView(QWidget *parent = nullptr);
     ~ArtistView();
 
-    std::shared_ptr<ArtistModel> model();
-    void setModel(std::shared_ptr<ArtistModel> value);
+    ArtistModel* model();
+    void setModel(ArtistModel* value);
 
 private:
-    std::shared_ptr<ArtistModel> mainModel;
+    ArtistModel* mainModel = nullptr;
     std::unique_ptr<Ui::ArtistView> ui;
 };
 
