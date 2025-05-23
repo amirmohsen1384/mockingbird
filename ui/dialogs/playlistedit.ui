@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PlaylistEdit</class>
- <widget class="QWidget" name="PlaylistEdit">
+ <widget class="QDialog" name="PlaylistEdit">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>754</width>
-    <height>717</height>
+    <width>714</width>
+    <height>693</height>
    </rect>
   </property>
   <property name="font">
@@ -19,7 +19,10 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
    <item>
     <widget class="QLineEdit" name="nameEdit">
      <property name="text">
@@ -52,25 +55,25 @@
    <item>
     <layout class="QHBoxLayout" name="controlLayout">
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QPushButton" name="addButton">
        <property name="toolTip">
         <string>Add</string>
        </property>
        <property name="text">
-        <string>Add</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources.qrc">
+         <normaloff>:/images/dialogs/add.png</normaloff>:/images/dialogs/add.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -83,12 +86,25 @@
         <string>Remove</string>
        </property>
        <property name="text">
-        <string>Remove</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources.qrc">
+         <normaloff>:/images/dialogs/delete.png</normaloff>:/images/dialogs/delete.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="separator">
+      <spacer name="leftSpacer">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
@@ -100,11 +116,173 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QPushButton" name="filterButton">
+       <property name="toolTip">
+        <string>Filter</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources.qrc">
+         <normaloff>:/images/view/filter.png</normaloff>:/images/view/filter.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="findButton">
+       <property name="toolTip">
+        <string>Search</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources.qrc">
+         <normaloff>:/images/view/search.png</normaloff>:/images/view/search.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="arrangeButton">
+       <property name="toolTip">
+        <string>Sort</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources.qrc">
+         <normaloff>:/images/view/sort.png</normaloff>:/images/view/sort.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="rightSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="moveUpButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources.qrc">
+         <normaloff>:/images/dialogs/move-up.png</normaloff>:/images/dialogs/move-up.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="moveDownButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources.qrc">
+         <normaloff>:/images/dialogs/move-down.png</normaloff>:/images/dialogs/move-down.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="FilterEdit" name="filterPanel" native="true"/>
+   </item>
+   <item>
+    <widget class="FindWidget" name="findPanel" native="true"/>
+   </item>
+   <item>
+    <widget class="ArrangeWidget" name="arrangePanel" native="true"/>
    </item>
   </layout>
  </widget>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>FilterEdit</class>
+   <extends>QWidget</extends>
+   <header location="global">include/components/custom/filteredit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FindWidget</class>
+   <extends>QWidget</extends>
+   <header>include/components/custom/findwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ArrangeWidget</class>
+   <extends>QWidget</extends>
+   <header>include/components/custom/arrangewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>addButton</sender>
@@ -113,8 +291,8 @@
    <slot>addSong()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>697</y>
+     <x>56</x>
+     <y>629</y>
     </hint>
     <hint type="destinationlabel">
      <x>97</x>
@@ -129,8 +307,8 @@
    <slot>removeSong()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>161</x>
-     <y>685</y>
+     <x>108</x>
+     <y>629</y>
     </hint>
     <hint type="destinationlabel">
      <x>274</x>
@@ -154,6 +332,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>filterButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PlaylistEdit</receiver>
+   <slot>showFilterEdit(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>314</x>
+     <y>607</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>284</x>
+     <y>692</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>arrangeButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PlaylistEdit</receiver>
+   <slot>showArrangePanel(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>397</x>
+     <y>609</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>697</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>findButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PlaylistEdit</receiver>
+   <slot>showFindPanel(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>357</x>
+     <y>614</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>487</x>
+     <y>691</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addSong()</slot>
@@ -161,5 +387,8 @@
   <slot>moveUpSong()</slot>
   <slot>moveDownSong()</slot>
   <slot>editSong(QModelIndex)</slot>
+  <slot>showFilterEdit(bool)</slot>
+  <slot>showArrangePanel(bool)</slot>
+  <slot>showFindPanel(bool)</slot>
  </slots>
 </ui>
