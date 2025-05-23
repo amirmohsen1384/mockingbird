@@ -34,5 +34,7 @@
         <file>images/dialogs/delete.png</file>
         <file>images/player/advance-next.png</file>
         <file>images/player/advance-prev.png</file>
+        <file>images/dialogs/move-down.png</file>
+        <file>images/dialogs/move-up.png</file>
     </qresource>
 </RCC>

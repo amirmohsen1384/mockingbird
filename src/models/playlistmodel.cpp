@@ -215,17 +215,6 @@ void PlaylistModel::setPlaylist(const Playlist &value)
     endResetModel();
 }
 
-bool PlaylistModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild)
-{
-    beginMoveRows(sourceParent, sourceRow, sourceRow + count, destinationParent, destinationChild);
-    for(int i = 0; i < count; ++i)
-    {
-        container.move(sourceRow + i, destinationChild + i);
-    }
-    endMoveRows();
-    return true;
-}
-
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
