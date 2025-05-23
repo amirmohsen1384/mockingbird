@@ -116,15 +116,7 @@ void PlaylistEdit::addSong()
         if(target != nullptr)
         {
             const Song &song = editor.getValue();
-            const QModelIndex index = mainModel->mapToSource(ui->songView->currentIndex());
-            if(index.isValid())
-            {
-                target->insertSong(index.row(), song);
-            }
-            else
-            {
-                target->appendSong(song);
-            }
+            target->appendSong(song);
         }
     }
 }
