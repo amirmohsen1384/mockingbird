@@ -216,7 +216,7 @@ bool PlaylistModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int
 
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    beginInsertRows(parent, row, row + count);
+    beginInsertRows(parent, row, row + count - 1);
     for(int index = 0; index < count; ++index)
     {
         container.insert(row, Song());
@@ -227,7 +227,7 @@ bool PlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
 
 bool PlaylistModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    beginRemoveRows(parent, row, row + count);
+    beginRemoveRows(parent, row, row + count - 1);
     container.remove(row, count);
     endRemoveRows();
     return true;
