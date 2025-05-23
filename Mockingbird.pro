@@ -8,8 +8,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
-    artistedit.h \
-    artistview.h \
+    include/dialogs/artistedit.h \
+    include/dialogs/artistview.h \
     include/dialogs/playlistplayer.h \
     include/components/custom/arrangewidget.h \
     include/components/custom/filteredit.h \
@@ -32,8 +32,8 @@ HEADERS += \
     include/dialogs/playlistedit.h
 
 SOURCES += \
-    artistedit.cpp \
-    artistview.cpp \
+    src/dialogs/artistedit.cpp \
+    src/dialogs/artistview.cpp \
     src/dialogs/playlistedit.cpp \
     src/dialogs/playlistplayer.cpp \
     src/components/custom/arrangewidget.cpp \
@@ -57,8 +57,8 @@ SOURCES += \
     src/windows/welcomewindow.cpp
 
 FORMS += \
-    artistedit.ui \
-    artistview.ui \
+    ui/dialogs/artistedit.ui \
+    ui/dialogs/artistview.ui \
     ui/dialogs/playlistedit.ui \
     ui/dialogs/playlistplayer.ui \
     ui/components/custom/arrangewidget.ui \
