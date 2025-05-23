@@ -9,6 +9,7 @@
 #include "include/models/artistmodel.h"
 #include "include/dialogs/playlistplayer.h"
 #include "include/models/songdelegate.h"
+#include "include/dialogs/artistview.h"
 
 int main(int argc, char **argv)
 {
@@ -27,13 +28,15 @@ int main(int argc, char **argv)
     }
     playlist.setName("My favorite songs");
 
-    PlaylistEdit editor;
-    editor.setModel(&playlist);
-    editor.exec();
+    ArtistModel model;
+    model.appendPlaylist(playlist.playlist());
+    model.setName("Marshall Bruce Mathers III (Eminem)");
+    model.setBiography("Eminem, born Marshall Bruce Mathers III, is one of the most influential and best-selling artists in the history of hip-hop. Known for his rapid-fire lyrics, complex rhyme schemes, and emotionally raw content, he gained worldwide fame in the late 1990s and early 2000s and helped bring hip-hop to a broader audience.");
+    model.setPhoto(QPixmap("C:/Users/Amir Mohsen/Downloads/Sample.jpg"));
 
-    PlaylistPlayer player;
-    player.setModel(&playlist);
-    player.exec();
+    ArtistView view;
+    view.setModel(&model);
+    view.exec();
 
     return 0;
 }
