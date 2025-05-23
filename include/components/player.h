@@ -6,6 +6,7 @@
 #include <QAudioOutput>
 #include <QAbstractItemModel>
 #include "include/core/general.h"
+#include "include/models/playlistmodel.h"
 
 namespace Ui
 {
@@ -21,8 +22,8 @@ public:
     explicit Player(QWidget *parent = nullptr);
     ~Player();
 
-    std::shared_ptr<QAbstractItemModel> model();
-    void setModel(std::shared_ptr<QAbstractItemModel> value);
+    QAbstractItemModel* model();
+    void setModel(QAbstractItemModel *value);
 
     bool isPlaying() const;
     bool isShuffleMode() const;
@@ -59,9 +60,9 @@ signals:
 private:
     int currentTrack = 0;
     std::unique_ptr<Ui::Player> ui;
+    QAbstractItemModel *_model = nullptr;
     std::unique_ptr<QAudioOutput> output;
     std::unique_ptr<QMediaPlayer> player;
-    std::shared_ptr<QAbstractItemModel> _model;
 };
 
 #endif // PLAYER_H

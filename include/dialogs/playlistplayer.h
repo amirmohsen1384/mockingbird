@@ -19,15 +19,12 @@ public:
     explicit PlaylistPlayer(QWidget *parent = nullptr);
     ~PlaylistPlayer();
 
-    Player* player();
-    const Player* player() const;
-
-    std::shared_ptr<ProxyPlaylistModel> model();
-    void setModel(std::shared_ptr<ProxyPlaylistModel> &model);
+    QAbstractItemModel* model();
+    void setModel(QAbstractItemModel *model);
 
 private:
+    QAbstractItemModel* _model;
     std::unique_ptr<Ui::PlaylistPlayer> ui;
-    std::shared_ptr<ProxyPlaylistModel> _model;
 };
 
 #endif // PLAYLISTPLAYER_H

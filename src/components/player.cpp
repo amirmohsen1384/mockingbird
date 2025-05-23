@@ -4,7 +4,6 @@
 #include <QMediaDevices>
 #include <QAudioDevice>
 #include "ui_player.h"
-#include <QTime>
 
 Player::Player(QWidget *parent) : QWidget(parent), ui(std::make_unique<Ui::Player>())
 {
@@ -254,16 +253,16 @@ void Player::setInfiniteMode(bool value)
 
 Player::~Player() {}
 
-std::shared_ptr<QAbstractItemModel> Player::model()
+QAbstractItemModel *Player::model()
 {
     return _model;
 }
 
-void Player::setModel(std::shared_ptr<QAbstractItemModel> value)
+void Player::setModel(QAbstractItemModel *value)
 {
     auto temp = this->_model;
     this->_model = value;
-    updateModel(temp.get(), value.get());
+    updateModel(temp, value);
     currentTrack = 0;
     player->stop();
     updatePlayer();
