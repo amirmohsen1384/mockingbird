@@ -6,6 +6,14 @@
 class Artist : public PlaylistGroup
 {
 public:
+    enum Role
+    {
+        NameRole = Qt::DisplayRole,
+        BiographyRole = Qt::UserRole,
+        PhotoRole = Qt::UserRole + 1,
+    };
+
+public:
     QString getName() const;
     void setName(const QString &value);
 
