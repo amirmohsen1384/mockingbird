@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "include/components/player.h"
+#include "include/models/songdelegate.h"
 #include "include/models/proxyplaylistmodel.h"
 
 namespace Ui { class PlaylistPlayer; }
@@ -24,6 +25,7 @@ public:
 
 private:
     QAbstractItemModel* _model;
+    std::unique_ptr<SongDelegate> delegate;
     std::unique_ptr<Ui::PlaylistPlayer> ui;
 };
 

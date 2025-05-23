@@ -24,6 +24,8 @@ void PlaylistPlayer::playSong(const QModelIndex &index)
 PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QDialog(parent), ui(new Ui::PlaylistPlayer)
 {
     ui->setupUi(this);
+    delegate = std::make_unique<SongDelegate>();
+    ui->playlistView->setItemDelegate(delegate.get());
     connect(ui->player, &Player::currentTrackChanged, this, &PlaylistPlayer::updateCurrentTrack);
 }
 
