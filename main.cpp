@@ -1,12 +1,14 @@
 #include <QDir>
+#include <QListView>
 #include <QApplication>
+#include <QRandomGenerator64>
 #include "include/dialogs/songedit.h"
 #include "include/windows/welcomewindow.h"
 #include "include/dialogs/playlistedit.h"
 #include "include/models/playlistmodel.h"
-#include <QRandomGenerator64>
 #include "include/models/artistmodel.h"
 #include "include/dialogs/playlistplayer.h"
+#include "include/models/songdelegate.h"
 
 int main(int argc, char **argv)
 {
@@ -33,5 +35,5 @@ int main(int argc, char **argv)
     player.setModel(&playlist);
     player.exec();
 
-    return app.exec();
+    return 0;
 }
