@@ -48,6 +48,8 @@ public slots:
     void setCover(const QPixmap &value);
     void setArtist(const QString &value);
     void setLocation(const QUrl &location);
+
+    void removeCover();
     virtual void accept() override;
 
 signals:

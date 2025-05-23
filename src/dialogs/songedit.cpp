@@ -252,6 +252,11 @@ void SongEdit::setLocation(const QUrl &location)
     ui->fileNameEdit->setText(location.toString(QUrl::PreferLocalFile));
 }
 
+void SongEdit::removeCover()
+{
+    ui->coverView->setImage(QImage());
+}
+
 void SongEdit::accept()
 {
     try

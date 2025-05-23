@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>516</width>
-    <height>649</height>
+    <width>529</width>
+    <height>767</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,17 +17,14 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="mainLayout">
-   <item row="2" column="0" colspan="2">
-    <widget class="ImageView" name="coverView" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+   <item row="5" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="4" column="0" colspan="2">
     <widget class="QGroupBox" name="infoGroup">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -292,12 +289,74 @@
      </layout>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+   <item row="2" column="0" colspan="2">
+    <widget class="ImageView" name="coverView" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
     </widget>
+   </item>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="removePhotoLayout">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="leftSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="removePhotoButton">
+       <property name="toolTip">
+        <string>Remove Cover</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources.qrc">
+         <normaloff>:/images/dialogs/delete.png</normaloff>:/images/dialogs/delete.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="rightSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
@@ -379,8 +438,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>357</x>
-     <y>630</y>
+     <x>368</x>
+     <y>755</y>
     </hint>
     <hint type="destinationlabel">
      <x>250</x>
@@ -395,12 +454,28 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>433</x>
-     <y>628</y>
+     <x>444</x>
+     <y>755</y>
     </hint>
     <hint type="destinationlabel">
      <x>487</x>
      <y>647</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removePhotoButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SongEdit</receiver>
+   <slot>removeCover()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>255</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>549</y>
     </hint>
    </hints>
   </connection>
@@ -414,5 +489,6 @@
   <slot>openSongFile()</slot>
   <slot>controlPlayback()</slot>
   <slot>openImageFile()</slot>
+  <slot>removeCover()</slot>
  </slots>
 </ui>
