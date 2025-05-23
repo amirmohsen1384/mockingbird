@@ -21,8 +21,8 @@ HEADERS += \
     include/core/general.h \
     include/core/person.h \
     include/components/player.h \
+    include/models/artistmodel.h \
     include/models/genremodel.h \
-    include/models/playlistgroupmodel.h \
     include/models/playlistmodel.h \
     include/models/proxyplaylistmodel.h \
     include/models/songdelegate.h \
@@ -47,8 +47,8 @@ SOURCES += \
     src/core/playlist.cpp \
     src/core/song.cpp \
     main.cpp \
+    src/models/artistmodel.cpp \
     src/models/genremodel.cpp \
-    src/models/playlistgroupmodel.cpp \
     src/models/playlistmodel.cpp \
     src/models/proxyplaylistmodel.cpp \
     src/models/songdelegate.cpp \
