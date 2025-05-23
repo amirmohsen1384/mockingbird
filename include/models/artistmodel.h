@@ -10,7 +10,7 @@ class ArtistModel : public QAbstractListModel
 public:
     Q_DISABLE_COPY_MOVE(ArtistModel)
 
-    ArtistModel(QObject *parent) : QAbstractListModel(parent) {}
+    ArtistModel(QObject *parent = nullptr) : QAbstractListModel(parent) {}
     ~ArtistModel() {}
 
     const Artist& artist() const;
