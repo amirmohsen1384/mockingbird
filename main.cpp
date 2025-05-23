@@ -4,15 +4,17 @@
 #include "include/windows/welcomewindow.h"
 #include "include/dialogs/playlistedit.h"
 #include "include/models/playlistmodel.h"
-#include "include/dialogs/playlistview.h"
 #include <QRandomGenerator64>
+#include "include/models/artistmodel.h"
+#include "artistview.h"
+#include "include/dialogs/playlistplayer.h"
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
     auto songs = QDir("C:/Users/Amir Mohsen/Downloads/Music").entryInfoList({"*.mp3"}, QDir::AllEntries | QDir::NoDotAndDotDot);
-    std::shared_ptr<PlaylistModel> model = std::make_shared<PlaylistModel>();
+    PlaylistModel playlist;
     for(const QFileInfo &i : songs)
     {
         Song target;
@@ -20,16 +22,17 @@ int main(int argc, char **argv)
         target.setPublicationYear(QRandomGenerator::global()->bounded(1996, 2016));
         target.setAddress(i.absoluteFilePath());
         target.setName(i.baseName());
-        model->appendSong(target);
+        playlist.appendSong(target);
     }
-    model->setName("Eminem Music");
+    playlist.setName("My favorite songs");
 
-    std::shared_ptr<ProxyPlaylistModel> proxy = std::make_shared<ProxyPlaylistModel>();
-    proxy->setSourceModel(model.get());
+    PlaylistEdit editor;
+    editor.setModel(&playlist);
+    editor.exec();
 
-    PlaylistView editor;
-    editor.setModel(proxy);
-    editor.show();
+    PlaylistPlayer player;
+    player.setModel(&playlist);
+    player.exec();
 
     return app.exec();
 }
