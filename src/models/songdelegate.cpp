@@ -66,6 +66,7 @@ SongDelegate::SongDelegate(QObject *parent) : QStyledItemDelegate{parent}
 
 QSize SongDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    Q_UNUSED(index)
     return QSize(option.widget != nullptr ? option.widget->width() : 1000 , 72 + margins.top() * 2 + margins.bottom());
 }
 
