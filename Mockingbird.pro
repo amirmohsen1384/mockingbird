@@ -8,6 +8,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+    artistedit.h \
+    artistview.h \
     include/dialogs/playlistplayer.h \
     include/components/custom/arrangewidget.h \
     include/components/custom/filteredit.h \
@@ -27,16 +29,16 @@ HEADERS += \
     include/models/proxyplaylistmodel.h \
     include/models/songdelegate.h \
     include/windows/welcomewindow.h \
-    include/dialogs/playlistview.h \
     include/dialogs/playlistedit.h
 
 SOURCES += \
+    artistedit.cpp \
+    artistview.cpp \
     src/dialogs/playlistedit.cpp \
     src/dialogs/playlistplayer.cpp \
     src/components/custom/arrangewidget.cpp \
     src/components/custom/filteredit.cpp \
     src/components/custom/findwidget.cpp \
-    src/dialogs/playlistview.cpp \
     src/components/imageview.cpp \
     src/dialogs/songedit.cpp \
     src/core/admin.cpp \
@@ -55,11 +57,13 @@ SOURCES += \
     src/windows/welcomewindow.cpp
 
 FORMS += \
+    artistedit.ui \
+    artistview.ui \
+    ui/dialogs/playlistedit.ui \
     ui/dialogs/playlistplayer.ui \
     ui/components/custom/arrangewidget.ui \
     ui/components/custom/filteredit.ui \
     ui/components/custom/findwidget.ui \
-    ui/dialogs/playlistview.ui \
     ui/components/player.ui \
     ui/dialogs/songedit.ui \
     ui/windows/welcomewindow.ui
