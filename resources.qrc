@@ -37,5 +37,9 @@
         <file>images/dialogs/move-down.png</file>
         <file>images/dialogs/move-up.png</file>
         <file>images/windows/person.png</file>
+        <file>images/windows/back.png</file>
+        <file>images/windows/check.png</file>
+        <file>images/windows/hide-password.png</file>
+        <file>images/windows/show-password.png</file>
     </qresource>
 </RCC>
