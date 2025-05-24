@@ -7,16 +7,17 @@
 #include "include/dialogs/playlistedit.h"
 #include "include/models/playlistmodel.h"
 #include "include/models/artistmodel.h"
-#include "include/dialogs/playlistplayer.h"
 #include "include/models/songdelegate.h"
 #include "include/dialogs/artistview.h"
+#include "include/dialogs/artistedit.h"
+#include "include/dialogs/playlistplayer.h"
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
     auto songs = QDir("C:/Users/Amir Mohsen/Downloads/Music").entryInfoList({"*.mp3"}, QDir::AllEntries | QDir::NoDotAndDotDot);
-    PlaylistModel playlist;
+    Playlist playlist;
     for(const QFileInfo &i : songs)
     {
         Song target;
@@ -24,19 +25,12 @@ int main(int argc, char **argv)
         target.setPublicationYear(QRandomGenerator::global()->bounded(1996, 2016));
         target.setAddress(i.absoluteFilePath());
         target.setName(i.baseName());
-        playlist.appendSong(target);
+        playlist.append(target);
     }
-    playlist.setName("My favorite songs");
+    playlist.setName("Sample Name");
 
-    ArtistModel model;
-    model.appendPlaylist(playlist.playlist());
-    model.setName("Marshall Bruce Mathers III (Eminem)");
-    model.setBiography("Eminem, born Marshall Bruce Mathers III, is one of the most influential and best-selling artists in the history of hip-hop. Known for his rapid-fire lyrics, complex rhyme schemes, and emotionally raw content, he gained worldwide fame in the late 1990s and early 2000s and helped bring hip-hop to a broader audience.");
-    model.setPhoto(QPixmap("C:/Users/Amir Mohsen/Downloads/Sample.jpg"));
-
-    ArtistView view;
-    view.setModel(&model);
-    view.exec();
+    PlaylistPlayer player(playlist);
+    player.exec();
 
     return 0;
 }
