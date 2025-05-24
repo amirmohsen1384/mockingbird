@@ -11,6 +11,8 @@
 #include "include/dialogs/artistview.h"
 #include "include/dialogs/artistedit.h"
 #include "include/dialogs/playlistplayer.h"
+#include "include/core/admin.h"
+#include "include/windows/adminwindow.h"
 
 int main(int argc, char **argv)
 {
@@ -29,8 +31,14 @@ int main(int argc, char **argv)
     }
     playlist.setName("Sample Name");
 
-    PlaylistEdit editor;
-    editor.exec();
+    Admin admin;
+    admin.setFirstName("Amir Mohsen");
+    admin.setLastName("Ghasemi");
+    admin.setUserName("amir@1384");
+    admin.setPassword("Amir@1100619720");
 
-    return 0;
+    AdminWindow window(admin);
+    window.show();
+
+    return app.exec();
 }
