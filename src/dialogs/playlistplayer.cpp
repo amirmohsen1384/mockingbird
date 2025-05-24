@@ -3,16 +3,14 @@
 
 void PlaylistPlayer::updateModel()
 {
-    ui->player->setModel(_model);
     ui->player->setCurrentTrack(0);
-    ui->playlistView->setModel(_model);
-    _model->setData(QModelIndex(), Playlist::PlayingRole, ui->player->getCurrentTrack());
+    model->setData(QModelIndex(), Playlist::PlayingRole, 0);
 }
 
 void PlaylistPlayer::updateCurrentTrack()
 {
-    QModelIndex index  = _model->index(ui->player->getCurrentTrack(), 0);
-    _model->setData(QModelIndex(), Playlist::PlayingRole, ui->player->getCurrentTrack());
+    QModelIndex index = model->index(ui->player->getCurrentTrack(), 0);
+    model->setData(QModelIndex(), Playlist::PlayingRole, ui->player->getCurrentTrack());
     setWindowTitle(QString("%1 - Media Player").arg(index.data(Qt::DisplayRole).toString()));
 }
 
@@ -21,23 +19,32 @@ void PlaylistPlayer::playSong(const QModelIndex &index)
     ui->player->setCurrentTrack(index.row());
 }
 
+PlaylistPlayer::PlaylistPlayer(const Playlist &person, QWidget *parent) : PlaylistPlayer(parent)
+{
+    setPlaylist(person);
+}
+
 PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QDialog(parent), ui(new Ui::PlaylistPlayer)
 {
     ui->setupUi(this);
+    model = std::make_unique<PlaylistModel>();
     delegate = std::make_unique<SongDelegate>();
     ui->playlistView->setItemDelegate(delegate.get());
     connect(ui->player, &Player::currentTrackChanged, this, &PlaylistPlayer::updateCurrentTrack);
+    ui->playlistView->setModel(model.get());
+    ui->player->setModel(model.get());
+    ui->player->stop();
 }
 
-void PlaylistPlayer::setModel(QAbstractItemModel *model)
+void PlaylistPlayer::setPlaylist(const Playlist &data)
 {
-    this->_model = model;
+    model->setPlaylist(data);
     updateModel();
 }
 
-QAbstractItemModel *PlaylistPlayer::model()
+Playlist PlaylistPlayer::playlist() const
 {
-    return _model;
+    return model->playlist();
 }
 
 PlaylistPlayer::~PlaylistPlayer() {}
