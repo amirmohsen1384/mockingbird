@@ -1,3 +1,4 @@
+#include "include/dialogs/playlistplayer.h"
 #include "include/dialogs/playlistedit.h"
 #include "include/dialogs/songedit.h"
 #include "ui_playlistedit.h"
@@ -5,12 +6,22 @@
 
 void PlaylistEdit::updateModel()
 {
+    updateFilteringCriteria();
+    ui->nameEdit->setText(sourceModel->name());
+    setWindowTitle(QString("%1 - Playlist Editor").arg(sourceModel->name()));
+}
+
+void PlaylistEdit::updateControl()
+{
+    ui->playButton->setVisible(sourceModel->rowCount() > 0);
+}
+
+void PlaylistEdit::updateFilteringCriteria()
+{
     ui->songView->selectionModel()->clear();
     updateFilter();
     updateFindCriteria();
     updateArrangeCriteria();
-    ui->nameEdit->setText(sourceModel->name());
-    setWindowTitle(QString("%1 - Playlist Editor").arg(sourceModel->name()));
 }
 
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
@@ -39,8 +50,14 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
     connect(ui->arrangePanel, &ArrangeWidget::sortCriteriaChanged, this, &PlaylistEdit::updateArrangeCriteria);
 
     ui->findPanel->setVisible(false);
+    ui->playButton->setVisible(false);
     ui->filterPanel->setVisible(false);
     ui->arrangePanel->setVisible(false);
+
+    connect(sourceModel.get(), &PlaylistModel::rowsInserted, this, &PlaylistEdit::updateControl);
+    connect(sourceModel.get(), &PlaylistModel::rowsRemoved, this, &PlaylistEdit::updateControl);
+
+    updateFilteringCriteria();
 }
 
 PlaylistEdit::PlaylistEdit(const Playlist &container, QWidget *parent) : PlaylistEdit(parent)
@@ -121,6 +138,12 @@ void PlaylistEdit::addSong()
         const Song &song = editor.getValue();
         sourceModel->appendSong(song);
     }
+}
+
+void PlaylistEdit::playSong()
+{
+    PlaylistPlayer player(sourceModel->playlist());
+    player.exec();
 }
 
 void PlaylistEdit::editSong(const QModelIndex &index)

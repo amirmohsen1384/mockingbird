@@ -14,6 +14,8 @@ class PlaylistEdit : public QDialog
     Q_OBJECT
 private slots:
     void updateModel();
+    void updateControl();
+    void updateFilteringCriteria();
 
 public:
     explicit PlaylistEdit(const Playlist &container, QWidget *parent = nullptr);
@@ -30,6 +32,7 @@ private slots:
 
 public slots:
     void addSong();
+    void playSong();
     void removeSong();
     void editSong(const QModelIndex &index);
 
