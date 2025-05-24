@@ -38,6 +38,8 @@ public slots:
     void setPhoto(const QPixmap &value);
     void setBiography(const QString &value);
 
+    void setArtist(const Artist &artist);
+
 private:
     Artist container;
 };

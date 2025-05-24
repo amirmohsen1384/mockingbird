@@ -211,3 +211,10 @@ void ArtistModel::setBiography(const QString &value)
 {
     setData({}, value, Artist::BiographyRole);
 }
+
+void ArtistModel::setArtist(const Artist &artist)
+{
+    beginResetModel();
+    container = artist;
+    endResetModel();
+}
