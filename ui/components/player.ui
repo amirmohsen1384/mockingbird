@@ -97,7 +97,7 @@
        <item>
         <widget class="QPushButton" name="shuffleButton">
          <property name="toolTip">
-          <string>Shuffle</string>
+          <string>Shuffle (R)</string>
          </property>
          <property name="text">
           <string/>
@@ -112,7 +112,13 @@
            <height>32</height>
           </size>
          </property>
+         <property name="shortcut">
+          <string>R</string>
+         </property>
          <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeat">
           <bool>true</bool>
          </property>
          <property name="flat">
@@ -123,7 +129,7 @@
        <item>
         <widget class="QPushButton" name="repeatButton">
          <property name="toolTip">
-          <string>Repeat</string>
+          <string>Repeat (Ctrl + T)</string>
          </property>
          <property name="text">
           <string/>
@@ -142,6 +148,9 @@
           <string>Ctrl+T</string>
          </property>
          <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoRepeat">
           <bool>true</bool>
          </property>
          <property name="flat">
@@ -165,7 +174,7 @@
        <item>
         <widget class="QPushButton" name="advanceBack">
          <property name="toolTip">
-          <string>Previous Track</string>
+          <string>Previous Track (Up Arrow)</string>
          </property>
          <property name="text">
           <string/>
@@ -179,6 +188,12 @@
            <width>32</width>
            <height>32</height>
           </size>
+         </property>
+         <property name="shortcut">
+          <string>Up</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -204,7 +219,7 @@
           <bool>false</bool>
          </property>
          <property name="toolTip">
-          <string>Replay by 10 seconds</string>
+          <string>Replay by 10 seconds (Left Arrow)</string>
          </property>
          <property name="text">
           <string/>
@@ -222,6 +237,9 @@
          <property name="shortcut">
           <string>Left</string>
          </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
          <property name="flat">
           <bool>true</bool>
          </property>
@@ -233,7 +251,7 @@
           <bool>false</bool>
          </property>
          <property name="toolTip">
-          <string>Play</string>
+          <string>Play (Space)</string>
          </property>
          <property name="text">
           <string/>
@@ -251,6 +269,9 @@
          <property name="shortcut">
           <string>Space</string>
          </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
+         </property>
          <property name="default">
           <bool>true</bool>
          </property>
@@ -265,7 +286,7 @@
           <bool>false</bool>
          </property>
          <property name="toolTip">
-          <string>Forward by 10 seconds</string>
+          <string>Forward by 10 seconds (Right Arrow)</string>
          </property>
          <property name="text">
           <string/>
@@ -282,6 +303,9 @@
          </property>
          <property name="shortcut">
           <string>Right</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -304,7 +328,7 @@
        <item>
         <widget class="QPushButton" name="advanceNext">
          <property name="toolTip">
-          <string>Next Track</string>
+          <string>Next Track (Down Arrow)</string>
          </property>
          <property name="text">
           <string/>
@@ -318,6 +342,12 @@
            <width>32</width>
            <height>32</height>
           </size>
+         </property>
+         <property name="shortcut">
+          <string>Down</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -343,7 +373,7 @@
           <bool>false</bool>
          </property>
          <property name="toolTip">
-          <string>Stop</string>
+          <string>Stop (S)</string>
          </property>
          <property name="text">
           <string/>
@@ -359,7 +389,10 @@
           </size>
          </property>
          <property name="shortcut">
-          <string>Ctrl+S</string>
+          <string>S</string>
+         </property>
+         <property name="autoRepeat">
+          <bool>true</bool>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -378,7 +411,7 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>Playback Speed</string>
+          <string>Adjust Playback Speed (Ctrl + P)</string>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LayoutDirection::LeftToRight</enum>
@@ -396,10 +429,10 @@
           <string>Ctrl+P</string>
          </property>
          <property name="autoRepeat">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="autoExclusive">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="autoDefault">
           <bool>false</bool>
