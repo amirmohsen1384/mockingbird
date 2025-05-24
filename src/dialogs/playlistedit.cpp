@@ -17,6 +17,11 @@ void PlaylistEdit::updateModel()
     }
 }
 
+void PlaylistEdit::commitMetaData()
+{
+    mainModel->sourceModel()->setData(QModelIndex(), ui->nameEdit->text(), Qt::DisplayRole);
+}
+
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::PlaylistEdit>();
@@ -34,6 +39,8 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
             ui->removeButton->setDisabled(indexes.isEmpty());
         }
     );
+
+    connect(ui->nameEdit, &QLineEdit::textChanged, this, &PlaylistEdit::commitMetaData);
     connect(ui->filterPanel, &FilterEdit::filterChanged, this, &PlaylistEdit::updateFilter);
     connect(ui->findPanel, &FindWidget::findPropertyChanged, this, &PlaylistEdit::updateFindCriteria);
     connect(ui->arrangePanel, &ArrangeWidget::sortCriteriaChanged, this, &PlaylistEdit::updateArrangeCriteria);

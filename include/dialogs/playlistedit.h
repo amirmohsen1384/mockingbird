@@ -14,6 +14,7 @@ class PlaylistEdit : public QDialog
     Q_OBJECT
 private slots:
     void updateModel();
+    void commitMetaData();
 
 public:
     explicit PlaylistEdit(QWidget *parent = nullptr);
