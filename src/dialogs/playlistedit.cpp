@@ -13,11 +13,6 @@ void PlaylistEdit::updateModel()
     setWindowTitle(QString("%1 - Playlist Editor").arg(sourceModel->name()));
 }
 
-void PlaylistEdit::updateMetaData()
-{
-    sourceModel->setName(ui->nameEdit->text());
-}
-
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::PlaylistEdit>();
@@ -39,7 +34,6 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
         }
     );
 
-    connect(ui->nameEdit, &QLineEdit::textEdited, this, &PlaylistEdit::updateMetaData);
     connect(ui->filterPanel, &FilterEdit::filterChanged, this, &PlaylistEdit::updateFilter);
     connect(ui->findPanel, &FindWidget::findPropertyChanged, this, &PlaylistEdit::updateFindCriteria);
     connect(ui->arrangePanel, &ArrangeWidget::sortCriteriaChanged, this, &PlaylistEdit::updateArrangeCriteria);
@@ -204,6 +198,7 @@ void PlaylistEdit::accept()
         {
             throw std::runtime_error("You have not entered the name.");
         }
+        sourceModel->setName(ui->nameEdit->text());
     }
     catch(std::exception &e)
     {
