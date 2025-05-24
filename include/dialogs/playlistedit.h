@@ -14,14 +14,15 @@ class PlaylistEdit : public QDialog
     Q_OBJECT
 private slots:
     void updateModel();
-    void commitMetaData();
+    void updateMetaData();
 
 public:
+    explicit PlaylistEdit(const Playlist &container, QWidget *parent = nullptr);
     explicit PlaylistEdit(QWidget *parent = nullptr);
     ~PlaylistEdit();
 
-    QAbstractItemModel* model();
-    void setModel(QAbstractItemModel* value);
+    Playlist playlist() const;
+    void setPlaylist(const Playlist &container);
 
 private slots:
     void showArrangePanel(bool toggle);
@@ -37,8 +38,11 @@ public slots:
     void updateFindCriteria();
     void updateFilter();
 
+    virtual void accept() override;
+
 private:
     std::unique_ptr<Ui::PlaylistEdit> ui;
+    std::unique_ptr<PlaylistModel> sourceModel;
     std::unique_ptr<ProxyPlaylistModel> mainModel;
 };
 

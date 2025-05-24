@@ -6,20 +6,16 @@
 void PlaylistEdit::updateModel()
 {
     ui->songView->selectionModel()->clear();
-    QAbstractItemModel *source = mainModel->sourceModel();
-    if(source != nullptr)
-    {
-        updateFilter();
-        updateFindCriteria();
-        updateArrangeCriteria();
-        ui->nameEdit->setText(source->data(QModelIndex(), Qt::DisplayRole).toString());
-        setWindowTitle(QString("%1 - Playlist Editor").arg(source->data(QModelIndex(), Qt::DisplayRole).toString()));
-    }
+    updateFilter();
+    updateFindCriteria();
+    updateArrangeCriteria();
+    ui->nameEdit->setText(sourceModel->name());
+    setWindowTitle(QString("%1 - Playlist Editor").arg(sourceModel->name()));
 }
 
-void PlaylistEdit::commitMetaData()
+void PlaylistEdit::updateMetaData()
 {
-    mainModel->sourceModel()->setData(QModelIndex(), ui->nameEdit->text(), Qt::DisplayRole);
+    sourceModel->setName(ui->nameEdit->text());
 }
 
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
@@ -29,6 +25,9 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
 
     mainModel = std::make_unique<ProxyPlaylistModel>();
     ui->songView->setModel(mainModel.get());
+
+    sourceModel = std::make_unique<PlaylistModel>();
+    mainModel->setSourceModel(sourceModel.get());
 
     connect(ui->songView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
         [&](const QItemSelection &selected, const QItemSelection &deselected)
@@ -40,7 +39,7 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
         }
     );
 
-    connect(ui->nameEdit, &QLineEdit::textChanged, this, &PlaylistEdit::commitMetaData);
+    connect(ui->nameEdit, &QLineEdit::textEdited, this, &PlaylistEdit::updateMetaData);
     connect(ui->filterPanel, &FilterEdit::filterChanged, this, &PlaylistEdit::updateFilter);
     connect(ui->findPanel, &FindWidget::findPropertyChanged, this, &PlaylistEdit::updateFindCriteria);
     connect(ui->arrangePanel, &ArrangeWidget::sortCriteriaChanged, this, &PlaylistEdit::updateArrangeCriteria);
@@ -50,16 +49,22 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
     ui->arrangePanel->setVisible(false);
 }
 
-PlaylistEdit::~PlaylistEdit() {}
-
-QAbstractItemModel* PlaylistEdit::model()
+PlaylistEdit::PlaylistEdit(const Playlist &container, QWidget *parent) : PlaylistEdit(parent)
 {
-    return mainModel->sourceModel();
+    setPlaylist(container);
 }
 
-void PlaylistEdit::setModel(QAbstractItemModel* value)
+
+PlaylistEdit::~PlaylistEdit() {}
+
+Playlist PlaylistEdit::playlist() const
 {
-    mainModel->setSourceModel(value);
+    return sourceModel->playlist();
+}
+
+void PlaylistEdit::setPlaylist(const Playlist &container)
+{
+    sourceModel->setPlaylist(container);
     updateModel();
 }
 
@@ -119,12 +124,8 @@ void PlaylistEdit::addSong()
     SongEdit editor(this);
     if(editor.exec() == QDialog::Accepted)
     {
-        PlaylistModel *target = dynamic_cast<PlaylistModel*>(mainModel->sourceModel());
-        if(target != nullptr)
-        {
-            const Song &song = editor.getValue();
-            target->appendSong(song);
-        }
+        const Song &song = editor.getValue();
+        sourceModel->appendSong(song);
     }
 }
 
@@ -134,7 +135,7 @@ void PlaylistEdit::editSong(const QModelIndex &index)
     SongEdit editor(target.data(Qt::UserRole).value<Song>(), this);
     if(editor.exec() == QDialog::Accepted)
     {
-        mainModel->sourceModel()->setData(target, QVariant::fromValue(editor.getValue()), Qt::UserRole);
+        sourceModel->setData(target, QVariant::fromValue(editor.getValue()), Qt::UserRole);
     }
 }
 
@@ -193,6 +194,23 @@ void PlaylistEdit::updateFilter()
         mainModel->setMinimumYear(ui->filterPanel->isYearFilteringEnabled() ? ui->filterPanel->getMinimumYear() : _min_year);
         mainModel->setMaximumYear(ui->filterPanel->isYearFilteringEnabled() ? ui->filterPanel->getMaximumYear() : QDate::currentDate().year());
     }
+}
+
+void PlaylistEdit::accept()
+{
+    try
+    {
+        if(ui->nameEdit->text().isEmpty())
+        {
+            throw std::runtime_error("You have not entered the name.");
+        }
+    }
+    catch(std::exception &e)
+    {
+        QMessageBox::critical(this, "Error", e.what());
+        return;
+    }
+    QDialog::accept();
 }
 
 void PlaylistEdit::removeSong()
