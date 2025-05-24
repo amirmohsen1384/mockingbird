@@ -1,14 +1,21 @@
-#include "adminwindow.h"
+#include "include/windows/adminwindow.h"
 #include "ui_adminwindow.h"
 
-AdminWindow::AdminWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::AdminWindow)
+AdminWindow::AdminWindow(QWidget *parent) : QMainWindow(parent)
 {
+    ui = std::make_unique<Ui::AdminWindow>();
     ui->setupUi(this);
 }
 
-AdminWindow::~AdminWindow()
+AdminWindow::~AdminWindow() {}
+
+Admin AdminWindow::adminstrator() const
 {
-    delete ui;
+    return adminstrator;
+}
+
+void AdminWindow::setAdminstrator(const Admin &value)
+{
+    adminstrator = value;
+    emit adminstratorChanged(value);
 }
