@@ -36,5 +36,6 @@
         <file>images/player/advance-prev.png</file>
         <file>images/dialogs/move-down.png</file>
         <file>images/dialogs/move-up.png</file>
+        <file>images/windows/person.png</file>
     </qresource>
 </RCC>
