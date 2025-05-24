@@ -29,8 +29,8 @@ int main(int argc, char **argv)
     }
     playlist.setName("Sample Name");
 
-    PlaylistPlayer player(playlist);
-    player.exec();
+    PlaylistEdit editor;
+    editor.exec();
 
     return 0;
 }
