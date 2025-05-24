@@ -21,10 +21,15 @@ QString Person::getPassword() const
     return password;
 }
 
+QString Person::getFullName() const
+{
+    return QString("%1 %2").arg(firstName).arg(lastName);
+}
+
 bool Person::setFirstName(const QString &value)
 {
     // Matches only with values that has no non-letter characters.
-    QRegularExpression pattern("[a-zA-Z ]{6,}");
+    QRegularExpression pattern("[a-zA-Z ]{1,}");
 
     // Checks if the given values matches with the regex.
     if(pattern.match(value).hasMatch())
@@ -41,7 +46,7 @@ bool Person::setFirstName(const QString &value)
 bool Person::setLastName(const QString &value)
 {
     // Matches only with values that has no non-letter characters.
-    QRegularExpression pattern("[a-zA-Z ]{6,}");
+    QRegularExpression pattern("[a-zA-Z ]{1,}");
 
     // Checks if the given values matches with the regex.
     if(pattern.match(value).hasMatch())

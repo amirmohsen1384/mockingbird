@@ -11,6 +11,7 @@ public:
     QString getUserName() const;
     QString getLastName() const;
     QString getPassword() const;
+    QString getFullName() const;
 
     bool setFirstName(const QString &value);
     bool setLastName(const QString &value);
