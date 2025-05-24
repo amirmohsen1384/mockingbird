@@ -5,14 +5,11 @@
 
 void ArtistView::updateMetaData()
 {
-    if(mainModel != nullptr)
-    {
-        Artist artist = mainModel->artist();
-        ui->nameLabel->setText(artist.getName());
-        ui->biographyBrowser->setText(artist.getBiography());
-        ui->photoView->setImage(artist.getPhoto().toImage());
-        setWindowTitle(QString("%1 - Artist Page").arg(artist.getName()));
-    }
+    Artist artist = mainModel->artist();
+    ui->nameLabel->setText(artist.getName());
+    ui->biographyBrowser->setText(artist.getBiography());
+    ui->photoView->setImage(artist.getPhoto().toImage());
+    setWindowTitle(QString("%1 - Artist Page").arg(artist.getName()));
 }
 
 void ArtistView::playPlaylist(const QModelIndex &index)
@@ -20,38 +17,35 @@ void ArtistView::playPlaylist(const QModelIndex &index)
     if(index.isValid())
     {
         const Playlist &value = index.data(Qt::UserRole).value<Playlist>();
-        std::unique_ptr<PlaylistModel> target = std::make_unique<PlaylistModel>(value);
-        PlaylistPlayer player;
-        player.setModel(target.get());
+        PlaylistPlayer player(value);
         player.exec();
     }
 }
 
-void ArtistView::updateModel()
+ArtistView::ArtistView(const Artist &value, QWidget *parent) : ArtistView(parent)
 {
-    if(mainModel != nullptr)
-    {
-        updateMetaData();
-        ui->playlistView->setModel(mainModel);
-    }
+    setArtist(value);
 }
 
 ArtistView::ArtistView(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::ArtistView>();
     ui->setupUi(this);
+
+    mainModel = std::make_unique<ArtistModel>();
+    ui->playlistView->setModel(mainModel.get());
 }
 
 ArtistView::~ArtistView()
 {}
 
-ArtistModel *ArtistView::model()
+Artist ArtistView::artist() const
 {
-    return mainModel;
+    return mainModel->artist();
 }
 
-void ArtistView::setModel(ArtistModel* value)
+void ArtistView::setArtist(const Artist &value)
 {
-    mainModel = value;
-    updateModel();
+    mainModel->setArtist(value);
+    updateMetaData();
 }
