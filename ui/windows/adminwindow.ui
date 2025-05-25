@@ -217,100 +217,47 @@
       </widget>
       <widget class="QWidget" name="informationPage">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="0" colspan="3">
-         <layout class="QGridLayout" name="descriptionLayout">
-          <item row="0" column="0" rowspan="2">
-           <widget class="QLabel" name="mainTitle">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-              <fontweight>Light</fontweight>
-             </font>
-            </property>
-            <property name="text">
-             <string>Change the information of the adminstrator</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="subtitle">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Here you can alter different pieces of information.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" rowspan="3">
-           <widget class="QPushButton" name="cancelButton">
-            <property name="toolTip">
-             <string>Go Back</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../resources.qrc">
-              <normaloff>:/images/windows/back.png</normaloff>:/images/windows/back.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+        <item row="4" column="0" colspan="3">
+         <spacer name="checkTopSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Policy::MinimumExpanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="Line" name="infoSeparator">
+        <item row="5" column="2">
+         <spacer name="checkRightSpacer">
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
           </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QPushButton" name="checkButton">
-          <property name="toolTip">
-           <string>Accept</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../../resources.qrc">
-            <normaloff>:/images/windows/check.png</normaloff>:/images/windows/check.png</iconset>
-          </property>
-          <property name="iconSize">
+          <property name="sizeHint" stdset="0">
            <size>
-            <width>48</width>
-            <height>48</height>
+            <width>40</width>
+            <height>20</height>
            </size>
           </property>
-          <property name="flat">
-           <bool>true</bool>
+         </spacer>
+        </item>
+        <item row="5" column="0">
+         <spacer name="checkLeftSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
-         </widget>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item row="3" column="0" colspan="3">
          <widget class="QGroupBox" name="informationLayout">
@@ -498,47 +445,100 @@
           </layout>
          </widget>
         </item>
-        <item row="5" column="2">
-         <spacer name="checkRightSpacer">
+        <item row="2" column="0" colspan="3">
+         <widget class="Line" name="infoSeparator">
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
+         </widget>
         </item>
-        <item row="5" column="0">
-         <spacer name="checkLeftSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
+        <item row="1" column="0" colspan="3">
+         <layout class="QGridLayout" name="descriptionLayout">
+          <item row="0" column="0" rowspan="2">
+           <widget class="QLabel" name="mainTitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+              <fontweight>Light</fontweight>
+             </font>
+            </property>
+            <property name="text">
+             <string>Change the information of the adminstrator</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="subtitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Here you can alter different pieces of information.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" rowspan="3">
+           <widget class="QPushButton" name="cancelButton">
+            <property name="toolTip">
+             <string>Go Back</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources.qrc">
+              <normaloff>:/images/windows/back.png</normaloff>:/images/windows/back.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>48</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="4" column="0" colspan="3">
-         <spacer name="checkTopSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
+        <item row="5" column="1">
+         <widget class="QPushButton" name="checkButton">
+          <property name="toolTip">
+           <string>Accept</string>
           </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Policy::MinimumExpanding</enum>
+          <property name="text">
+           <string/>
           </property>
-          <property name="sizeHint" stdset="0">
+          <property name="icon">
+           <iconset resource="../../resources.qrc">
+            <normaloff>:/images/windows/check.png</normaloff>:/images/windows/check.png</iconset>
+          </property>
+          <property name="iconSize">
            <size>
-            <width>20</width>
-            <height>40</height>
+            <width>48</width>
+            <height>48</height>
            </size>
           </property>
-         </spacer>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
