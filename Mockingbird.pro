@@ -8,6 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 HEADERS += \
+    include/models/artistgroupmodel.h \
     include/windows/adminwindow.h \
     include/dialogs/artistedit.h \
     include/dialogs/artistview.h \
@@ -33,6 +34,7 @@ HEADERS += \
     include/dialogs/playlistedit.h
 
 SOURCES += \
+    src/models/artistgroupmodel.cpp \
     src/windows/adminwindow.cpp \
     src/dialogs/artistedit.cpp \
     src/dialogs/artistview.cpp \
@@ -56,7 +58,8 @@ SOURCES += \
     src/models/playlistmodel.cpp \
     src/models/proxyplaylistmodel.cpp \
     src/models/songdelegate.cpp \
-    src/windows/welcomewindow.cpp
+    src/windows/welcomewindow.cpp \
+    ui/models/artistgroupmodel.cpp
 
 FORMS += \
     ui/windows/adminwindow.ui \
