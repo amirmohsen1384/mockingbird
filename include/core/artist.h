@@ -38,4 +38,6 @@ private:
 QDataStream& operator>>(QDataStream &stream, Artist &target);
 QDataStream& operator<<(QDataStream &stream, const Artist &target);
 
+using ArtistGroup = QList<Artist>
+
 #endif // ARTIST_H
